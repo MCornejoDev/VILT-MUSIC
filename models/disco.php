@@ -215,7 +215,15 @@ class Disco {
         return $discos;
     }
 
-    /**Devolver un número de discos de la base de datos.*/
+    /**
+     * Obtener un disco según el id
+     */
+    public function getDisco($id){
+        $disco = $this->db->query("SELECT * FROM discos WHERE id = '$id'");
+        return $disco->fetch_object();
+    }
+
+    /**Obtener un array de discos aleatorios de la base de datos.*/
     public function getDiscosRandom($limit){
         $result = false;
         $discos = $this->db->query("SELECT * FROM discos ORDER BY RAND() LIMIT $limit");
@@ -227,12 +235,6 @@ class Disco {
      */
     public function getDiscosCategoria($id){
         $discos = $this->db->query("SELECT * FROM discos WHERE categoria_id = '$id->id'");
-        return $discos;
-    }
-
-    public function getCategoria(){
-        $result = false;
-
         return $discos;
     }
 
