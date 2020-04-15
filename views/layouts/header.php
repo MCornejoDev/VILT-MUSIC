@@ -15,6 +15,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.14.1/css/mdb.min.css" rel="stylesheet">
     <!-- Custom CSS-->
     <link rel="stylesheet" href="<?=base_url?>/assets/css/registro.css">
+    <link rel="stylesheet" href="<?=base_url?>/assets/css/destacados.css">
 </head>
 
 <body>
