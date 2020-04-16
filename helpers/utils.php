@@ -1,5 +1,7 @@
 <?php
 
+require_once './models/categoria.php';
+
 class Utils{
 
     public static function deleteSession($nombre){
@@ -9,5 +11,11 @@ class Utils{
        }
 
        return $nombre;
+    }
+
+    public static function showCategories(){
+        $categorias = new Categoria();
+        $categorias = $categorias->getAll();
+        return $categorias;
     }
 }
