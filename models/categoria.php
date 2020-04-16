@@ -60,7 +60,7 @@ class Categoria{
     #region Métodos
 
     public function getAll(){
-        $categorias = $this->db->query("SELECT * FROM categorias");
+        $categorias = $this->db->query("SELECT * FROM categorias ORDER BY id ASC");
         return $categorias;
     }
 
