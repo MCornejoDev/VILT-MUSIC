@@ -1,0 +1,21 @@
+@media only screen and (max-width: 768px) {
+    .img_album {
+        width: 200px;
+    }
+
+    div.destacados{
+        padding: 0px;
+    }
+}
+
+@media only screen and (min-width: 769px) {
+    .img_album {
+        width: 220px;
+    }
+}
+
+@media only screen and (min-width: 426px) {
+    div.contenedor{
+        width: 365px;
+    }
+}
