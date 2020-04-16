@@ -28,7 +28,7 @@ titulo VARCHAR(50) NOT NULL,
 artista VARCHAR(100) NOT NULL,
 descripcion VARCHAR(255) NOT NULL,
 stock INT(255) NOT NULL,
-precio DOUBLE(2,2) NOT NULL,
+precio DECIMAL(10,2) NOT NULL,
 fecha DATE NOT NULL,
 imagen VARCHAR(255) NOT NULL,
 CONSTRAINT pk_discos PRIMARY KEY(id),
@@ -39,6 +39,8 @@ CREATE TABLE singles(
 id INT(255) NOT NULL AUTO_INCREMENT,
 disco_id INT(255) NOT NULL,
 titulo VARCHAR(255) NOT NULL,
+duracion VARCHAR(255) NOT NULL,
+archivo_musical VARCHAR(255) NOT NULL,
 CONSTRAINT pk_singles PRIMARY KEY(id),
 CONSTRAINT fk_singles FOREIGN KEY(disco_id) REFERENCES discos(id)
 )ENGINE=InnoDb;
