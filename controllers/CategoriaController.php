@@ -5,9 +5,9 @@ require_once 'models/categoria.php';
 class CategoriaController{
 
     public function index(){
-        $categoria = new Categoria();
-        $categoria = $categoria->getAll();
+        $categorias = new Categoria();
+        $categorias = $categorias->getAll();
 
-        return $categoria;
+        return $categorias;
     }
 }
