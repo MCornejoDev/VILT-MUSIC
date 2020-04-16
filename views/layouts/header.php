@@ -16,6 +16,7 @@
     <!-- Custom CSS-->
     <link rel="stylesheet" href="<?=base_url?>/assets/css/registro.css">
     <link rel="stylesheet" href="<?=base_url?>/assets/css/destacados.css">
+    <link rel="stylesheet" href="<?=base_url?>/assets/css/album.css">
 </head>
 
 <body>
@@ -59,10 +60,12 @@
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
-                            aria-haspopup="true" aria-expanded="false">Discos</a>
+                            aria-haspopup="true" aria-expanded="false">Categorias</a>
                         <div class="dropdown-menu">
-                            <a href="<?=base_url?>disco/categoria&nombre=pop" class="dropdown-item">Pop</a>
-                            <a href="<?=base_url?>disco/categoria&nombre=rock" class="dropdown-item">Rock</a>
+                            <?php $categorias = Utils::showCategories();
+                                  while($categoria = $categorias->fetch_object()): ?>
+                                <a href="<?=base_url?>disco/categoria&nombre=<?php echo($categoria->nombre)?>" class="dropdown-item text-capitalize"><?php echo($categoria->nombre)?></a>
+                            <?php endwhile; ?>
                         </div>
                     </li>
                     <?php endif;?>
@@ -76,5 +79,5 @@
 
 
     </header>
-    <div class="container-fluid">
+    <div class="container-fluid mb-5">
         <div class="row">
