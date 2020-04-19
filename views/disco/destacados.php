@@ -4,7 +4,7 @@
     <div class="row mx-auto">
         <?php while($disco = $discos->fetch_object()): ?>
         <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 border destacados text-center">
-            <img class="float-left" src="<?php echo($disco->imagen)?>" alt="<?php echo($disco->titulo)?>">
+            <img class="float-left" src="<?=base_url?><?php echo($disco->imagen)?>" alt="<?php echo($disco->titulo)?>">
             <span><?php echo($disco->titulo) ?></span>
             <?php if(isset($_SESSION['identity'])): ?>
             <a href="<?=base_url?>disco/album&id=<?php echo($disco->id) ?>" class="float-right">Ir</a>
