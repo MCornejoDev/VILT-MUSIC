@@ -19,3 +19,11 @@
         width: 365px;
     }
 }
+
+.hide{
+    display: none;
+}
+
+i.far{
+    cursor: pointer;
+}
