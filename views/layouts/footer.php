@@ -4,16 +4,7 @@
 
 <!-- Footer -->
 <footer class="page-footer font-small blue fixed-bottom mt-5">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-12 col sm-12 col-md-12 col-lg-12 col-xl-12 pt-2 pb-1 text-center">
-                <audio id="audio" controls>
-                    <source type="audio/mpeg">
-                    Your browser does not support the audio tag.
-                </audio>
-            </div>
-        </div>
-    </div>
+
     <!-- Copyright -->
     <div class="footer-copyright text-center py-3">
         <span class="text-white"> Miguel Ángel Cornejo Manzanares</span>
