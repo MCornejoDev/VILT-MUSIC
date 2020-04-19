@@ -1,6 +1,9 @@
 <IfModule mod_rewrite.c>
 #Activar rewrite 
 RewriteEngine on
+
+allow from all
+
 ErrorDocument 404 http://localhost/PHP/PROYECTO_PHP_SPOTIFY/error/index/
 
 RewriteCond %{SCRIPT_FILENAME} !-d
