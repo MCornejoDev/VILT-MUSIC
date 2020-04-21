@@ -45,15 +45,15 @@
                     </li>
                     <?php else: ?>
                     <?php if(isset($_SESSION['admin'])): ?>
-                    <!-- <li class="nav-item dropdown">
+                    <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
-                            aria-haspopup="true" aria-expanded="false">Gestionar Categorias</a>
+                            aria-haspopup="true" aria-expanded="false">Administración</a>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="<?=base_url?>disco/categoria">Opcion 1</a>
-                            <a class="dropdown-item" href="<?=base_url?>disco/categoria">Opcion 2</a>
-                            <a class="dropdown-item" href="<?=base_url?>disco/categoria">Opcion 3</a>
+                            <a class="dropdown-item" href="<?=base_url?>disco/añadir">Añadir Disco</a>
+                            <a class="dropdown-item" href="<?=base_url?>">Añadir Single</a>
+                            <a class="dropdown-item" href="<?=base_url?>categoria/añadir">Añadir Categoría</a>
                         </div>
-                    </li> -->
+                    </li>
                     <?php else: ?>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Carrito</a>
