@@ -23,9 +23,9 @@
             <div class="header pt-4 pb-4 text-center">
                 <h3 class="h3-responsive">Nuevo Disco</h3>
             </div>
-            <form action="<?=base_url?>disco/save" method="POST" id="formSave" class="md-form mx-auto">
-                <select class="browser-default custom-select" name="id_categoria">
-                    <option selected disabled>Seleccione una categoría</option>
+            <form action="<?=base_url?>disco/save" method="POST" enctype="multipart/form-data" id="formSave" class="md-form mx-auto">
+                <select class="browser-default custom-select" name="id_categoria" required>
+                    <option selected disabled value="">Seleccione una categoría</option>
                     <?php while($categoria = $categorias->fetch_object()):?>
                     <option value="<?php echo($categoria->id)?>"><?php echo($categoria->nombre)?></option>
                     <?php endwhile; ?>
@@ -33,37 +33,37 @@
 
                 <div class="md-form">
                     <label for="nombre_titulo">Nuevo Disco</label>
-                    <input type="text" name="nombre_titulo" id="nombre_titulo" class="form-control">
+                    <input type="text" name="nombre_titulo" id="nombre_titulo" class="form-control" required>
                 </div>
 
                 <div class="md-form">
                     <label for="nombre_artista">Artista</label>
-                    <input type="text" name="nombre_artista" id="nombre_artista" class="form-control">
+                    <input type="text" name="nombre_artista" id="nombre_artista" class="form-control" required>
                 </div>
 
                 <div class="md-form">
-                    <textarea id="descripcion" name="descripcion" class="md-textarea form-control" rows="3"></textarea>
+                    <textarea id="descripcion" name="descripcion" class="md-textarea form-control" rows="3" required></textarea>
                     <label for="descripcion">Descripción del disco</label>
                 </div>
 
                 <div class="md-form">
                     <label for="stock">Nº de unidades</label>
-                    <input type="text" name="stock" id="stock" class="form-control">
+                    <input type="number" name="stock" id="stock" class="form-control" required>
                 </div>
 
                 <div class="md-form">
                     <label for="precio">Precio</label>
-                    <input type="text" name="precio" id="precio" class="form-control">
+                    <input type="number" name="precio" id="precio" class="form-control" step=".01" required>
                 </div>
 
                 <div class="md-form">
                     <label for="fecha">Fecha </label>
-                    <input type="date" name="fecha" id="fecha" class="form-control">
+                    <input type="date" name="fecha" id="fecha" class="form-control" required>
                 </div>
 
                 <div class="md-form">
                     <div class="custom-file">
-                        <input type="file" name="imagen" class="custom-file-input" id="imagen" lang="es">
+                        <input type="file" name="imagen" class="custom-file-input" id="imagen" lang="es" required size="2048" accept="image/jpg, image/png, image/gif, image/jpeg">
                         <label class="custom-file-label" for="imagen">Seleccionar Archivo</label>
                     </div>
                 </div>
