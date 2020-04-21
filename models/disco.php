@@ -238,5 +238,21 @@ class Disco {
         return $discos;
     }
 
+    /** 
+     * Guardaremos un disco creado por el usuario.
+    */
+    public function save(){
+        $result = false;
+        $sql = "INSERT INTO discos VALUES(NULL,'{$this->getCategoria_id()}','{$this->getTitulo()}','{$this->getArtista()}','{$this->getDescripcion()}','{$this->getStock()}','{$this->getPrecio()}',{$this->getFecha()},'{$this->getImagen()}')";
+        $registro = $this->db->query($sql);
+        var_dump($registro);
+        die();
+        if($registro){
+            $result = true;
+        }
+
+        return $result;
+    }
+
     #endregion
 }
