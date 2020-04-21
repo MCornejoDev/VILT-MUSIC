@@ -1,5 +1,7 @@
 <?php
 
+require_once "./config/parameters.php";
+
 class Disco {
     
     #region Propiedades
@@ -223,7 +225,9 @@ class Disco {
         return $disco->fetch_object();
     }
 
-    /**Obtener un array de discos aleatorios de la base de datos.*/
+    /**
+     * Obtener un array de discos aleatorios de la base de datos.
+     */
     public function getDiscosRandom($limit){
         $result = false;
         $discos = $this->db->query("SELECT * FROM discos ORDER BY RAND() LIMIT $limit");
@@ -240,18 +244,77 @@ class Disco {
 
     /** 
      * Guardaremos un disco creado por el usuario.
-    */
+     */
     public function save(){
+
         $result = false;
-        $sql = "INSERT INTO discos VALUES(NULL,'{$this->getCategoria_id()}','{$this->getTitulo()}','{$this->getArtista()}','{$this->getDescripcion()}','{$this->getStock()}','{$this->getPrecio()}',{$this->getFecha()},'{$this->getImagen()}')";
-        $registro = $this->db->query($sql);
-        var_dump($registro);
-        die();
+       
+        $sql = "INSERT INTO discos VALUES(NULL,'{$this->getCategoria_id()}','{$this->getTitulo()}','{$this->getArtista()}','{$this->getDescripcion()}','{$this->getStock()}','{$this->getPrecio()}','{$this->getFecha()}','NULL')";
+        $registro = $this->db->query($sql); 
+
         if($registro){
+            $nombre_carpeta = $this->getTitulo();
+            $imagen = $this->getImagen();
+            $url_carpeta = public_url . "albums/" . $nombre_carpeta;
+
+            if(!is_dir($url_carpeta)){
+               $carpeta_creada = mkdir($url_carpeta, 0777, true);
+
+               if($carpeta_creada){
+                    $id_imagen = $this->obtenerUltimoId();
+                    $imagen_subida = $this->subirImagen($imagen,$url_carpeta,$nombre_carpeta,$id_imagen);
+
+                    if($imagen_subida){
+                        $result = true;
+                    }
+               }
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * Función que nos comprueba si el título del disco existe en la base de datos.
+     */
+    public function comprobarTitulo($titulo){
+        $result = false;
+        
+        $sql = $this->db->query("SELECT titulo FROM discos WHERE titulo = '$titulo'");
+      
+        if($sql->num_rows == 0 && $sql){
             $result = true;
         }
 
         return $result;
+    }
+
+    /**
+     * Función que nos sube la imagén en la carpeta correspondiente y nos actualiza la columna imagen
+     * de la tabla discos
+     */
+    public function subirImagen($imagen,$url_carpeta,$nombre_carpeta,$id_imagen)
+    {   
+        $result = false;
+        $url = $url_carpeta . "/" . basename($imagen['name']);
+        $url_public = "public/albums/" . $nombre_carpeta . "/" . $imagen['name'];
+      
+        if(move_uploaded_file($imagen['tmp_name'],$url)){
+            $sql = $this->db->query("UPDATE discos SET imagen = '$url_public' WHERE id = '$id_imagen'");
+            $result = true;
+        }
+
+        return $result;
+    }
+
+    /**
+     * Función que nos devuelve el id del último registro creado.
+     */
+    public function obtenerUltimoId(){
+        $id = -1;
+        $sql = $this->db->query("SELECT MAX(id) as id FROM discos");
+        $id = $sql->fetch_object();
+        return $id->id;
     }
 
     #endregion
