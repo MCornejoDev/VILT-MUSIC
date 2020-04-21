@@ -5,15 +5,15 @@ require_once './helpers/utils.php';
 
 class UsuarioController{
     public function index(){
-        echo "Controlador Usuario, Acción Index";
+        echo 'Controlador Usuario, Acción Index';
     }
 
     public function login(){
-        require_once "views/usuario/login.php";
+        require_once 'views/usuario/login.php';
     }
 
     public function registro(){
-        require_once "views/usuario/registro.php";
+        require_once 'views/usuario/registro.php';
     }
 
     public function save(){
@@ -39,20 +39,20 @@ class UsuarioController{
                 $save = $usuario->save();
     
                 if($save){
-                    $_SESSION['register'] = "complete";
+                    $_SESSION['register'] = 'complete';
                 }
                 else{
-                    $_SESSION['register'] = "failed";
+                    $_SESSION['register'] = 'failed';
                 }
             }
             else{
-                $_SESSION['register'] = "failed";
+                $_SESSION['register'] = 'failed';
             }
         }
         else{
-            $_SESSION['register'] = "failed";
+            $_SESSION['register'] = 'failed';
         }
-        header("Location:".base_url.'usuario/registro');
+        header('Location:'.base_url.'usuario/registro');
     }
 
     public function loginPost(){
@@ -67,26 +67,26 @@ class UsuarioController{
             $usuario->setEmail($email);
             $usuario->setPassword($password);
             $identity = $usuario->login();
-            $localizacion = "usuario/login";
+            $localizacion = 'usuario/login';
             //CREAR UNA SESIÓN
             if($identity && is_object($identity)){
                 $_SESSION['identity'] = $identity;
                 if($identity->rol == 'admin'){
                     $_SESSION['admin'] = true;
                 }
-                $localizacion = "disco/index";
+                $localizacion = 'disco/index';
             }
             else{
-                $_SESSION['error_login'] = "Identificación fallida";
-                $localizacion = "usuario/login";
+                $_SESSION['error_login'] = 'Identificación fallida';
+                $localizacion = 'usuario/login';
             }
          
         }
         else{
-            $_SESSION['error_login'] = "Identificación fallida";
+            $_SESSION['error_login'] = 'Identificación fallida';
         }
 
-        header("Location:".base_url.$localizacion);
+        header('Location:'.base_url.$localizacion);
         
     }
 
@@ -99,6 +99,6 @@ class UsuarioController{
             Utils::deleteSession('admin');
         }
        
-        header("Location:".base_url."usuario/login");
+        header('Location:'.base_url.'usuario/login');
     }
 }
