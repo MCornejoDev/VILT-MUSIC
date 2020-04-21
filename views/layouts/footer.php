@@ -28,5 +28,6 @@
 <!---Custom JS-->
 <script type="text/javascript" src="<?=base_url?>assets/js/registro.js"></script>
 <script type="text/javascript" src="<?=base_url?>assets/js/album.js"></script>
+<script type="text/javascript" src="<?=base_url?>assets/js/administracion.js"></script>
 
 </html>
