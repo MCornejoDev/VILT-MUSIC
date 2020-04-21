@@ -214,7 +214,7 @@ class Usuario {
         $registro = $this->db->query($sql);
         $result = false;
 
-        if($sql){
+        if($registro){
             $result = true;
         }
 
