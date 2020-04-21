@@ -59,11 +59,17 @@ class Categoria{
 
     #region Métodos
 
+    /**
+     * Obtiene todas las categorias.
+     */
     public function getAll(){
         $categorias = $this->db->query("SELECT * FROM categorias ORDER BY id ASC");
         return $categorias;
     }
 
+    /**
+     * Obtiene el id de una categoria que le pasemos por parámetro.
+     */
     public function getIdCategory($categoria){
         $sql = $this->db->query("SELECT id FROM categorias WHERE nombre = '$categoria'");
         
@@ -72,6 +78,28 @@ class Categoria{
         }
 
         return $id;
+    }
+
+    /**
+     * Guardaremos una categoría creada por el usuario.
+     */
+    public function save(){
+        $result = false;
+        $sql = "";
+        $sqlCheck = "SELECT * FROM categorias WHERE nombre = '{$this->getNombre()}'";
+        $check = $this->db->query($sqlCheck);
+       
+        if($check->num_rows == 0){
+            $sql = "INSERT INTO categorias VALUES(NULL,'{$this->getNombre()}')";
+            $registro = $this->db->query($sql);
+           
+        }
+        
+        if($registro){
+            $result = true;
+        }
+
+        return $result;
     }
 
     #endregion
