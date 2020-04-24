@@ -20,6 +20,13 @@
             </div>
         </div>
         <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                        <button type="button" class="btn btn-rounded indigo text-white"><i class="far fa-play-circle" ></i></button>
+                    </div>
+                </div>
+            </div>
             <div class="container-fluid">
                 <div class="row mx-auto" id="playlist">
                     <?php while($single = $singles->fetch_object()): ?>
@@ -42,3 +49,8 @@
         </div>
     </div>
 </div>
+<audio controls>
+  <source src="horse.ogg" type="audio/ogg">
+  <source src="horse.mp3" type="audio/mpeg">
+Your browser does not support the audio element.
+</audio>
