@@ -32,7 +32,7 @@ class SingleController{
                             $single->setDuracion('3:45');
                             $nombre_carpeta = $single->obtenerTituloCarpeta($single->getDisco_id());
                             $url_carpeta = "public/albums/" . $nombre_carpeta . "/";
-                            $url_completa = $url_carpeta . $single->getTitulo();
+                            $url_completa = $url_carpeta . $single->getTitulo() . ".mp3";
                             $single->setArchivo_musical($url_completa);
                             //$id = $single->obtenerUltimoId();
                             // basename() puede evitar ataques de denegació del sistema de ficheros;
