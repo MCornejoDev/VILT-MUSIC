@@ -69,36 +69,3 @@ $(document).ready(function () {
   });
 
 });
-
-//onclick="play(this);"
-// function play(play) {
-//   let cancion = $(play).siblings('input:hidden');
-//   $(play).removeClass('fa-play-circle').addClass('fa-pause-circle');
-//   $(play).attr('onclick', 'pause(this)');
-//   if (audio_id == -1) {
-//     audio.src = cancion.val();
-//   }
-//   else {
-//     if (audio_id == cancion.attr('id')) {
-//       audio.currentTime = tiempo;
-//     }
-//     else {
-//       nueva_cancion = $("#" + cancion.attr('id')).siblings('input:hidden');
-//       console.log(cancion.attr('id'));
-//       audio.src = nueva_cancion.val();
-//     }
-//   }
-
-//   audio.play();
-// }
-
-// function pause(pause) {
-//   let cancion = $(pause).siblings('input:hidden');
-//   $(pause).removeClass('fa-pause-circle').addClass('fa-play-circle');
-//   $(pause).attr('onclick', 'play(this)');
-//   audio_id = cancion.attr('id');
-//   console.log(audio_id);
-//   tiempo = audio.currentTime;
-//   console.log("Tiempo: " + tiempo);
-//   audio.pause();
-// }
