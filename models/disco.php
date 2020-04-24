@@ -212,8 +212,7 @@ class Disco {
      * Devolver el total de discos que hay de la base de datos.
      */
     public function getDiscos(){
-        $result = false;
-        
+        $discos = $this->db->query("SELECT * FROM discos");
         return $discos;
     }
 
