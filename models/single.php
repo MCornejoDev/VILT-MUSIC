@@ -1,11 +1,15 @@
 <?php
 
+require_once "./config/parameters.php";
+
 class Single {
 
     #region Propiedades
-    public $id;
-    public $disco_id;
-    public $titulo;
+    private $id;
+    private $disco_id;
+    private $titulo;
+    private $duracion;
+    private $archivo_musical;
     private $db;
     #endregion
 
@@ -75,6 +79,46 @@ class Single {
         return $this;
     }
 
+    /**
+     * Get the value of duracion
+     */ 
+    public function getDuracion()
+    {
+        return $this->duracion;
+    }
+
+    /**
+     * Set the value of duracion
+     *
+     * @return  self
+     */ 
+    public function setDuracion($duracion)
+    {
+        $this->duracion = $duracion;
+
+        return $this;
+    }
+
+     /**
+     * Get the value of archivo_musical
+     */ 
+    public function getArchivo_musical()
+    {
+        return $this->archivo_musical;
+    }
+
+    /**
+     * Set the value of archivo_musical
+     *
+     * @return  self
+     */ 
+    public function setArchivo_musical($archivo_musical)
+    {
+        $this->archivo_musical = $archivo_musical;
+
+        return $this;
+    }
+
     #endregion
 
     #region Métodos
@@ -88,7 +132,53 @@ class Single {
         return $album;
 
     }
-    
+
+    public function save(){
+ 
+        $result = false;
+        $sql = "INSERT INTO singles VALUES(NULL,'{$this->getDisco_id()}','{$this->getTitulo()}','{$this->getDuracion()}','{$this->getArchivo_musical()}')";
+        $registro = $this->db->query($sql);
+
+        if($registro){
+            $result = true;
+        }
+
+        return $result;
+
+    }
+
+    /**
+     * Función que nos comprueba si el título del single existe en la base de datos.
+     */
+    public function comprobarTitulo($titulo,$disco_id){
+        $result = false;
+
+        $sql = $this->db->query("SELECT * FROM singles WHERE titulo = '$titulo' AND disco_id = '$disco_id'");
+
+        if($sql->num_rows == 0 && $sql){
+            $result = true;
+        }
+
+        return $result;
+    }
+
+    public function obtenerTituloCarpeta($disco_id){
+        $sql = $this->db->query("SELECT titulo FROM discos WHERE id = '$disco_id'");
+        $titulo = $sql->fetch_object();
+        return $titulo->titulo;
+    }
+
+    /**
+     * Función que nos devuelve el id del último registro creado.
+     */
+    public function obtenerUltimoId(){
+        $id = -1;
+        $sql = $this->db->query("SELECT MAX(id) as id FROM singles");
+        $id = $sql->fetch_object();
+        return $id->id;
+    }
+
+    public function subirArchivo(){}
 
     #endregion
    
