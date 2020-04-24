@@ -98,7 +98,7 @@ class UsuarioController{
         if(isset($_SESSION['admin'])){
             Utils::deleteSession('admin');
         }
-       
+      
         header('Location:'.base_url.'usuario/login');
     }
 }
