@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="<?=base_url?>/assets/css/registro.css">
     <link rel="stylesheet" href="<?=base_url?>/assets/css/destacados.css">
     <link rel="stylesheet" href="<?=base_url?>/assets/css/album.css">
+    <link rel="stylesheet" href="<?=base_url?>/assets/css/single.css">
 </head>
 
 <body>
@@ -45,14 +46,15 @@
                     </li>
                     <?php else: ?>
                     <?php if(isset($_SESSION['admin'])): ?>
-                    <li class="nav-item dropdown">
+                    <li class="nav-item dropdown multi-level-dropdown">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
                             aria-haspopup="true" aria-expanded="false">Administración</a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="<?=base_url?>disco/añadir">Añadir Disco</a>
-                            <a class="dropdown-item" href="<?=base_url?>">Añadir Single</a>
-                            <a class="dropdown-item" href="<?=base_url?>categoria/añadir">Añadir Categoría</a>
-                        </div>
+                        <ul class="dropdown-menu">
+                            <!--Añadir subMenu dentro de cada enlace para insercción,actualizar o eliminar-->
+                            <a class="dropdown-item" href="<?=base_url?>disco/añadir">Disco></a>
+                            <a class="dropdown-item" href="<?=base_url?>single/añadir">Single></a>
+                            <a class="dropdown-item" href="<?=base_url?>categoria/añadir">Categoría></a>
+                        </ul>
                     </li>
                     <?php else: ?>
                     <li class="nav-item">
@@ -64,7 +66,8 @@
                         <div class="dropdown-menu">
                             <?php $categorias = Utils::showCategories();
                                   while($categoria = $categorias->fetch_object()): ?>
-                                <a href="<?=base_url?>disco/categoria&nombre=<?php echo($categoria->nombre)?>" class="dropdown-item text-capitalize"><?php echo($categoria->nombre)?></a>
+                            <a href="<?=base_url?>disco/categoria&nombre=<?php echo($categoria->nombre)?>"
+                                class="dropdown-item text-capitalize"><?php echo($categoria->nombre)?></a>
                             <?php endwhile; ?>
                         </div>
                     </li>
