@@ -15,7 +15,7 @@ class SingleController{
         if(isset($_POST) && isset($_FILES)){
             $disco_id = isset($_POST['id_disco']) ? $_POST['id_disco'] : false;
             $archivos = isset($_FILES['audio']) ? $_FILES['audio'] : false;
-            $archivos_contabilizados = count($archivos);
+            $archivos_subidos = count($_FILES['audio']['name']);
 
             if($archivos && $disco_id){
 
@@ -25,7 +25,7 @@ class SingleController{
                         $nombre = current(explode('.',$_FILES["audio"]["name"][$clave]));
                         $single = new Single();
                         $comprobar_titulo = $single->comprobarTitulo($nombre,$disco_id);
-
+                        
                         if($comprobar_titulo){
                             $single->setDisco_id($disco_id);
                             $single->setTitulo($nombre);
@@ -42,18 +42,19 @@ class SingleController{
                                 $save = $single->save();
                                 if($save){
                                     $_SESSION['single'] = 'success';
+                                    $_SESSION['archivos_subidos'] = $archivos_subidos;
                                 }
                                 else{
-                                    $archivos_contabilizados--;
+                                    $archivos_subidos--;
                                 }
                             }
                             else{
-                                $archivos_contabilizados--;
+                                $archivos_subidos--;
                             }
                         }
                         else
                         {
-                            $archivos_contabilizados--;
+                            $archivos_subidos--;
                         }
                        
                     }
