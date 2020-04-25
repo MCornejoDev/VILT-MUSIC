@@ -5,7 +5,7 @@
             <div class="alert alert-success alert-dismissable" id="flash-msg">
                 <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
                 <h3 class="text-center h3-responsive"><i class="icon fa fa-check"></i>
-                    Nuevos singles añadidos.</h3>
+                    Nuevos singles añadidos : <?php echo($_SESSION['archivos_subidos']);?>.</h3>
             </div>
         </div>
         <?php elseif(isset($_SESSION['single']) && $_SESSION['single'] == 'error'): ?>
