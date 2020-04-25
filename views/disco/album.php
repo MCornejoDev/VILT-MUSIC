@@ -3,44 +3,53 @@
 <div class="container-fluid mb-5 pb-5">
     <div class="row mx-auto">
         <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 mb-4 text-center">
-            <img class="img-fluid img_album pb-3" src="<?=base_url?><?php echo($disco->imagen)?>" alt="<?php echo($disco->titulo)?>">
+            <img class="img-fluid img_album pb-3" src="<?=base_url?><?php echo($disco->imagen)?>"
+                alt="<?php echo($disco->titulo)?>">
             <div class="container-fluid mx-auto contenedor">
                 <div class="row">
                     <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12"><span class="float-left pl-2">Artista :
-                        </span><span class="float-right"> <?php echo($disco->artista)?></span><br></div>
+                        </span><span class="float-right font-weight-normal"> <?php echo($disco->artista)?></span><br></div>
                     <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12"><span class="float-left pl-2">Precio :
-                        </span><span class="float-right"> <?php echo($disco->precio)?> €</span><br></div>
+                        </span><span class="float-right font-weight-normal"> <?php echo($disco->precio)?> €</span><br></div>
                     <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12"><span class="float-left pl-2">Stock :
-                        </span><span class="float-right"> <?php echo($disco->stock)?> unidades</span><br></div>
+                        </span><span class="float-right font-weight-normal"> <?php echo($disco->stock)?> unidades</span><br></div>
                     <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12"><span class="float-left pl-2">Fecha de
-                            salida: </span><span class="float-right"> <?php echo($disco->fecha)?></span><br></div>
+                            salida: </span><span class="float-right font-weight-normal"> <?php echo($disco->fecha)?></span><br></div>
                     <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12"><span
-                            class="float-left pl-2"><?php echo($disco->descripcion)?></span></div>
+                            class="float-left pl-2 font-weight-normal text-break"><?php echo($disco->descripcion)?></span></div>
                 </div>
             </div>
         </div>
         <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
             <div class="container">
                 <div class="row">
-                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                        <button type="button" class="btn btn-rounded indigo text-white"><i class="far fa-play-circle" ></i></button>
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 text-right">
+                        <div class="text-center">
+                            <span class="reproducir" id="album_completo">ALL.</span>
+                            <span><i class="fas fa-random"></i></span>
+                            <span><i class="fas fa-redo-alt"></i></span>
+                            <span class="normal">Normal</span>
+                        </div>
+                        <div class="text-center">
+                            <i class="fas fa-step-backward hide"></i>
+                            <span id="cancion_actual">Ninguna canción</span>
+                            <i class="fas fa-step-forward hide"></i>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="container-fluid">
                 <div class="row mx-auto" id="playlist">
                     <?php while($single = $singles->fetch_object()): ?>
-                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 border-top destacados text-center pt-2 pb-3">
-                        <span class="float-left"><?php echo($single->titulo);?></span>
-
-                        <a href="<?=base_url?><?php echo($single->archivo_musical)?>"></a>
+                    <div
+                        class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 border-top destacados text-center pt-2 pb-3">
+                        <span class="float-left font-weight-light"><?php echo($single->titulo);?></span>
                         <span class="float-right">
-                            <i class="far fa-play-circle" ></i>
+                            <i class="far fa-play-circle"></i>
                             <i class="hide far fa-pause-circle"></i>
                             <!-- <i class="far fa-stop-circle"></i> -->
-                            <input type="hidden" name="audio" id="<?php echo("audio_".$single->id)?>" value="<?=base_url?><?php echo($single->archivo_musical)?>">
-                            
-                            <!--<i class="far fa-pause-circle"></i>-->
+                            <input type="hidden" class="audio" name="audio" id="<?php echo("audio_".$single->id)?>"
+                                value="<?=base_url?><?php echo($single->archivo_musical)?>">
                         </span>
                     </div>
                     <?php endwhile; ?>
@@ -49,8 +58,3 @@
         </div>
     </div>
 </div>
-<audio controls>
-  <source src="horse.ogg" type="audio/ogg">
-  <source src="horse.mp3" type="audio/mpeg">
-Your browser does not support the audio element.
-</audio>

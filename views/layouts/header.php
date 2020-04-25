@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="<?=base_url?>/assets/css/single.css">
 </head>
 
-<body>
+<body class="font-weight-bold">
     <header class="mb-5">
         <div class="container-fluid">
             <div class="row">
