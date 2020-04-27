@@ -25,6 +25,8 @@
 </script>
 <!-- MDB core JavaScript -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.14.1/js/mdb.min.js"></script>
+<!--SweetAlert-->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 <!---Custom JS-->
 <script type="text/javascript" src="<?=base_url?>assets/js/registro.js"></script>
 <script type="text/javascript" src="<?=base_url?>assets/js/album.js"></script>
