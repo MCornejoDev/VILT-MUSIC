@@ -104,4 +104,8 @@ class DiscoController{
 
         header('Location:'.base_url.'disco/añadir');
     }
+
+    public function update(){
+        
+    }
 }
