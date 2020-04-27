@@ -7,16 +7,50 @@
                 alt="<?php echo($disco->titulo)?>">
             <div class="container-fluid mx-auto contenedor">
                 <div class="row">
-                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12"><span class="float-left pl-2">Artista :
-                        </span><span class="float-right font-weight-normal"> <?php echo($disco->artista)?></span><br></div>
-                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12"><span class="float-left pl-2">Precio :
-                        </span><span class="float-right font-weight-normal"> <?php echo($disco->precio)?> €</span><br></div>
-                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12"><span class="float-left pl-2">Stock :
-                        </span><span class="float-right font-weight-normal"> <?php echo($disco->stock)?> unidades</span><br></div>
-                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12"><span class="float-left pl-2">Fecha de
-                            salida: </span><span class="float-right font-weight-normal"> <?php echo($disco->fecha)?></span><br></div>
-                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12"><span
-                            class="float-left pl-2 font-weight-normal text-break"><?php echo($disco->descripcion)?></span></div>
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 detalles">
+                        <span class="float-left pl-2">Artista :</span>
+                        <span class="float-right font-weight-normal"> 
+                            <?php echo($disco->artista)?>
+                            <?php if(isset($_SESSION['admin'])): ?>
+                                <i class="fas fa-edit hide" id="artista" data-type="text" data-placeholder=""></i>
+                            <?php endif;?>
+                        </span>
+                    </div>
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 detalles">
+                        <span class="float-left pl-2">Precio :</span>
+                        <span class="float-right font-weight-normal"> 
+                            <?php echo($disco->precio)?> €
+                            <?php if(isset($_SESSION['admin'])): ?>
+                                <i class="fas fa-edit hide" id="precio" data-type="number" data-placeholder="Formato: 0,00"></i>
+                            <?php endif;?>
+                        </span>
+                    </div>
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 detalles">
+                        <span class="float-left pl-2">Stock :</span>
+                        <span class="float-right font-weight-normal"> 
+                            <?php echo($disco->stock)?> unidades
+                            <?php if(isset($_SESSION['admin'])): ?>
+                                <i class="fas fa-edit hide" id="stock" data-type="number" data-placeholder=""></i>
+                            <?php endif;?>
+                        </span>
+                    </div>
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 detalles">
+                        <span class="float-left pl-2">Fecha de salida: </span>
+                        <span class="float-right font-weight-normal">
+                            <?php echo($disco->fecha)?>
+                            <?php if(isset($_SESSION['admin'])): ?>
+                                <i class="fas fa-edit hide" id="fecha" data-type="text" data-placeholder="Formato: YYYY/MM/DD"></i>
+                            <?php endif;?>
+                        </span>
+                    </div>
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 detalles">
+                        <span class="float-left pl-2 font-weight-normal text-break">
+                            <?php echo($disco->descripcion)?>
+                            <?php if(isset($_SESSION['admin'])): ?>
+                                <i class="fas fa-edit hide" id="descripcion" data-type="textarea" data-placeholder=""></i>
+                            <?php endif;?>
+                        </span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -24,16 +58,17 @@
             <div class="container">
                 <div class="row">
                     <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 text-right">
-                        <div class="text-center">
-                            <span class="reproducir" id="album_completo">ALL.</span>
+                        <div class="text-center border">
+                            <i class="fas fa-step-backward hide"></i>
+                            <span class="reproducir" id="album_completo">Reproducir</span>
+                            <span class="normal">Normal</span>
                             <span><i class="fas fa-random"></i></span>
                             <span><i class="fas fa-redo-alt"></i></span>
-                            <span class="normal">Normal</span>
+                            <i class="fas fa-step-forward hide"></i>
                         </div>
                         <div class="text-center">
-                            <i class="fas fa-step-backward hide"></i>
                             <span id="cancion_actual">Ninguna canción</span>
-                            <i class="fas fa-step-forward hide"></i>
+                            <span id="cambiaTiempo"></span><span id="tiempo"></span>
                         </div>
                     </div>
                 </div>
