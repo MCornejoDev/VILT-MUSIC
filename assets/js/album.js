@@ -14,6 +14,10 @@ let modo = "";
 let pos = -1;
 //Posición aleatoria de la canción en el array.
 let pos_aleatoria = -1;
+//Variables para la duración de la canción
+let hours = -1;
+let minutes = -1;
+let seconds = -1;
 $(document).ready(function () {
 
   //Iniciar la reproducción de una canción.
@@ -75,31 +79,38 @@ $(document).ready(function () {
   $(audio).on('ended', function () {
     $('.fa-pause-circle').addClass('hide');
     $('.fa-play-circle').removeClass('hide');
-    mode_play();
+    next();
+  });
 
-    if (trackList.length > 0) {
-      contador++;
-      console.log(contador);
-      play($(trackList[contador]), $(trackList[contador]).siblings('.fa-play-circle'));
-    }
-    else {
-      audio_id = -1;
-      audio.currentTime = 0.0;
-      tiempo = 0;
+  $(".detalles").on('mouseover', function () {
+    $(this).find('.fa-edit').removeClass('hide');
+  });
 
-    }
+  $(".detalles").on('mouseout', function () {
+    $(this).find('.fa-edit').addClass('hide');
+  });
 
+  $(".fa-edit").on('click', function () {
+    let id = $(this).attr('id');
+    let date_type = $(this).attr('data-type');
+    let date_placeholder = $(this).attr('data-placeholder');
+    console.log(date_type);
+    let id_text = id.charAt(0).toUpperCase() + id.slice(1).toLowerCase();
+    swalFire(id,date_type,date_placeholder,id_text);
   });
 
 });
+
 
 function play(cancion, elemento) {
   $('#cancion_actual').text($(cancion).parent().siblings().text());
   $('.fa-step-backward').removeClass('hide');
   $('.fa-step-forward').removeClass('hide');
+
   if (audio_id == -1) {
     audio.src = cancion.val();
     audio_id = cancion.attr('id');
+    songDur();
     audio.play();
     $(elemento).addClass('hide');
     $(elemento).siblings('.fa-pause-circle').removeClass('hide')
@@ -124,6 +135,7 @@ function play(cancion, elemento) {
       $(elemento).siblings('.fa-pause-circle').removeClass('hide')
     }
   }
+
 }
 
 function pause(cancion, elemento) {
@@ -138,8 +150,9 @@ function stop() {
 
 }
 
+//Reproducirá la siguiente canción de la manera del modo usado.
 function next() {
-  playMode();
+
   if (modo === "aleatoria") {
     //Se reproducirá la siguiente canción de forma aleatoria.
     pos = encontrarPos();
@@ -161,13 +174,13 @@ function next() {
       else {
         play($(trackList[pos + 1]), $(trackList[pos + 1]).siblings('.fa-play-circle'));
       }
-
     }
   }
 }
 
+
 function prev() {
-  playMode();
+
   if (modo === "aleatoria") {
     //Se reproducirá la anterior canción de forma aleatoria.
     pos = encontrarPos();
@@ -194,10 +207,6 @@ function prev() {
   }
 }
 
-function playMode(){
-  
-}
-
 function encontrarPos() {
   for (let i = 0; i < trackList.length; i++) {
     if (trackList[i].id == audio_id) {
@@ -212,4 +221,52 @@ function posAleatoria() {
     pos_aleatoria = Math.floor(Math.random() * trackList.length);
   }
   return pos_aleatoria;
+}
+
+function songDur() {
+
+  setInterval(function () {
+    // let durationTotal = audio.duration;
+    // let minutesT = Math.floor(durationTotal / 60);
+    // let secondsT = Math.floor(durationTotal % 60);
+    // let secondsWithLeadingZeroT = secondsT < 10 ? '0' + secondsT : secondsT;
+    // $('#tiempo').text(" / " + minutesT + ':' + secondsWithLeadingZeroT);
+
+    let timeRemaining = audio.duration - audio.currentTime;
+    let minutes = Math.floor(timeRemaining / 60);
+    let seconds = Math.floor(timeRemaining % 60);
+    let secondsWithLeadingZero = seconds < 10 ? '0' + seconds : seconds;
+    $('#cambiaTiempo').text(minutes + ':' + secondsWithLeadingZero);
+
+  }, 500);
+}
+
+function swalFire(columna,date_type,date_placeholder,texto)
+{
+  Swal.fire({
+    title:  `<h5 class='h5'>Va a actualizar el campo ${texto}</h5>`,
+    input: date_type,
+    inputAttributes: {
+      autocapitalize: 'off',
+      required : true,
+      step:0.1,
+      class:'form-control'
+    },
+    inputPlaceholder:date_placeholder,
+    showCancelButton: true,
+    cancelButtonText: 'Cancelar',
+    confirmButtonText: 'Confirmar',
+    showLoaderOnConfirm: true,
+    preConfirm: () => {
+      console.log("heasas");
+    },
+    allowOutsideClick: () => !Swal.isLoading()
+  }).then((result) => {
+    if (result.value) {
+      Swal.fire({
+        title: `${result.value.login}'s avatar`,
+        imageUrl: result.value.avatar_url
+      })
+    }
+  })
 }
