@@ -111,7 +111,7 @@ $(document).ready(function () {
     swalFire(id, columna, date_type, date_placeholder, date_tama, id_text);
   });
 
-  $("#progress_audio").on("click", function(e) {
+  $("#progress_audio").on("click", function (e) {
     var percent = e.offsetX / this.offsetWidth;
     audio.currentTime = percent * audio.duration;
   });
@@ -245,7 +245,7 @@ function posAleatoria() {
 
 //Muestra el tiempo que le queda a la canción y modifica la barra de progreso según el tiempo.
 function songDur() {
-  
+
   setInterval(function () {
     // let durationTotal = audio.duration;
     // let minutesT = Math.floor(durationTotal / 60);
@@ -258,14 +258,15 @@ function songDur() {
     let seconds = Math.floor(timeRemaining % 60);
     let secondsWithLeadingZero = seconds < 10 ? '0' + seconds : seconds;
     $('#cambiaTiempo').text(minutes + ':' + secondsWithLeadingZero);
-    $('#progress_audio').attr('max',audio.duration);
-    $('#progress_audio').attr('value',audio.currentTime);
+    $('#progress_audio').attr('max', audio.duration);
+    $('#progress_audio').attr('value', audio.currentTime);
   }, 500);
 }
 
 //Alert para modificación de campos.
 function swalFire(id, columna, date_type, date_placeholder, date_tama, texto) {
-
+  let pattern = new RegExp('[0-9]{4}/(0[1-9]|1[012])/(0[1-9]|1[0-9]|2[0-9]|3[01])');
+  
   Swal.fire({
     title: `<h5 class='h5'>Va a actualizar el campo ${texto}</h5>`,
     input: date_type,
@@ -284,6 +285,11 @@ function swalFire(id, columna, date_type, date_placeholder, date_tama, texto) {
     inputValidator: (value) => {
       if (!value) {
         return "Rellene el campo";
+      }
+      if (columna == 'fecha' ) {
+        if(pattern.test(value) == false){
+          return "Rellene el campo correctamente YYYY/MM/DD";
+        }
       }
     },
     preConfirm: function (value) {
@@ -307,9 +313,9 @@ function swalFire(id, columna, date_type, date_placeholder, date_tama, texto) {
             title: 'La página se recargará en breve',
             showConfirmButton: false,
             timer: 1500
-          }).then((result)=>{
-            if(result){
-              window.setTimeout(function() {
+          }).then((result) => {
+            if (result) {
+              window.setTimeout(function () {
                 location.reload();
               }, 2500)
             }

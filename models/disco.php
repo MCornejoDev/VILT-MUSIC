@@ -281,7 +281,8 @@ class Disco {
         if($sql){
            $result = true;
         }
-
+        echo $result;
+        die();
         return $result;
     }
 
