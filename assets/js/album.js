@@ -85,22 +85,35 @@ $(document).ready(function () {
     next();
   });
 
+  //Muestra un icono para editar el campo.
   $(".detalles").on('mouseover', function () {
     $(this).find('.fa-edit').removeClass('hide');
   });
 
+  //Esconde el icono del edición del campo.
   $(".detalles").on('mouseout', function () {
     $(this).find('.fa-edit').addClass('hide');
   });
 
+  //Obtendrá los datos para actualizar el valor de la columna seleccionada.
   $(".fa-edit").on('click', function () {
+    //Id de la fila de la base de datos.
     let id = window.location.pathname.substring(window.location.pathname.lastIndexOf('=') + 1);
+    //Columna de la base de datos.
     let columna = $(this).attr('id');
+    // Columna de la base de datos en formato bonito.
     let id_text = columna.charAt(0).toUpperCase() + columna.slice(1).toLowerCase();
+    //Datas de cada elemento del edit seleccionado.
     let date_type = $(this).attr('data-type');
     let date_placeholder = $(this).attr('data-placeholder');
     let date_tama = $(this).attr('data-tama');
+    //Muestra un alert en formato bonito para hacer el cambio.
     swalFire(id, columna, date_type, date_placeholder, date_tama, id_text);
+  });
+
+  $("#progress_audio").on("click", function(e) {
+    var percent = e.offsetX / this.offsetWidth;
+    audio.currentTime = percent * audio.duration;
   });
 
 });
@@ -142,6 +155,7 @@ function play(cancion, elemento) {
 
 }
 
+//Pausa la canción del elemento seleccionado.
 function pause(cancion, elemento) {
   audio_id = cancion.attr('id');
   tiempo = audio.currentTime;
@@ -211,6 +225,7 @@ function prev() {
   }
 }
 
+//Encuentra y devulve la posición del elemento audio_id en la lista 
 function encontrarPos() {
   for (let i = 0; i < trackList.length; i++) {
     if (trackList[i].id == audio_id) {
@@ -219,6 +234,7 @@ function encontrarPos() {
   }
 }
 
+//Devuelve una posición aleatoria de la lista.
 function posAleatoria() {
   let pos_aleatoria = pos;
   while (pos_aleatoria == pos) {
@@ -227,8 +243,9 @@ function posAleatoria() {
   return pos_aleatoria;
 }
 
+//Muestra el tiempo que le queda a la canción y modifica la barra de progreso según el tiempo.
 function songDur() {
-
+  
   setInterval(function () {
     // let durationTotal = audio.duration;
     // let minutesT = Math.floor(durationTotal / 60);
@@ -241,12 +258,14 @@ function songDur() {
     let seconds = Math.floor(timeRemaining % 60);
     let secondsWithLeadingZero = seconds < 10 ? '0' + seconds : seconds;
     $('#cambiaTiempo').text(minutes + ':' + secondsWithLeadingZero);
-
+    $('#progress_audio').attr('max',audio.duration);
+    $('#progress_audio').attr('value',audio.currentTime);
   }, 500);
 }
 
+//Alert para modificación de campos.
 function swalFire(id, columna, date_type, date_placeholder, date_tama, texto) {
-  console.log("El id es : " + id + " la columna es : " + columna);
+
   Swal.fire({
     title: `<h5 class='h5'>Va a actualizar el campo ${texto}</h5>`,
     input: date_type,
