@@ -42,7 +42,7 @@
                 </div>
 
                 <div class="md-form">
-                    <textarea id="descripcion" name="descripcion" class="md-textarea form-control" rows="3" required></textarea>
+                    <textarea id="descripcion" name="descripcion" class="md-textarea form-control" rows="3" maxlength="255" required></textarea>
                     <label for="descripcion">Descripción del disco</label>
                 </div>
 
