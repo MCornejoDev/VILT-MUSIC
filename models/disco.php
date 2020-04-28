@@ -273,6 +273,18 @@ class Disco {
         return $result;
     }
 
+    public function update($id,$columna,$valor){
+
+        $result = false;
+        $sql = $this->db->query("UPDATE discos SET `$columna` = '$valor' WHERE id = '$id'");
+
+        if($sql){
+           $result = true;
+        }
+
+        return $result;
+    }
+
     /**
      * Función que nos comprueba si el título del disco existe en la base de datos.
      */

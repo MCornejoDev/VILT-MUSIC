@@ -106,6 +106,24 @@ class DiscoController{
     }
 
     public function update(){
-        
+       if(isset($_POST)){
+           $id = $_POST['id'];
+           $columna = $_POST['columna'];
+           $valor = $_POST['value'];
+
+           $disco = new Disco();
+           $actualizado = $disco->update($id,$columna,$valor);
+
+           if($actualizado){
+            $response['status']  = 'success';
+            $response['message'] = 'Se ha actualizado correctamente';
+           }
+           else{
+            $response['status']  = 'error';
+            $response['message'] = 'No se ha actualizado correctamente';
+           }
+
+           echo json_encode($response);
+       }
     }
 }
