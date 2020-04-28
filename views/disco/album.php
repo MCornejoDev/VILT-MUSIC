@@ -12,7 +12,7 @@
                         <span class="float-right font-weight-normal"> 
                             <?php echo($disco->artista)?>
                             <?php if(isset($_SESSION['admin'])): ?>
-                                <i class="fas fa-edit hide" id="artista" data-type="text" data-placeholder=""></i>
+                                <i class="fas fa-edit hide" id="artista" data-type="text" data-placeholder="" data-tama=""></i>
                             <?php endif;?>
                         </span>
                     </div>
@@ -21,7 +21,7 @@
                         <span class="float-right font-weight-normal"> 
                             <?php echo($disco->precio)?> €
                             <?php if(isset($_SESSION['admin'])): ?>
-                                <i class="fas fa-edit hide" id="precio" data-type="number" data-placeholder="Formato: 0,00"></i>
+                                <i class="fas fa-edit hide" id="precio" data-type="number" data-placeholder="Formato: 0,00" data-tama=""></i>
                             <?php endif;?>
                         </span>
                     </div>
@@ -30,7 +30,7 @@
                         <span class="float-right font-weight-normal"> 
                             <?php echo($disco->stock)?> unidades
                             <?php if(isset($_SESSION['admin'])): ?>
-                                <i class="fas fa-edit hide" id="stock" data-type="number" data-placeholder=""></i>
+                                <i class="fas fa-edit hide" id="stock" data-type="number" data-placeholder="" data-tama=""></i>
                             <?php endif;?>
                         </span>
                     </div>
@@ -39,21 +39,22 @@
                         <span class="float-right font-weight-normal">
                             <?php echo($disco->fecha)?>
                             <?php if(isset($_SESSION['admin'])): ?>
-                                <i class="fas fa-edit hide" id="fecha" data-type="text" data-placeholder="Formato: YYYY/MM/DD"></i>
+                                <i class="fas fa-edit hide" id="fecha" data-type="text" data-placeholder="Formato: YYYY/MM/DD" data-tama=""></i>
                             <?php endif;?>
                         </span>
                     </div>
                     <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 detalles">
-                        <span class="float-left pl-2 font-weight-normal text-break">
+                        <span class="float-left pl-2 font-weight-normal text-break text-left">
                             <?php echo($disco->descripcion)?>
                             <?php if(isset($_SESSION['admin'])): ?>
-                                <i class="fas fa-edit hide" id="descripcion" data-type="textarea" data-placeholder=""></i>
+                                <i class="fas fa-edit hide" id="descripcion" data-type="textarea" data-placeholder="Tamaño max: 255 carácteres" data-tama="255"></i>
                             <?php endif;?>
                         </span>
                     </div>
                 </div>
             </div>
         </div>
+        <?php if(isset($singles) && $singles->num_rows > 0):?>
         <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
             <div class="container">
                 <div class="row">
@@ -91,5 +92,10 @@
                 </div>
             </div>
         </div>
+        <?php else: ?>
+            <div>
+                No hay singles por el momento, disculpe las molestias.
+            </div>
+        <?php endif; ?>
     </div>
 </div>
