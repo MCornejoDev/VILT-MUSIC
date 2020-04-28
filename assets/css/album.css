@@ -30,3 +30,7 @@ i.fas,
 .normal {
     cursor: pointer;
 }
+
+/* div#swal2-validation-message::after {
+    content: "Rellene el campo";
+} */

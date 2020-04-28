@@ -18,6 +18,9 @@ let pos_aleatoria = -1;
 let hours = -1;
 let minutes = -1;
 let seconds = -1;
+//Constantes
+const rutabase = "http://localhost/PHP/PROYECTO_PHP_SPOTIFY/disco/";
+
 $(document).ready(function () {
 
   //Iniciar la reproducción de una canción.
@@ -91,12 +94,13 @@ $(document).ready(function () {
   });
 
   $(".fa-edit").on('click', function () {
-    let id = $(this).attr('id');
+    let id = window.location.pathname.substring(window.location.pathname.lastIndexOf('=') + 1);
+    let columna = $(this).attr('id');
+    let id_text = columna.charAt(0).toUpperCase() + columna.slice(1).toLowerCase();
     let date_type = $(this).attr('data-type');
     let date_placeholder = $(this).attr('data-placeholder');
-    console.log(date_type);
-    let id_text = id.charAt(0).toUpperCase() + id.slice(1).toLowerCase();
-    swalFire(id,date_type,date_placeholder,id_text);
+    let date_tama = $(this).attr('data-tama');
+    swalFire(id, columna, date_type, date_placeholder, date_tama, id_text);
   });
 
 });
@@ -241,32 +245,66 @@ function songDur() {
   }, 500);
 }
 
-function swalFire(columna,date_type,date_placeholder,texto)
-{
+function swalFire(id, columna, date_type, date_placeholder, date_tama, texto) {
+  console.log("El id es : " + id + " la columna es : " + columna);
   Swal.fire({
-    title:  `<h5 class='h5'>Va a actualizar el campo ${texto}</h5>`,
+    title: `<h5 class='h5'>Va a actualizar el campo ${texto}</h5>`,
     input: date_type,
     inputAttributes: {
       autocapitalize: 'off',
-      required : true,
-      step:0.1,
-      class:'form-control'
+      required: true,
+      step: 0.1,
+      class: 'form-control',
+      maxlength: date_tama
     },
-    inputPlaceholder:date_placeholder,
+    inputPlaceholder: date_placeholder,
     showCancelButton: true,
     cancelButtonText: 'Cancelar',
     confirmButtonText: 'Confirmar',
     showLoaderOnConfirm: true,
-    preConfirm: () => {
-      console.log("heasas");
+    inputValidator: (value) => {
+      if (!value) {
+        return "Rellene el campo";
+      }
     },
-    allowOutsideClick: () => !Swal.isLoading()
-  }).then((result) => {
-    if (result.value) {
-      Swal.fire({
-        title: `${result.value.login}'s avatar`,
-        imageUrl: result.value.avatar_url
-      })
+    preConfirm: function (value) {
+      return new Promise(function (resolve) {
+        /*
+        Ajax code will be here
+        */
+        $.ajax({
+          url: rutabase + "/update",
+          type: 'POST',
+          cache: false,
+          data: {
+            id: id,
+            columna: columna,
+            value: value
+          }
+        }).done(function (response) {
+          Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: 'La página se recargará en breve',
+            showConfirmButton: false,
+            timer: 1500
+          }).then((result)=>{
+            if(result){
+              window.setTimeout(function() {
+                location.reload();
+              }, 2500)
+            }
+          })
+        })
+          .fail(function () {
+            Swal.fire({
+              title: 'Oops',
+              text: 'Something went wrong with ajax !',
+              icon: 'Error',
+              confirmButtonText: 'Vale'
+            })
+          });
+      });
     }
   })
 }
