@@ -1,4 +1,4 @@
-CREATE DATABASE cornejo_music;
+CREATE DATABASE cornejo_music CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE cornejo_music;
 
 CREATE TABLE usuarios(
@@ -26,7 +26,7 @@ id INT(255) NOT NULL AUTO_INCREMENT,
 categoria_id INT(255) NOT NULL,
 titulo VARCHAR(50) NOT NULL,
 artista VARCHAR(100) NOT NULL,
-descripcion VARCHAR(255) NOT NULL,
+descripcion TEXT NOT NULL,
 stock INT(255) NOT NULL,
 precio DECIMAL(10,2) NOT NULL,
 fecha DATE NOT NULL,
