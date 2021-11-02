@@ -61,19 +61,19 @@
         </div>
         <?php if(isset($singles) && $singles->num_rows > 0):?>
         <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
-            <div class="container">
+            <div class="container-fluid mb-3">
                 <div class="row">
                     <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 text-right border">
                         <div class="text-center">
-                            <span class="reproducir" id="album_completo">Reproducir</span>
-                            <span class="normal">Normal</span>
-                            <span><i class="fas fa-random"></i></span>
-                            <span><i class="fas fa-redo-alt"></i></span>
+                            <span class="reproducir" id="album_completo" data-toggle="tooltip" data-placement="right" title="Reproducir albúm completo">Reproducir</span>
+                            <span class="normal data-activado" data-toggle="tooltip" data-placement="right" title="Desactivado">Normal</span>
+                            <span><i class="fas fa-random data-activado" data-toggle="tooltip" data-placement="right" title="Desactivado"></i></span>
+                            <span><i class="fas fa-redo-alt data-activado" data-toggle="tooltip" data-placement="right" title="Desactivado"></i></span>
                         </div>
                         <div class="text-center">
-                            <i class="fas fa-step-backward hide"></i>
+                            <i class="fas fa-step-backward hide arrow"></i>
                             <progress id="progress_audio" class="progress_bar" value="" max=""></progress>
-                            <i class="fas fa-step-forward hide"></i>
+                            <i class="fas fa-step-forward hide arrow"></i>
                         </div>
                         <div class="text-center">
                             <span id="cancion_actual">Ninguna canción</span>

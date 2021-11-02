@@ -49,23 +49,20 @@ $(document).ready(function () {
 
   //Reproducirá las canciones de forma aleatoría.
   $('.fa-random').on('click', function () {
-    $('.indigo-text').removeClass('indigo-text');
-    $(this).addClass('indigo-text');
     modo = "aleatoria";
+    cambiarTitle(modo,$(this));
   });
 
   //Reproducirá las canciones de forma repetitiva.
   $('.fa-redo-alt').on('click', function () {
-    $('.indigo-text').removeClass('indigo-text');
-    $(this).addClass('indigo-text');
     modo = "repetitiva";
+    cambiarTitle(modo, $(this));
   });
 
   //Reproducirá las canciones de forma normal.
   $('.normal').on('click', function () {
-    $('.indigo-text').removeClass('indigo-text');
-    $(this).addClass('indigo-text');
     modo = "";
+    cambiarTitle(modo, $(this));
   });
 
   //Reproducirá la anterior canción.
@@ -263,10 +260,29 @@ function songDur() {
   }, 500);
 }
 
+
+function cambiarTitle(modo,elemento) {
+  $('.data-activado').attr('title','Desactivado');
+  $('.indigo-text').removeClass('indigo-text');
+  $(elemento).addClass('indigo-text');
+  switch (modo) {
+    case "aleatoria":
+        $('.fa-random').attr('title','Activado');
+      break;
+    case "repetitiva":
+        $('.fa-redo-alt').attr('title','Activado');
+      break;
+    case "":
+        $('.normal').attr('title','Activado');
+      break;
+  }
+
+}
+
 //Alert para modificación de campos.
 function swalFire(id, columna, date_type, date_placeholder, date_tama, texto) {
   let pattern = new RegExp('[0-9]{4}/(0[1-9]|1[012])/(0[1-9]|1[0-9]|2[0-9]|3[01])');
-  
+
   Swal.fire({
     title: `<h5 class='h5'>Va a actualizar el campo ${texto}</h5>`,
     input: date_type,
@@ -286,8 +302,8 @@ function swalFire(id, columna, date_type, date_placeholder, date_tama, texto) {
       if (!value) {
         return "Rellene el campo";
       }
-      if (columna == 'fecha' ) {
-        if(pattern.test(value) == false){
+      if (columna == 'fecha') {
+        if (pattern.test(value) == false) {
           return "Rellene el campo correctamente YYYY/MM/DD";
         }
       }

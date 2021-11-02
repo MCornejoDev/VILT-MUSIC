@@ -180,7 +180,7 @@ class Usuario {
      */ 
     public function setImagen($imagen)
     {
-        $this->imagen = $this->db->real_escape_string($imagen);
+        $this->imagen = $imagen;
 
         return $this;
     }
@@ -210,11 +210,28 @@ class Usuario {
     #region Métodos
 
     public function save(){
-        $sql = "INSERT INTO usuarios VALUES(NULL,'{$this->getNombre_usuario()}','{$this->getEmail()}','{$this->getPassword()}','{$this->getNombre()}','{$this->getApellidos()}','user','{$this->getImagen()}','{$this->getDireccion()}')";
+        $sql = "INSERT INTO usuarios VALUES(NULL,'{$this->getNombre_usuario()}','{$this->getEmail()}','{$this->getPassword()}','{$this->getNombre()}','{$this->getApellidos()}','{$this->getRol()}','NULL','{$this->getDireccion()}')";
         $registro = $this->db->query($sql);
         $result = false;
 
         if($registro){
+            $nombre_carpeta_user = $this->getNombre_usuario();
+            $imagen = $this->getImagen();
+            $url_carpeta = public_url . "usuarios/" . $nombre_carpeta_user;
+
+            if(!is_dir($url_carpeta)){
+                $carpeta_creada = mkdir($url_carpeta,0777,true);
+
+                if($carpeta_creada){
+                    $id_imagen = $this->obtenerUltimoId();
+                    $imagen_subida = $this->subirImagen($imagen,$url_carpeta,$nombre_carpeta_user,$id_imagen);
+                    
+                    if($imagen_subida){
+                        $result = true;
+                    }
+                }
+            }
+
             $result = true;
         }
 
@@ -242,6 +259,48 @@ class Usuario {
         }
 
         return $result;
+    }
+
+    /**
+     * Función que nos comprueba que no exista el usuario en la base de datos.
+     */
+    public function compruebaUsuario($nombre_usuario){
+        $sql = $this->db->query("SELECT nombre_usuario FROM usuarios WHERE nombre_usuario = '$nombre_usuario'");
+        $result = false;
+        
+        if($sql && $sql->num_rows > 0){
+            $result = true;
+        }
+
+        return $result;
+    }
+
+    /**
+     * Función que nos sube la imagén en la carpeta correspondiente y nos actualiza la columna imagen
+     * de la tabla discos
+     */
+    public function subirImagen($imagen,$url_carpeta,$nombre_carpeta,$id_imagen)
+    {   
+        $result = false;
+        $url = $url_carpeta . "/" . basename($imagen['name']);
+        $url_public = "public/usuarios/" . $nombre_carpeta . "/" . $imagen['name'];
+      
+        if(move_uploaded_file($imagen['tmp_name'],$url)){
+            $sql = $this->db->query("UPDATE usuarios SET imagen = '$url_public' WHERE id = '$id_imagen'");
+            $result = true;
+        }
+
+        return $result;
+    }
+
+      /**
+     * Función que nos devuelve el id del último registro creado.
+     */
+    public function obtenerUltimoId(){
+        $id = -1;
+        $sql = $this->db->query("SELECT MAX(id) as id FROM usuarios");
+        $id = $sql->fetch_object();
+        return $id->id;
     }
 
     #endregion

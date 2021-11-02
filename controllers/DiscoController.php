@@ -105,6 +105,7 @@ class DiscoController{
         header('Location:'.base_url.'disco/añadir');
     }
 
+    //Actualiza el valor en la columna cuyo id sea los recogidos por parámetro.
     public function update(){
        if(isset($_POST)){
            $id = $_POST['id'];
