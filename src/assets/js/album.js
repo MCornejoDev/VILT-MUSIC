@@ -50,7 +50,7 @@ $(document).ready(function () {
   //Reproducirá las canciones de forma aleatoría.
   $('.fa-random').on('click', function () {
     modo = "aleatoria";
-    cambiarTitle(modo,$(this));
+    cambiarTitle(modo, $(this));
   });
 
   //Reproducirá las canciones de forma repetitiva.
@@ -165,62 +165,53 @@ function stop() {
 
 }
 
-//Reproducirá la siguiente canción de la manera del modo usado.
 function next() {
+  const pos = encontrarPos();
+  const pos_aleatoria = posAleatoria();
 
-  if (modo === "aleatoria") {
-    //Se reproducirá la siguiente canción de forma aleatoria.
-    pos = encontrarPos();
-    pos_aleatoria = posAleatoria();
-    play($(trackList[pos_aleatoria]), $(trackList[pos_aleatoria]).siblings('.fa-play-circle'));
-  }
-  else {
-    if (modo === "repetitiva") {
-      //Se reproducirá la misma canción.
-      pos = encontrarPos();
+  switch (modo) {
+    case "aleatoria":
+      // Se reproducirá la siguiente canción de forma aleatoria.
+      play($(trackList[pos_aleatoria]), $(trackList[pos_aleatoria]).siblings('.fa-play-circle'));
+      break;
+
+    case "repetitiva":
+      // Se reproducirá la misma canción.
       play($(trackList[pos]), $(trackList[pos]).siblings('.fa-play-circle'));
-    }
-    else {
-      //Ningún modo activado, reproducción normal.
-      pos = encontrarPos();
-      if (pos == trackList.length - 1) {
-        play($(trackList[0]), $(trackList[0]).siblings('.fa-play-circle'));
-      }
-      else {
-        play($(trackList[pos + 1]), $(trackList[pos + 1]).siblings('.fa-play-circle'));
-      }
-    }
+      break;
+
+    default:
+      // Reproducción normal.
+      const nextPos = (pos === trackList.length - 1) ? 0 : pos + 1;
+      play($(trackList[nextPos]), $(trackList[nextPos]).siblings('.fa-play-circle'));
+      break;
   }
 }
 
 
 function prev() {
+  const pos = encontrarPos();
+  const pos_aleatoria = posAleatoria();
 
-  if (modo === "aleatoria") {
-    //Se reproducirá la anterior canción de forma aleatoria.
-    pos = encontrarPos();
-    pos_aleatoria = posAleatoria();
-    play($(trackList[pos_aleatoria]), $(trackList[pos_aleatoria]).siblings('.fa-play-circle'));
-  }
-  else {
-    if (modo === "repetitiva") {
-      //Se reproducirá la misma canción.
-      pos = encontrarPos();
+  switch (modo) {
+    case "aleatoria":
+      // Se reproducirá la anterior canción de forma aleatoria.
+      play($(trackList[pos_aleatoria]), $(trackList[pos_aleatoria]).siblings('.fa-play-circle'));
+      break;
+
+    case "repetitiva":
+      // Se reproducirá la misma canción.
       play($(trackList[pos]), $(trackList[pos]).siblings('.fa-play-circle'));
-    }
-    else {
-      //Ningún modo activado, reproducción normal.
-      pos = encontrarPos();
-      if (pos == 0) {
-        play($(trackList[trackList.length - 1]), $(trackList[trackList.length - 1]).siblings('.fa-play-circle'));
-      }
-      else {
-        play($(trackList[pos - 1]), $(trackList[pos - 1]).siblings('.fa-play-circle'));
-      }
+      break;
 
-    }
+    default:
+      // Reproducción normal.
+      const prevPos = (pos === 0) ? trackList.length - 1 : pos - 1;
+      play($(trackList[prevPos]), $(trackList[prevPos]).siblings('.fa-play-circle'));
+      break;
   }
 }
+
 
 //Encuentra y devulve la posición del elemento audio_id en la lista 
 function encontrarPos() {
@@ -261,19 +252,19 @@ function songDur() {
 }
 
 
-function cambiarTitle(modo,elemento) {
-  $('.data-activado').attr('title','Desactivado');
+function cambiarTitle(modo, elemento) {
+  $('.data-activado').attr('title', 'Desactivado');
   $('.indigo-text').removeClass('indigo-text');
   $(elemento).addClass('indigo-text');
   switch (modo) {
     case "aleatoria":
-        $('.fa-random').attr('title','Activado');
+      $('.fa-random').attr('title', 'Activado');
       break;
     case "repetitiva":
-        $('.fa-redo-alt').attr('title','Activado');
+      $('.fa-redo-alt').attr('title', 'Activado');
       break;
     case "":
-        $('.normal').attr('title','Activado');
+      $('.normal').attr('title', 'Activado');
       break;
   }
 

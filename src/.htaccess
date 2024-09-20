@@ -4,7 +4,7 @@ RewriteEngine on
 
 allow from all
 
-ErrorDocument 404 http://localhost/PHP/PROYECTO_PHP_SPOTIFY/error/index/
+ErrorDocument 404 http://localhost:8080/error/index/
 
 RewriteCond %{SCRIPT_FILENAME} !-d
 RewriteCond %{SCRIPT_FILENAME} !-f

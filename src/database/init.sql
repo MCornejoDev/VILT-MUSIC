@@ -1,7 +1,7 @@
-CREATE DATABASE cornejo_music CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-USE cornejo_music;
+CREATE DATABASE IF NOT EXISTS music CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE music;
 
-CREATE TABLE usuarios(
+CREATE TABLE IF NOT EXISTS usuarios(
 id INT(255) NOT NULL AUTO_INCREMENT,
 nombre_usuario VARCHAR(100) NOT NULL,
 email VARCHAR(255) NOT NULL,
@@ -15,13 +15,13 @@ CONSTRAINT pk_usuarios PRIMARY KEY(id),
 CONSTRAINT uq_email UNIQUE(email)
 )ENGINE=InnoDb;
 
-CREATE TABLE categorias(
+CREATE TABLE IF NOT EXISTS categorias(
 id INT(255) NOT NULL AUTO_INCREMENT,
 nombre VARCHAR(50) NOT NULL,
 CONSTRAINT pk_categorias PRIMARY KEY(id)
 )ENGINE=InnoDb;
 
-CREATE TABLE discos(
+CREATE TABLE IF NOT EXISTS discos(
 id INT(255) NOT NULL AUTO_INCREMENT,
 categoria_id INT(255) NOT NULL,
 titulo VARCHAR(50) NOT NULL,
@@ -35,7 +35,7 @@ CONSTRAINT pk_discos PRIMARY KEY(id),
 CONSTRAINT fk_discos FOREIGN KEY(categoria_id) REFERENCES categorias(id)
 )ENGINE=InnoDb;
 
-CREATE TABLE singles(
+CREATE TABLE IF NOT EXISTS singles(
 id INT(255) NOT NULL AUTO_INCREMENT,
 disco_id INT(255) NOT NULL,
 titulo VARCHAR(255) NOT NULL,
@@ -45,7 +45,7 @@ CONSTRAINT pk_singles PRIMARY KEY(id),
 CONSTRAINT fk_singles FOREIGN KEY(disco_id) REFERENCES discos(id)
 )ENGINE=InnoDb;
 
-CREATE TABLE pedidos(
+CREATE TABLE IF NOT EXISTS pedidos(
 id INT(255) NOT NULL AUTO_INCREMENT,
 usuario_id INT(255) NOT NULL,
 estado BOOLEAN NOT NULL,
@@ -55,7 +55,7 @@ CONSTRAINT pk_pedidos PRIMARY KEY(id),
 CONSTRAINT fk_pedidos FOREIGN KEY(usuario_id) REFERENCES usuarios(id)
 )ENGINE=InnoDb;
 
-CREATE TABLE lineas_pedidos(
+CREATE TABLE IF NOT EXISTS lineas_pedidos(
 id INT(255) NOT NULL AUTO_INCREMENT,
 pedido_id INT(255) NOT NULL,
 disco_id INT(255) NOT NULL,
