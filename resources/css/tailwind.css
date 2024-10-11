@@ -1,0 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('album.css');
+@import url('destacados.css');
+@import url('registro.css');
+@import url('single.css');

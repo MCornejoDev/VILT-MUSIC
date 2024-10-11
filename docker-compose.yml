@@ -3,9 +3,10 @@ services:
     build: .
     container_name: php-container
     ports:
-      - "${APP_PORT}:80"
+      - "${APP_PORT:-80}:80"  # Usa el puerto definido en .env o 80 por defecto
     volumes:
-      - ./src:/var/www/html
+      - ./:/var/www/html       # Monta el directorio actual en el contenedor
+      - ./apache-config.conf:/etc/apache2/sites-available/000-default.conf # Asegura la configuración de Apache
     depends_on:
       - mysql
     env_file:
@@ -17,12 +18,11 @@ services:
     ports:
       - "3306:3306"
     environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
-      # MYSQL_USER y MYSQL_PASSWORD han sido removidos ya que son para usuarios regulares
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}  # Define esta variable en .env
+      MYSQL_DATABASE: ${MYSQL_DATABASE}            # Define esta variable en .env
     volumes:
       - db_data:/var/lib/mysql
-      - ./src/database/init.sql:/docker-entrypoint-initdb.d/init.sql # Montar el archivo SQL aquí
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql  # Asegura que el archivo init.sql exista
 
 volumes:
   db_data:
