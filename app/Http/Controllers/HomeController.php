@@ -6,6 +6,6 @@ class HomeController extends BaseController
 {
     public function index()
     {
-        echo "Hola Soy el homecontroller";
+        $this->loadView('home/index');
     }
 }
