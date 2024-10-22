@@ -20,7 +20,7 @@
                 <div class="flex items-center justify-center flex-1 sm:items-stretch sm:justify-start">
                     <div class="flex items-center flex-shrink-0">
                         <a href="<?= BASE_URL ?>">
-                            <img class="w-auto h-8" src="<?= BASE_URL ?>/img/logo.png" alt="Logo">
+                            <img class="w-auto h-8" src="<?= BASE_URL ?>/img/logo.webp" alt="Logo">
                         </a>
                     </div>
                     <div class="hidden sm:ml-6 sm:block">
@@ -28,35 +28,35 @@
                             <!-- Menu de navegación -->
                             <?php if (!isset($_SESSION['identity'])) : ?>
                                 <a href="<?= BASE_URL ?>" class="block px-3 py-2 text-base font-medium text-gray-300 rounded-md hover:bg-indigo-500 hover:text-white"><? __('nav.home') ?></a>
-                                <a href="<?= BASE_URL ?>/usuario/login" class="block px-3 py-2 text-base font-medium text-gray-300 rounded-md hover:bg-indigo-500 hover:text-white"><? __('nav.login') ?></a>
-                                <a href="<?= BASE_URL ?>/usuario/registro" class="block px-3 py-2 text-base font-medium text-gray-300 rounded-md hover:bg-indigo-500 hover:text-white"><? __('nav.register') ?></a>
+                                <a href="<?= BASE_URL ?>/user/login" class="block px-3 py-2 text-base font-medium text-gray-300 rounded-md hover:bg-indigo-500 hover:text-white"><? __('nav.login') ?></a>
+                                <a href="<?= BASE_URL ?>/user/register" class="block px-3 py-2 text-base font-medium text-gray-300 rounded-md hover:bg-indigo-500 hover:text-white"><? __('nav.register') ?></a>
                             <?php else : ?>
                                 <?php if (isset($_SESSION['admin'])) : ?>
                                     <li class="relative group">
-                                        <a class="hover:text-gray-300" href="#">Administración</a>
+                                        <a class="hover:text-gray-300" href="#"><?= __('nav.admin.title') ?></a>
                                         <ul class="absolute hidden p-2 mt-1 text-black bg-white rounded-lg shadow-lg group-hover:block">
                                             <li class="relative group">
-                                                <a href="#" class="block px-4 py-2 hover:bg-gray-100">Disco</a>
+                                                <a href="#" class="block px-4 py-2 hover:bg-gray-100"><? __('nav.admin.albums') ?></a>
                                                 <ul class="absolute top-0 hidden mt-1 bg-white shadow-lg left-full group-hover:block">
-                                                    <li><a href="<?= BASE_URL ?>/disco/añadir" class="block px-4 py-2 hover:bg-gray-100">Añadir</a></li>
-                                                    <li><a href="#" class="block px-4 py-2 hover:bg-gray-100">Actualizar</a></li>
-                                                    <li><a href="#" class="block px-4 py-2 hover:bg-gray-100">Eliminar</a></li>
+                                                    <li><a href="<?= BASE_URL ?>/disco/añadir" class="block px-4 py-2 hover:bg-gray-100"><? __('nav.admin.add') ?></a></li>
+                                                    <li><a href="#" class="block px-4 py-2 hover:bg-gray-100"><? __('nav.admin.update') ?></a></li>
+                                                    <li><a href="#" class="block px-4 py-2 hover:bg-gray-100"><? __('nav.admin.delete') ?></a></li>
                                                 </ul>
                                             </li>
                                             <li class="relative group">
-                                                <a href="#" class="block px-4 py-2 hover:bg-gray-100">Single</a>
+                                                <a href="#" class="block px-4 py-2 hover:bg-gray-100"><? __('nav.admin.singles') ?></a>
                                                 <ul class="absolute top-0 hidden mt-1 bg-white shadow-lg left-full group-hover:block">
-                                                    <li><a href="<?= BASE_URL ?>/single/añadir" class="block px-4 py-2 hover:bg-gray-100">Añadir</a></li>
-                                                    <li><a href="#" class="block px-4 py-2 hover:bg-gray-100">Actualizar</a></li>
-                                                    <li><a href="#" class="block px-4 py-2 hover:bg-gray-100">Eliminar</a></li>
+                                                    <li><a href="<?= BASE_URL ?>/single/añadir" class="block px-4 py-2 hover:bg-gray-100"><? __('nav.admin.add') ?></a></li>
+                                                    <li><a href="#" class="block px-4 py-2 hover:bg-gray-100"><? __('nav.admin.update') ?></a></li>
+                                                    <li><a href="#" class="block px-4 py-2 hover:bg-gray-100"><? __('nav.admin.delete') ?></a></li>
                                                 </ul>
                                             </li>
                                             <li class="relative group">
-                                                <a href="#" class="block px-4 py-2 hover:bg-gray-100">Categoría</a>
+                                                <a href="#" class="block px-4 py-2 hover:bg-gray-100"><? __('nav.admin.categories') ?></a>
                                                 <ul class="absolute top-0 hidden mt-1 bg-white shadow-lg left-full group-hover:block">
-                                                    <li><a href="<?= BASE_URL ?>/categoria/añadir" class="block px-4 py-2 hover:bg-gray-100">Añadir</a></li>
-                                                    <li><a href="#" class="block px-4 py-2 hover:bg-gray-100">Actualizar</a></li>
-                                                    <li><a href="#" class="block px-4 py-2 hover:bg-gray-100">Eliminar</a></li>
+                                                    <li><a href="<?= BASE_URL ?>/single/añadir" class="block px-4 py-2 hover:bg-gray-100"><? __('nav.admin.add') ?></a></li>
+                                                    <li><a href="#" class="block px-4 py-2 hover:bg-gray-100"><? __('nav.admin.update') ?></a></li>
+                                                    <li><a href="#" class="block px-4 py-2 hover:bg-gray-100"><? __('nav.admin.delete') ?></a></li>
                                                 </ul>
                                             </li>
                                         </ul>
@@ -66,7 +66,7 @@
                                         <a class="hover:text-gray-300" href="#">Carrito</a>
                                     </li>
                                     <li class="relative group">
-                                        <a class="hover:text-gray-300" href="#">Categorías</a>
+                                        <a class="hover:text-gray-300" href="#"><? __('nav.admin.categories') ?></a>
                                         <div class="absolute hidden mt-1 text-black bg-white rounded-lg shadow-lg group-hover:block">
                                             <?php $categorias = Utils::showCategories();
                                             while ($categoria = $categorias->fetch_object()) : ?>
@@ -78,7 +78,7 @@
                                     </li>
                                 <?php endif; ?>
                                 <li>
-                                    <a class="hover:text-gray-300" href="<?= BASE_URL ?>/usuario/salir">Salir</a>
+                                    <a class="hover:text-gray-300" href="<?= BASE_URL ?>/user/logout"><? __('nav.logout') ?></a>
                                 </li>
                                 <li>
                                     <input class="border-gray-300 rounded-lg form-control form-control-sm" id="search" type="text" placeholder="&#xF002; Presiona enter para buscar" style="font-family:Arial, FontAwesome" aria-label="Search">
@@ -95,8 +95,8 @@
         <div class="overflow-hidden transition-all duration-200 ease-in-out opacity-0 sm:hidden max-h-0" id="mobile-menu">
             <div class="px-2 pt-2 pb-3 space-y-1">
                 <a href="<?= BASE_URL ?>" class="block px-3 py-2 text-base font-medium text-gray-300 rounded-md hover:bg-indigo-500 hover:text-white"><? __('nav.home') ?></a>
-                <a href="<?= BASE_URL ?>/usuario/login" class="block px-3 py-2 text-base font-medium text-gray-300 rounded-md hover:bg-indigo-500 hover:text-white"><? __('nav.login') ?></a>
-                <a href="<?= BASE_URL ?>/usuario/registro" class="block px-3 py-2 text-base font-medium text-gray-300 rounded-md hover:bg-indigo-500 hover:text-white"><? __('nav.register') ?></a>
+                <a href="<?= BASE_URL ?>/user/login" class="block px-3 py-2 text-base font-medium text-gray-300 rounded-md hover:bg-indigo-500 hover:text-white"><? __('nav.login') ?></a>
+                <a href="<?= BASE_URL ?>/user/register" class="block px-3 py-2 text-base font-medium text-gray-300 rounded-md hover:bg-indigo-500 hover:text-white"><? __('nav.register') ?></a>
             </div>
         </div>
     </nav>

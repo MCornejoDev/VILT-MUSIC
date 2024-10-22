@@ -50,3 +50,31 @@ if (! function_exists('getLanguage')) {
         return $lang;
     }
 }
+
+if (! function_exists('addToBag')) {
+    function addToBag(string $key, array $data)
+    {
+        $_SESSION[$key] = $data;
+    }
+}
+
+if (! function_exists('existsErrorInBag')) {
+    function existsErrorInBag(string $key)
+    {
+        return array_key_exists($key, $_SESSION['errors']);
+    }
+}
+
+if (! function_exists('existsMessageInBag')) {
+    function existsMessageInBag()
+    {
+        return array_key_exists('messages', $_SESSION);
+    }
+}
+
+if (! function_exists('getMessagesBag')) {
+    function getMessagesBag()
+    {
+        return $_SESSION['messages'];
+    }
+}

@@ -1,66 +1,66 @@
 CREATE DATABASE IF NOT EXISTS music CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE music;
 
-CREATE TABLE IF NOT EXISTS usuarios(
-id INT(255) NOT NULL AUTO_INCREMENT,
-nombre_usuario VARCHAR(100) NOT NULL,
-email VARCHAR(255) NOT NULL,
-password VARCHAR(255) NOT NULL,
-nombre VARCHAR(100) NOT NULL,
-apellidos VARCHAR(255) NOT NULL,
-rol VARCHAR(20) NOT NULL,
-imagen VARCHAR(255) NOT NULL,
-direccion VARCHAR(255) NOT NULL,
-CONSTRAINT pk_usuarios PRIMARY KEY(id),
-CONSTRAINT uq_email UNIQUE(email)
-)ENGINE=InnoDb;
+CREATE TABLE IF NOT EXISTS users (
+    id INT(255) NOT NULL AUTO_INCREMENT,
+    username VARCHAR(100) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    first_name VARCHAR(100) NOT NULL,
+    last_name VARCHAR(255) NOT NULL,
+    role VARCHAR(20) NOT NULL,
+    image VARCHAR(255) NOT NULL,
+    address VARCHAR(255) NOT NULL,
+    CONSTRAINT pk_users PRIMARY KEY(id),
+    CONSTRAINT uq_email UNIQUE(email)
+) ENGINE=InnoDB;
 
-CREATE TABLE IF NOT EXISTS categorias(
-id INT(255) NOT NULL AUTO_INCREMENT,
-nombre VARCHAR(50) NOT NULL,
-CONSTRAINT pk_categorias PRIMARY KEY(id)
-)ENGINE=InnoDb;
+CREATE TABLE IF NOT EXISTS categories (
+    id INT(255) NOT NULL AUTO_INCREMENT,
+    name VARCHAR(50) NOT NULL,
+    CONSTRAINT pk_categories PRIMARY KEY(id)
+) ENGINE=InnoDB;
 
-CREATE TABLE IF NOT EXISTS discos(
-id INT(255) NOT NULL AUTO_INCREMENT,
-categoria_id INT(255) NOT NULL,
-titulo VARCHAR(50) NOT NULL,
-artista VARCHAR(100) NOT NULL,
-descripcion TEXT NOT NULL,
-stock INT(255) NOT NULL,
-precio DECIMAL(10,2) NOT NULL,
-fecha DATE NOT NULL,
-imagen VARCHAR(255) NOT NULL,
-CONSTRAINT pk_discos PRIMARY KEY(id),
-CONSTRAINT fk_discos FOREIGN KEY(categoria_id) REFERENCES categorias(id)
-)ENGINE=InnoDb;
+CREATE TABLE IF NOT EXISTS albums (
+    id INT(255) NOT NULL AUTO_INCREMENT,
+    category_id INT(255) NOT NULL,
+    title VARCHAR(50) NOT NULL,
+    artist VARCHAR(100) NOT NULL,
+    description TEXT NOT NULL,
+    stock INT(255) NOT NULL,
+    price DECIMAL(10,2) NOT NULL,
+    release_date DATE NOT NULL,
+    image VARCHAR(255) NOT NULL,
+    CONSTRAINT pk_albums PRIMARY KEY(id),
+    CONSTRAINT fk_albums_category FOREIGN KEY(category_id) REFERENCES categories(id)
+) ENGINE=InnoDB;
 
-CREATE TABLE IF NOT EXISTS singles(
-id INT(255) NOT NULL AUTO_INCREMENT,
-disco_id INT(255) NOT NULL,
-titulo VARCHAR(255) NOT NULL,
-duracion VARCHAR(255) NOT NULL,
-archivo_musical VARCHAR(255) NOT NULL,
-CONSTRAINT pk_singles PRIMARY KEY(id),
-CONSTRAINT fk_singles FOREIGN KEY(disco_id) REFERENCES discos(id)
-)ENGINE=InnoDb;
+CREATE TABLE IF NOT EXISTS singles (
+    id INT(255) NOT NULL AUTO_INCREMENT,
+    album_id INT(255) NOT NULL,
+    title VARCHAR(255) NOT NULL,
+    duration VARCHAR(255) NOT NULL,
+    music_file VARCHAR(255) NOT NULL,
+    CONSTRAINT pk_singles PRIMARY KEY(id),
+    CONSTRAINT fk_singles_album FOREIGN KEY(album_id) REFERENCES albums(id)
+) ENGINE=InnoDB;
 
-CREATE TABLE IF NOT EXISTS pedidos(
-id INT(255) NOT NULL AUTO_INCREMENT,
-usuario_id INT(255) NOT NULL,
-estado BOOLEAN NOT NULL,
-fecha DATE NOT NULL,
-coste DOUBLE(2,2) NOT NULL,
-CONSTRAINT pk_pedidos PRIMARY KEY(id),
-CONSTRAINT fk_pedidos FOREIGN KEY(usuario_id) REFERENCES usuarios(id)
-)ENGINE=InnoDb;
+CREATE TABLE IF NOT EXISTS orders (
+    id INT(255) NOT NULL AUTO_INCREMENT,
+    user_id INT(255) NOT NULL,
+    status BOOLEAN NOT NULL,
+    order_date DATE NOT NULL,
+    total_cost DOUBLE(10,2) NOT NULL,
+    CONSTRAINT pk_orders PRIMARY KEY(id),
+    CONSTRAINT fk_orders_user FOREIGN KEY(user_id) REFERENCES users(id)
+) ENGINE=InnoDB;
 
-CREATE TABLE IF NOT EXISTS lineas_pedidos(
-id INT(255) NOT NULL AUTO_INCREMENT,
-pedido_id INT(255) NOT NULL,
-disco_id INT(255) NOT NULL,
-unidades INT(255) NOT NULL,
-CONSTRAINT pk_lineas_pedidos PRIMARY KEY(id),
-CONSTRAINT fk_lineas_pedidos FOREIGN KEY(pedido_id) REFERENCES pedidos(id),
-CONSTRAINT fk_lineas_discos FOREIGN KEY(disco_id) REFERENCES discos(id)
-)ENGINE=InnoDb;
+CREATE TABLE IF NOT EXISTS order_lines (
+    id INT(255) NOT NULL AUTO_INCREMENT,
+    order_id INT(255) NOT NULL,
+    album_id INT(255) NOT NULL,
+    quantity INT(255) NOT NULL,
+    CONSTRAINT pk_order_lines PRIMARY KEY(id),
+    CONSTRAINT fk_order_lines_order FOREIGN KEY(order_id) REFERENCES orders(id),
+    CONSTRAINT fk_order_lines_album FOREIGN KEY(album_id) REFERENCES albums(id)
+) ENGINE=InnoDB;
