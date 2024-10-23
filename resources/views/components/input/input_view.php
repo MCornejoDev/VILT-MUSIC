@@ -1,6 +1,6 @@
 <div>
     <?php if ($label): ?>
-        <?php if (existsErrorInBag($name)): ?>
+        <?php if (existsKeyInBag($name, 'errors')): ?>
             <label for="<?= htmlspecialchars($id); ?>" class="block font-medium text-red-600">
                 <?= __($label); ?>
             </label>
@@ -11,7 +11,7 @@
         <?php endif; ?>
     <?php endif; ?>
 
-    <?php if (existsErrorInBag($name)): ?>
+    <?php if (existsKeyInBag($name, 'errors')): ?>
         <input type="<?= htmlspecialchars($type); ?>"
             name="<?= htmlspecialchars($name); ?>"
             id="<?= htmlspecialchars($id); ?>"

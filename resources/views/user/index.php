@@ -1,5 +1,6 @@
+<? require_once __DIR__ . '/../components/messages.php'; ?>
+
 <div class="space-y-4">
-    <? require_once __DIR__ . '/../components/messages.php'; ?>
     <div class="container mx-auto mb-5">
         <div class="flex flex-col items-center p-6">
             <div class="w-full max-w-lg mx-auto border border-gray-300">

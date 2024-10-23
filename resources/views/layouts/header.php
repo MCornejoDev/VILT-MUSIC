@@ -1,3 +1,4 @@
+<?php $categories = getCategories(); ?>
 <header>
     <nav class="bg-indigo-600">
         <div class="px-2 mx-auto max-w-7xl sm:px-6 lg:px-8">
@@ -62,28 +63,22 @@
                                         </ul>
                                     </li>
                                 <?php else : ?>
-                                    <li>
-                                        <a class="hover:text-gray-300" href="#">Carrito</a>
-                                    </li>
-                                    <li class="relative group">
-                                        <a class="hover:text-gray-300" href="#"><? __('nav.admin.categories') ?></a>
-                                        <div class="absolute hidden mt-1 text-black bg-white rounded-lg shadow-lg group-hover:block">
-                                            <?php $categorias = Utils::showCategories();
-                                            while ($categoria = $categorias->fetch_object()) : ?>
-                                                <a href="<?= BASE_URL ?>/disco/categoria&nombre=<?php echo ($categoria->nombre) ?>" class="block px-4 py-2 text-capitalize hover:bg-gray-100">
-                                                    <?php echo ($categoria->nombre) ?>
-                                                </a>
-                                            <?php endwhile; ?>
-                                        </div>
-                                    </li>
+                                    <a class="block px-3 py-2 text-base font-medium text-gray-300 rounded-md hover:bg-indigo-500 hover:text-white" href="#"><? __('nav.admin.cart') ?></a>
+
+                                    <a class="relative block px-3 py-2 text-base font-medium text-gray-300 rounded-md hover:bg-indigo-500 hover:text-white group" href="#">
+                                        <?php echo __('nav.admin.categories') ?>
+                                    </a>
+                                    <div class="absolute z-10 hidden mt-1 text-black bg-white rounded-lg shadow-lg group-hover:block">
+                                        <?php foreach ($categories as $key => $value): ?>
+                                            <a href="<?= BASE_URL ?>/disco/categoria&nombre=<?php echo ($value['id']) ?>"
+                                                class="block px-4 py-2 text-gray-700 capitalize hover:bg-gray-100 hover:text-indigo-500">
+                                                <?php echo ($value['name']) ?>
+                                            </a>
+                                        <?php endforeach; ?>
+                                    </div>
+
                                 <?php endif; ?>
-                                <li>
-                                    <a class="hover:text-gray-300" href="<?= BASE_URL ?>/user/logout"><? __('nav.logout') ?></a>
-                                </li>
-                                <li>
-                                    <input class="border-gray-300 rounded-lg form-control form-control-sm" id="search" type="text" placeholder="&#xF002; Presiona enter para buscar" style="font-family:Arial, FontAwesome" aria-label="Search">
-                                    <div id="showSearchDiv"></div>
-                                </li>
+                                <a class="block px-3 py-2 text-base font-medium text-gray-300 rounded-md hover:bg-indigo-500 hover:text-white" href="<?= BASE_URL ?>/user/logout"><? __('nav.logout') ?></a>
                             <?php endif; ?>
                         </div>
                     </div>
@@ -94,9 +89,26 @@
         <!-- Menú móvil, oculto por defecto -->
         <div class="overflow-hidden transition-all duration-200 ease-in-out opacity-0 sm:hidden max-h-0" id="mobile-menu">
             <div class="px-2 pt-2 pb-3 space-y-1">
-                <a href="<?= BASE_URL ?>" class="block px-3 py-2 text-base font-medium text-gray-300 rounded-md hover:bg-indigo-500 hover:text-white"><? __('nav.home') ?></a>
-                <a href="<?= BASE_URL ?>/user/login" class="block px-3 py-2 text-base font-medium text-gray-300 rounded-md hover:bg-indigo-500 hover:text-white"><? __('nav.login') ?></a>
-                <a href="<?= BASE_URL ?>/user/register" class="block px-3 py-2 text-base font-medium text-gray-300 rounded-md hover:bg-indigo-500 hover:text-white"><? __('nav.register') ?></a>
+                <?php if (!isset($_SESSION['identity'])) : ?>
+                    <a href="<?= BASE_URL ?>" class="block px-3 py-2 text-base font-medium text-gray-300 rounded-md hover:bg-indigo-500 hover:text-white"><? __('nav.home') ?></a>
+                    <a href="<?= BASE_URL ?>/user/login" class="block px-3 py-2 text-base font-medium text-gray-300 rounded-md hover:bg-indigo-500 hover:text-white"><? __('nav.login') ?></a>
+                    <a href="<?= BASE_URL ?>/user/register" class="block px-3 py-2 text-base font-medium text-gray-300 rounded-md hover:bg-indigo-500 hover:text-white"><? __('nav.register') ?></a>
+                <?php else : ?>
+                    <a class="block px-3 py-2 text-base font-medium text-gray-300 rounded-md hover:bg-indigo-500 hover:text-white" href="#"><? __('nav.admin.cart') ?></a>
+
+                    <a class="relative block px-3 py-2 text-base font-medium text-gray-300 rounded-md hover:bg-indigo-500 hover:text-white group" href="#">
+                        <?php echo __('nav.admin.categories') ?>
+                        <div class="absolute z-10 hidden mt-1 text-black bg-white rounded-lg shadow-lg group-hover:block">
+                            <?php foreach ($categories as $key => $value): ?>
+                                <a href="<?= BASE_URL ?>/disco/categoria&nombre=<?php echo ($value['id']) ?>"
+                                    class="block px-4 py-2 text-gray-700 capitalize hover:bg-gray-100 hover:text-indigo-500">
+                                    <?php echo ($value['name']) ?>
+                                </a>
+                            <?php endforeach; ?>
+                        </div>
+                    </a>
+                    <a class="block px-3 py-2 text-base font-medium text-gray-300 rounded-md hover:bg-indigo-500 hover:text-white" href="<?= BASE_URL ?>/user/logout"><? __('nav.logout') ?></a>
+                <?php endif; ?>
             </div>
         </div>
     </nav>

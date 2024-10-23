@@ -13,6 +13,13 @@ return [
     'form' => [
         'title' => 'Formulario de registro',
         'button' => 'Registrarse',
-        'success' => 'Usuario creado exitosamente',
+        'register' => [
+            'success' => 'Usuario creado exitosamente',
+            'error' => 'Error al registrar el usuario'
+        ],
+        'login' => [
+            'success' => '',
+            'error' => 'Error al iniciar sesión'
+        ]
     ]
 ];

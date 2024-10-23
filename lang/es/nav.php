@@ -11,6 +11,7 @@ return [
         'albums' => 'Albums',
         'singles' => 'Canciones',
         'categories' => 'Categorías',
+        'cart' => 'Carrito',
         'add' => 'Añadir',
         'update' => 'Actualizar',
         'delete' => 'Eliminar',

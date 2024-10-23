@@ -18,7 +18,13 @@ class UserController extends BaseController
             $user->setEmail($data['email']);
             $user->setPassword($data['password']);
 
-            var_dump($_SESSION);
+            if ($user->login()) {
+                $_SESSION['identity'] = $user;
+                $this->loadView('home/index');
+            } else {
+                addToBag('errors', ['user.form.login.error']);
+                $this->loadView('user/index');
+            }
         } else {
             $this->loadView('user/index');
         }
@@ -31,6 +37,7 @@ class UserController extends BaseController
 
             $user = new User();
 
+            //VALIDAR EL USUARIO SEGÚN UNIQUE, NULO, FALSE O LO QUE SEA
             if (!$user->isValid($data)) {
                 $this->loadView('user/register');
                 return;
@@ -45,13 +52,20 @@ class UserController extends BaseController
             $user->setImage($data['image']);
             $user->setRol('user');
 
-            if ($user->save()) {
-                addToBag('messages', ['user.form.success']);
-                $this->loadView('user/index');
-            }
+            $user->save() ? addToBag('messages', ['user.form.register.success']) : addToBag('errors', ['user.form.register.error']);
+            $this->loadView('user/register');
         } else {
             $this->loadView('user/register');
         }
+    }
+
+    public function logout()
+    {
+        unset($_SESSION['identity']);
+        unset($_SESSION['admin']);
+        unset($_SESSION['error']);
+        unset($_SESSION['messages']);
+        $this->loadView('user/index');
     }
 
     function getData()

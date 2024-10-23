@@ -13,6 +13,13 @@ return [
     'form' => [
         'title' => 'Register Form',
         'button' => 'Register',
-        'success' => 'User created successfully',
+        'register' => [
+            'success' => 'User created successfully',
+            'error' => 'Error registering user',
+        ],
+        'login' => [
+            'success' => '',
+            'error' => 'Login error',
+        ],
     ]
 ];

@@ -265,7 +265,6 @@ class User
 
         return $stmt->execute();
 
-        $result = false;
 
         // if ($record) {
         //     $folderName = $this->getUserName();
@@ -298,26 +297,38 @@ class User
 
     public function login()
     {
-        $result = false;
         $email = $this->email;
         $password = $this->password;
 
-        //COMPROBAR SI EXISTE EL USUARIO
-        $sql = "SELECT * FROM users WHERE email = '$email'";
-        $login = $this->db->query($sql);
+        $stmt = $this->db->prepare('SELECT id,username,password,first_name,last_name,role,image,address FROM users WHERE email = ?');
+        $stmt->bind_param('s', $email);
+        $stmt->execute();
 
-        if ($login && $login->num_rows == 1) {
-            $user = $login->fetch_object();
+        $stmt->bind_result(
+            $id,
+            $username,
+            $passwordFromUser,
+            $first_name,
+            $last_name,
+            $role,
+            $image,
+            $address
+        );
 
-            //VERIFICAR LA CONTRASEÑA
-            $verify = password_verify($password, $user->password);
+        $stmt->fetch();
 
-            if ($verify) {
-                $result = $user;
-            }
+        if (!is_null($passwordFromUser) && password_verify($password, $passwordFromUser)) {
+            $this->setId($id);
+            $this->setUserName($username);
+            $this->setName($first_name);
+            $this->setLastName($last_name);
+            $this->setRol($role);
+            $this->setImage($image);
+            $this->setAddress($address);
+            return true;
         }
 
-        return $result;
+        return;
     }
 
     /**

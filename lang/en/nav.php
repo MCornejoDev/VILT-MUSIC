@@ -11,6 +11,7 @@ return [
         'albums' => 'Albums',
         'singles' => 'Singles',
         'categories' => 'Categories',
+        'cart' => 'Cart',
         'add' => 'Add',
         'update' => 'Update',
         'delete' => 'Delete',

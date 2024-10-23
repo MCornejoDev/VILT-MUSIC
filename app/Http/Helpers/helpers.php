@@ -58,10 +58,10 @@ if (! function_exists('addToBag')) {
     }
 }
 
-if (! function_exists('existsErrorInBag')) {
-    function existsErrorInBag(string $key)
+if (! function_exists('existsKeyInBag')) {
+    function existsKeyInBag(string $key, string $bag)
     {
-        return array_key_exists($key, $_SESSION['errors']);
+        return array_key_exists($key, $_SESSION[$bag]);
     }
 }
 
@@ -72,9 +72,19 @@ if (! function_exists('existsMessageInBag')) {
     }
 }
 
-if (! function_exists('getMessagesBag')) {
-    function getMessagesBag()
+if (! function_exists('getValuesFromBag')) {
+    function getValuesFromBag(string $bag)
     {
-        return $_SESSION['messages'];
+        return $_SESSION[$bag];
+    }
+}
+
+if (! function_exists('getCategories')) {
+    function getCategories()
+    {
+        include __DIR__ . '/../../Models/category.php';
+        $category = new Category();
+        $categories = $category->getAll();
+        return $categories;
     }
 }

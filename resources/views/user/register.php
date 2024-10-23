@@ -1,3 +1,4 @@
+<? require_once __DIR__ . '/../components/messages.php'; ?>
 <div class="container mx-auto mb-5">
     <div class="flex flex-col items-center">
         <div class="w-full p-6 mx-auto bg-white border shadow-md lg:w-1/2">
