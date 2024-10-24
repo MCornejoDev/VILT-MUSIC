@@ -20,7 +20,7 @@ require_once __DIR__ . '/../resources/views/components/input/input.php'; ?>
     <link rel="stylesheet" href="<?= BASE_URL ?>/css/app.min.css">
 </head>
 
-<body class="font-weight-bold">
+<body>
     <? require_once __DIR__ . '/../resources/views/layouts/header.php'; ?>
     <div class="mt-10">
         <?php require_once __DIR__ . '/../app/autoloading.php'; ?>

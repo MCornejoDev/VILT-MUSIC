@@ -4,7 +4,7 @@
     </a>
     <div class="absolute z-10 hidden w-48 mt-1 bg-white rounded-lg shadow-lg dropdown-menu">
         <?php foreach (getCategories() as $id => $value): ?>
-            <a href="<?= BASE_URL ?>/disco/categoria/<?php echo ($value) ?>"
+            <a href="<?= BASE_URL ?>/album/category/<?php echo ($value) ?>"
                 class="block px-4 py-2 text-gray-700 capitalize rounded-lg hover:bg-gray-200 hover:text-black hover:font-bold">
                 <?php echo ($value) ?>
             </a>

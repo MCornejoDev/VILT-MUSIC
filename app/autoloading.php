@@ -1,13 +1,5 @@
 <?php
 
-require_once __DIR__ . '/Http/Controllers/ErrorController.php';
-
-function show_error()
-{
-    $error = new ErrorController();
-    $error->error404();
-}
-
 function get_controller_name($uri_segment)
 {
     if (empty($uri_segment)) {
@@ -20,14 +12,13 @@ function get_controller_name($uri_segment)
     return file_exists($controller_path) ? $controller_name : null;
 }
 
-function load_controller($name_controller)
+function load_controller(?string $name_controller = null)
 {
-    $controller_file = __DIR__ . '/Http/Controllers/' . $name_controller . '.php';
-
-    if (!file_exists($controller_file)) {
-        show_error();
-        exit();
+    if (is_null($name_controller)) {
+        $name_controller = 'ErrorController';
     }
+
+    $controller_file = __DIR__ . '/Http/Controllers/' . $name_controller . '.php';
 
     require_once $controller_file;
 
@@ -37,20 +28,13 @@ function load_controller($name_controller)
 // Procesa URI y obtiene nombre del controlador
 $uri = explode("/", trim($_SERVER["REQUEST_URI"], "/"));
 $name_controller = get_controller_name($uri[0] ?? null);
-
-if (is_null($name_controller)) {
-    show_error();
-    exit();
-}
-
 $controller = load_controller($name_controller);
 
 // Determina la acción o método a ejecutar
 $action = $uri[1] ?? (defined('ACTION_DEFAULT') ? ACTION_DEFAULT : null);
 
 if (!$action || !method_exists($controller, $action)) {
-    show_error();
-    exit();
+    $action = 'error404';
 }
 
 $controller->$action();
