@@ -6,12 +6,13 @@ return [
     'register' => 'Registrarse',
     'logout' => 'Cerrar Sesión',
 
+    'albums' => 'Albums',
+    'singles' => 'Canciones',
+    'categories' => 'Categorías',
+    'cart' => 'Carrito',
+
     'admin' => [
         'title' => 'Admin',
-        'albums' => 'Albums',
-        'singles' => 'Canciones',
-        'categories' => 'Categorías',
-        'cart' => 'Carrito',
         'add' => 'Añadir',
         'update' => 'Actualizar',
         'delete' => 'Eliminar',

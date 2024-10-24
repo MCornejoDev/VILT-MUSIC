@@ -1,4 +1,3 @@
-<?php $categories = getCategories(); ?>
 <header>
     <nav class="bg-indigo-600">
         <div class="px-2 mx-auto max-w-7xl sm:px-6 lg:px-8">
@@ -37,7 +36,7 @@
                                         <a class="hover:text-gray-300" href="#"><?= __('nav.admin.title') ?></a>
                                         <ul class="absolute hidden p-2 mt-1 text-black bg-white rounded-lg shadow-lg group-hover:block">
                                             <li class="relative group">
-                                                <a href="#" class="block px-4 py-2 hover:bg-gray-100"><? __('nav.admin.albums') ?></a>
+                                                <a href="#" class="block px-4 py-2 hover:bg-gray-100"><? __('nav.albums') ?></a>
                                                 <ul class="absolute top-0 hidden mt-1 bg-white shadow-lg left-full group-hover:block">
                                                     <li><a href="<?= BASE_URL ?>/disco/añadir" class="block px-4 py-2 hover:bg-gray-100"><? __('nav.admin.add') ?></a></li>
                                                     <li><a href="#" class="block px-4 py-2 hover:bg-gray-100"><? __('nav.admin.update') ?></a></li>
@@ -45,7 +44,7 @@
                                                 </ul>
                                             </li>
                                             <li class="relative group">
-                                                <a href="#" class="block px-4 py-2 hover:bg-gray-100"><? __('nav.admin.singles') ?></a>
+                                                <a href="#" class="block px-4 py-2 hover:bg-gray-100"><? __('navsingles') ?></a>
                                                 <ul class="absolute top-0 hidden mt-1 bg-white shadow-lg left-full group-hover:block">
                                                     <li><a href="<?= BASE_URL ?>/single/añadir" class="block px-4 py-2 hover:bg-gray-100"><? __('nav.admin.add') ?></a></li>
                                                     <li><a href="#" class="block px-4 py-2 hover:bg-gray-100"><? __('nav.admin.update') ?></a></li>
@@ -53,7 +52,7 @@
                                                 </ul>
                                             </li>
                                             <li class="relative group">
-                                                <a href="#" class="block px-4 py-2 hover:bg-gray-100"><? __('nav.admin.categories') ?></a>
+                                                <a href="#" class="block px-4 py-2 hover:bg-gray-100"><? __('navcategories') ?></a>
                                                 <ul class="absolute top-0 hidden mt-1 bg-white shadow-lg left-full group-hover:block">
                                                     <li><a href="<?= BASE_URL ?>/single/añadir" class="block px-4 py-2 hover:bg-gray-100"><? __('nav.admin.add') ?></a></li>
                                                     <li><a href="#" class="block px-4 py-2 hover:bg-gray-100"><? __('nav.admin.update') ?></a></li>
@@ -63,20 +62,8 @@
                                         </ul>
                                     </li>
                                 <?php else : ?>
-                                    <a class="block px-3 py-2 text-base font-medium text-gray-300 rounded-md hover:bg-indigo-500 hover:text-white" href="#"><? __('nav.admin.cart') ?></a>
-
-                                    <a class="relative block px-3 py-2 text-base font-medium text-gray-300 rounded-md hover:bg-indigo-500 hover:text-white group" href="#">
-                                        <?php echo __('nav.admin.categories') ?>
-                                    </a>
-                                    <div class="absolute z-10 hidden mt-1 text-black bg-white rounded-lg shadow-lg group-hover:block">
-                                        <?php foreach ($categories as $key => $value): ?>
-                                            <a href="<?= BASE_URL ?>/disco/categoria&nombre=<?php echo ($value['id']) ?>"
-                                                class="block px-4 py-2 text-gray-700 capitalize hover:bg-gray-100 hover:text-indigo-500">
-                                                <?php echo ($value['name']) ?>
-                                            </a>
-                                        <?php endforeach; ?>
-                                    </div>
-
+                                    <a class="block px-3 py-2 text-base font-medium text-gray-300 rounded-md hover:bg-indigo-500 hover:text-white" href="#"><? __('nav.cart') ?></a>
+                                    <? include __DIR__ . '/../components/nav/categories.php'; ?>
                                 <?php endif; ?>
                                 <a class="block px-3 py-2 text-base font-medium text-gray-300 rounded-md hover:bg-indigo-500 hover:text-white" href="<?= BASE_URL ?>/user/logout"><? __('nav.logout') ?></a>
                             <?php endif; ?>
@@ -94,19 +81,8 @@
                     <a href="<?= BASE_URL ?>/user/login" class="block px-3 py-2 text-base font-medium text-gray-300 rounded-md hover:bg-indigo-500 hover:text-white"><? __('nav.login') ?></a>
                     <a href="<?= BASE_URL ?>/user/register" class="block px-3 py-2 text-base font-medium text-gray-300 rounded-md hover:bg-indigo-500 hover:text-white"><? __('nav.register') ?></a>
                 <?php else : ?>
-                    <a class="block px-3 py-2 text-base font-medium text-gray-300 rounded-md hover:bg-indigo-500 hover:text-white" href="#"><? __('nav.admin.cart') ?></a>
-
-                    <a class="relative block px-3 py-2 text-base font-medium text-gray-300 rounded-md hover:bg-indigo-500 hover:text-white group" href="#">
-                        <?php echo __('nav.admin.categories') ?>
-                        <div class="absolute z-10 hidden mt-1 text-black bg-white rounded-lg shadow-lg group-hover:block">
-                            <?php foreach ($categories as $key => $value): ?>
-                                <a href="<?= BASE_URL ?>/disco/categoria&nombre=<?php echo ($value['id']) ?>"
-                                    class="block px-4 py-2 text-gray-700 capitalize hover:bg-gray-100 hover:text-indigo-500">
-                                    <?php echo ($value['name']) ?>
-                                </a>
-                            <?php endforeach; ?>
-                        </div>
-                    </a>
+                    <a class="block px-3 py-2 text-base font-medium text-gray-300 rounded-md hover:bg-indigo-500 hover:text-white" href="#"><? __('nav.cart') ?></a>
+                    <? include __DIR__ . '/../components/nav/categories.php'; ?>
                     <a class="block px-3 py-2 text-base font-medium text-gray-300 rounded-md hover:bg-indigo-500 hover:text-white" href="<?= BASE_URL ?>/user/logout"><? __('nav.logout') ?></a>
                 <?php endif; ?>
             </div>

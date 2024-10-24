@@ -6,12 +6,13 @@ return [
     'register' => 'Register',
     'logout' => 'Logout',
 
+    'albums' => 'Albums',
+    'singles' => 'Singles',
+    'categories' => 'Categories',
+    'cart' => 'Cart',
+
     'admin' => [
         'title' => 'Admin',
-        'albums' => 'Albums',
-        'singles' => 'Singles',
-        'categories' => 'Categories',
-        'cart' => 'Cart',
         'add' => 'Add',
         'update' => 'Update',
         'delete' => 'Delete',

@@ -33,3 +33,31 @@ document.addEventListener('DOMContentLoaded', () => {
     mobileMenu.classList.add('hidden');
     mobileMenu.classList.add('opacity-0');
 });
+
+document.addEventListener('DOMContentLoaded', function () {
+    const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
+    const dropdownMenus = document.querySelectorAll('.dropdown-menu');
+
+    dropdownToggles.forEach((toggle, index) => {
+        const menu = dropdownMenus[index];
+
+        toggle.addEventListener('click', function (event) {
+            // Evita que otros dropdowns se queden abiertos
+            dropdownMenus.forEach((otherMenu, otherIndex) => {
+                if (otherIndex !== index) {
+                    otherMenu.classList.add('hidden');
+                }
+            });
+
+            // Alternar visibilidad del menú correspondiente
+            menu.classList.toggle('hidden');
+        });
+
+        // Cerrar el dropdown si se hace clic fuera de él
+        document.addEventListener('click', function (event) {
+            if (!toggle.contains(event.target) && !menu.contains(event.target)) {
+                menu.classList.add('hidden');
+            }
+        });
+    });
+});
