@@ -64,7 +64,7 @@ class Category
      */
     public function getAll()
     {
-        return $this->db->query("SELECT * FROM categories ORDER BY id ASC");
+        return $this->db->query("SELECT * FROM categories ORDER BY id ASC")->fetch_object();
     }
 
     /**

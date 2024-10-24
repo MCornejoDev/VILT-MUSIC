@@ -1,7 +1,7 @@
 <?php
 
 require_once __DIR__ . '/BaseController.php';
-require_once __DIR__ . '../../../Models/user.php';
+require_once __DIR__ . '../../../Models/User.php';
 
 class UserController extends BaseController
 {
@@ -20,7 +20,7 @@ class UserController extends BaseController
 
             if ($user->login()) {
                 $_SESSION['identity'] = $user;
-                $this->loadView('home/index');
+                redirectTo('/');
             } else {
                 addToBag('errors', ['user.form.login.error']);
                 $this->loadView('user/index');
@@ -61,11 +61,12 @@ class UserController extends BaseController
 
     public function logout()
     {
+        // Clear session data
         unset($_SESSION['identity']);
         unset($_SESSION['admin']);
         unset($_SESSION['error']);
         unset($_SESSION['messages']);
-        $this->loadView('user/index');
+        redirectTo('/user/login');
     }
 
     function getData()

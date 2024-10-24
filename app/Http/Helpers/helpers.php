@@ -1,5 +1,5 @@
 <?php
-
+include __DIR__ . '/../../Models/Category.php';
 if (! function_exists('__')) {
     function __(string $key)
     {
@@ -82,9 +82,20 @@ if (! function_exists('getValuesFromBag')) {
 if (! function_exists('getCategories')) {
     function getCategories()
     {
-        include __DIR__ . '/../../Models/category.php';
         $category = new Category();
         $categories = $category->getAll();
         return $categories;
+    }
+}
+
+if (!function_exists('redirectTo')) {
+    function redirectTo(string $url)
+    {
+        print
+            '<script>
+                window.setTimeout(function() {
+                    window.location = "' . $url . '";
+                }, 1);
+            </script>';
     }
 }
