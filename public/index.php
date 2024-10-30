@@ -21,11 +21,13 @@ require_once __DIR__ . '/../resources/views/components/input/input.php'; ?>
 </head>
 
 <body>
-    <? require_once __DIR__ . '/../resources/views/layouts/header.php'; ?>
-    <div class="mt-10">
-        <?php require_once __DIR__ . '/../app/autoloading.php'; ?>
+    <div class="grid grid-flow-row auto-rows-max">
+        <? require_once __DIR__ . '/../resources/views/layouts/header.php'; ?>
+        <main class="mt-10">
+            <?php require_once __DIR__ . '/../app/autoloading.php'; ?>
+        </main>
+        <? require_once __DIR__ . '/../resources/views/layouts/footer.php'; ?>
     </div>
-    <? require_once __DIR__ . '/../resources/views/layouts/footer.php'; ?>
 </body>
 
 <script type="module" src="<?= BASE_URL ?>/js/app.min.js"></script>

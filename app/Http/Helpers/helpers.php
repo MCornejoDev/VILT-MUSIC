@@ -99,3 +99,17 @@ if (!function_exists('redirectTo')) {
             </script>';
     }
 }
+
+if (!function_exists('identityIsEmpty')) {
+    function identityIsEmpty()
+    {
+        return empty($_SESSION['identity']);
+    }
+}
+
+if (!function_exists('isAdmin')) {
+    function isAdmin()
+    {
+        return isset($_SESSION['admin']) && $_SESSION['admin'];
+    }
+}

@@ -375,5 +375,21 @@ class User
         return $id->id;
     }
 
+    public function isAdmin()
+    {
+        return $this->rol == 'admin';
+    }
+
+    public function identityUser()
+    {
+        return [
+            'id' => $this->id,
+            'username' => $this->userName,
+            'email' => $this->email,
+            'rol' => $this->rol,
+            'image' => $this->image,
+        ];
+    }
+
     #endregion
 }

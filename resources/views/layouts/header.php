@@ -26,46 +26,26 @@
                     <div class="hidden sm:ml-6 sm:block">
                         <div class="flex space-x-4">
                             <!-- Menu de navegación -->
-                            <?php if (!isset($_SESSION['identity'])) : ?>
+                            <?php if (identityIsEmpty()) : ?>
                                 <a href="<?= BASE_URL ?>" class="block px-3 py-2 text-base font-medium text-gray-300 rounded-md hover:bg-indigo-500 hover:text-white"><? __('nav.home') ?></a>
                                 <a href="<?= BASE_URL ?>/user/login" class="block px-3 py-2 text-base font-medium text-gray-300 rounded-md hover:bg-indigo-500 hover:text-white"><? __('nav.login') ?></a>
                                 <a href="<?= BASE_URL ?>/user/register" class="block px-3 py-2 text-base font-medium text-gray-300 rounded-md hover:bg-indigo-500 hover:text-white"><? __('nav.register') ?></a>
                             <?php else : ?>
-                                <?php if (isset($_SESSION['admin'])) : ?>
-                                    <li class="relative group">
-                                        <a class="hover:text-gray-300" href="#"><?= __('nav.admin.title') ?></a>
-                                        <ul class="absolute hidden p-2 mt-1 text-black bg-white rounded-lg shadow-lg group-hover:block">
-                                            <li class="relative group">
-                                                <a href="#" class="block px-4 py-2 hover:bg-gray-100"><? __('nav.albums') ?></a>
-                                                <ul class="absolute top-0 hidden mt-1 bg-white shadow-lg left-full group-hover:block">
-                                                    <li><a href="<?= BASE_URL ?>/disco/añadir" class="block px-4 py-2 hover:bg-gray-100"><? __('nav.admin.add') ?></a></li>
-                                                    <li><a href="#" class="block px-4 py-2 hover:bg-gray-100"><? __('nav.admin.update') ?></a></li>
-                                                    <li><a href="#" class="block px-4 py-2 hover:bg-gray-100"><? __('nav.admin.delete') ?></a></li>
-                                                </ul>
-                                            </li>
-                                            <li class="relative group">
-                                                <a href="#" class="block px-4 py-2 hover:bg-gray-100"><? __('navsingles') ?></a>
-                                                <ul class="absolute top-0 hidden mt-1 bg-white shadow-lg left-full group-hover:block">
-                                                    <li><a href="<?= BASE_URL ?>/single/añadir" class="block px-4 py-2 hover:bg-gray-100"><? __('nav.admin.add') ?></a></li>
-                                                    <li><a href="#" class="block px-4 py-2 hover:bg-gray-100"><? __('nav.admin.update') ?></a></li>
-                                                    <li><a href="#" class="block px-4 py-2 hover:bg-gray-100"><? __('nav.admin.delete') ?></a></li>
-                                                </ul>
-                                            </li>
-                                            <li class="relative group">
-                                                <a href="#" class="block px-4 py-2 hover:bg-gray-100"><? __('navcategories') ?></a>
-                                                <ul class="absolute top-0 hidden mt-1 bg-white shadow-lg left-full group-hover:block">
-                                                    <li><a href="<?= BASE_URL ?>/single/añadir" class="block px-4 py-2 hover:bg-gray-100"><? __('nav.admin.add') ?></a></li>
-                                                    <li><a href="#" class="block px-4 py-2 hover:bg-gray-100"><? __('nav.admin.update') ?></a></li>
-                                                    <li><a href="#" class="block px-4 py-2 hover:bg-gray-100"><? __('nav.admin.delete') ?></a></li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                    </li>
+                                <?php if (isAdmin()) : ?>
+                                    <? include __DIR__ . '/../components/nav/admin.php'; ?>
                                 <?php else : ?>
                                     <a class="block px-3 py-2 text-base font-medium text-gray-300 rounded-md hover:bg-indigo-500 hover:text-white" href="#"><? __('nav.cart') ?></a>
                                     <? include __DIR__ . '/../components/nav/categories.php'; ?>
                                 <?php endif; ?>
-                                <a class="block px-3 py-2 text-base font-medium text-gray-300 rounded-md hover:bg-indigo-500 hover:text-white" href="<?= BASE_URL ?>/user/logout"><? __('nav.logout') ?></a>
+                                <div class="relative">
+                                    <a class="block px-3 py-2 text-base font-medium text-gray-300 rounded-md cursor-pointer dropdown-toggle hover:bg-indigo-500 hover:text-white">
+                                        <img class="inline-block w-6 h-6 rounded-full ring-2 ring-white" src="" alt="<? echo $_SESSION['identity']['image'] ?>">
+
+                                    </a>
+                                    <div class="absolute z-10 hidden w-48 mt-1 bg-white rounded-lg shadow-lg dropdown-menu">
+                                        <a href="<?= BASE_URL ?>/user/logout" class="block px-4 py-2 text-gray-700 capitalize rounded-lg hover:bg-gray-200 hover:text-black hover:font-bold"><? __('nav.logout') ?></a>
+                                    </div>
+                                </div>
                             <?php endif; ?>
                         </div>
                     </div>
@@ -76,13 +56,17 @@
         <!-- Menú móvil, oculto por defecto -->
         <div class="overflow-hidden transition-all duration-200 ease-in-out opacity-0 sm:hidden max-h-0" id="mobile-menu">
             <div class="px-2 pt-2 pb-3 space-y-1">
-                <?php if (!isset($_SESSION['identity'])) : ?>
+                <?php if (identityIsEmpty()) : ?>
                     <a href="<?= BASE_URL ?>" class="block px-3 py-2 text-base font-medium text-gray-300 rounded-md hover:bg-indigo-500 hover:text-white"><? __('nav.home') ?></a>
                     <a href="<?= BASE_URL ?>/user/login" class="block px-3 py-2 text-base font-medium text-gray-300 rounded-md hover:bg-indigo-500 hover:text-white"><? __('nav.login') ?></a>
                     <a href="<?= BASE_URL ?>/user/register" class="block px-3 py-2 text-base font-medium text-gray-300 rounded-md hover:bg-indigo-500 hover:text-white"><? __('nav.register') ?></a>
                 <?php else : ?>
-                    <a class="block px-3 py-2 text-base font-medium text-gray-300 rounded-md hover:bg-indigo-500 hover:text-white" href="#"><? __('nav.cart') ?></a>
-                    <? include __DIR__ . '/../components/nav/categories.php'; ?>
+                    <?php if (isAdmin()) : ?>
+                        <? include __DIR__ . '/../components/nav/admin.php'; ?>
+                    <?php else : ?>
+                        <a class="block px-3 py-2 text-base font-medium text-gray-300 rounded-md hover:bg-indigo-500 hover:text-white" href="#"><? __('nav.cart') ?></a>
+                        <? include __DIR__ . '/../components/nav/categories.php'; ?>
+                    <?php endif; ?>
                     <a class="block px-3 py-2 text-base font-medium text-gray-300 rounded-md hover:bg-indigo-500 hover:text-white" href="<?= BASE_URL ?>/user/logout"><? __('nav.logout') ?></a>
                 <?php endif; ?>
             </div>
