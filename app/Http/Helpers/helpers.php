@@ -110,6 +110,13 @@ if (!function_exists('identityIsEmpty')) {
 if (!function_exists('isAdmin')) {
     function isAdmin()
     {
-        return isset($_SESSION['admin']) && $_SESSION['admin'];
+        return isset($_SESSION['identity']['role']) && $_SESSION['identity']['role'];
+    }
+}
+
+if (!function_exists('makeDirectory')) {
+    function makeDirectory(string $folder): bool
+    {
+        return is_dir($folder) || mkdir($folder, 0755, true);
     }
 }

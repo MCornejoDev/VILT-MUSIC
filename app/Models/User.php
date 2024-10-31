@@ -4,7 +4,6 @@ require_once __DIR__ . '../../../config/db.php';
 
 class User
 {
-
     #region Propiedades 
     private $id;
     private $userName;
@@ -17,7 +16,7 @@ class User
     private $address;
 
     //Conexión a la base de datos
-    private $db;
+    public $db;
 
     #endregion
 
@@ -70,7 +69,7 @@ class User
      */
     public function setUserName($userName)
     {
-        $this->userName = $this->db->real_escape_string($userName);
+        $this->userName = $userName;
 
         return $this;
     }
@@ -90,7 +89,7 @@ class User
      */
     public function setEmail($email)
     {
-        $this->email = $this->db->real_escape_string($email);
+        $this->email = $email;
 
         return $this;
     }
@@ -130,7 +129,7 @@ class User
      */
     public function setName($name)
     {
-        $this->name = $this->db->real_escape_string($name);
+        $this->name = $name;
 
         return $this;
     }
@@ -150,7 +149,7 @@ class User
      */
     public function setLastName($lastName)
     {
-        $this->lastName = $this->db->real_escape_string($lastName);
+        $this->lastName = $lastName;
 
         return $this;
     }
@@ -170,7 +169,7 @@ class User
      */
     public function setRol($rol)
     {
-        $this->rol = $this->db->real_escape_string($rol);
+        $this->rol = $rol;
 
         return $this;
     }
@@ -210,7 +209,7 @@ class User
      */
     public function setAddress($address)
     {
-        $this->address = $this->db->real_escape_string($address);
+        $this->address = $address;
 
         return $this;
     }
@@ -237,100 +236,6 @@ class User
         return $hasErrors;
     }
 
-    public function save()
-    {
-        $stmt = $this->db->prepare('INSERT INTO users (username, email, password, first_name, last_name, role, image, address) VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
-        // Assign the values to variables first
-        $username = $this->getUserName();
-        $email = $this->getEmail();
-        $password = $this->getPassword();
-        $first_name = $this->getName();
-        $last_name = $this->getLastName();
-        $role = $this->getRol();
-        $image = 'asa';
-        $address = $this->getAddress();
-
-        // Now pass the variables to bind_param
-        $stmt->bind_param(
-            'ssssssss',
-            $username,
-            $email,
-            $password,
-            $first_name,
-            $last_name,
-            $role,
-            $image,
-            $address
-        );
-
-        return $stmt->execute();
-
-
-        // if ($record) {
-        //     $folderName = $this->getUserName();
-        //     $image = $this->getImage();
-        //     $folderUrl = BASE_PATH;
-        //     var_dump($folderName, $image, $folderUrl);
-
-        //     die();
-
-        //     //public_url . "usuarios/" . $folderName;
-
-        //     if (!is_dir($folderUrl)) {
-        //         $carpeta_creada = mkdir($folderUrl, 0777, true);
-
-        //         if ($carpeta_creada) {
-        //             $imageId = $this->getLastId();
-        //             $imageUploaded = $this->uploadImage($image, $folderUrl, $folderName, $imageId);
-
-        //             if ($imageUploaded) {
-        //                 $result = true;
-        //             }
-        //         }
-        //     }
-
-        //     $result = true;
-        // }
-
-        // return $result;
-    }
-
-    public function login()
-    {
-        $email = $this->email;
-        $password = $this->password;
-
-        $stmt = $this->db->prepare('SELECT id,username,password,first_name,last_name,role,image,address FROM users WHERE email = ?');
-        $stmt->bind_param('s', $email);
-        $stmt->execute();
-
-        $stmt->bind_result(
-            $id,
-            $username,
-            $passwordFromUser,
-            $first_name,
-            $last_name,
-            $role,
-            $image,
-            $address
-        );
-
-        $stmt->fetch();
-
-        if (!is_null($passwordFromUser) && password_verify($password, $passwordFromUser)) {
-            $this->setId($id);
-            $this->setUserName($username);
-            $this->setName($first_name);
-            $this->setLastName($last_name);
-            $this->setRol($role);
-            $this->setImage($image);
-            $this->setAddress($address);
-            return true;
-        }
-
-        return;
-    }
-
     /**
      * Función que nos comprueba que no exista el usuario en la base de datos.
      */
@@ -346,33 +251,24 @@ class User
         return $result;
     }
 
-    /**
-     * Función que nos sube la imagén en la carpeta correspondiente y nos actualiza la columna imagen
-     * de la tabla discos
-     */
-    public function uploadImage($image, $folderUrl, $folderName, $imageId)
+    public function saveImage($img): string
     {
-        $result = false;
-        $url = $folderUrl . "/" . basename($image['name']);
-        $url_public = "public/usuarios/" . $folderName . "/" . $image['name'];
+        try {
 
-        if (move_uploaded_file($image['tmp_name'], $url)) {
-            $sql = $this->db->query("UPDATE usuarios SET imagen = '$url_public' WHERE id = '$imageId'");
-            $result = true;
+            $name = uniqid() . '_' . basename($img['name']);
+            $folder = BASE_PATH . '/public/img/users';
+
+            if (makeDirectory($folder)) {
+                $file = $folder . '/' . $name;
+                move_uploaded_file($img['tmp_name'], $file);
+            }
+
+            return $file;
+        } catch (Exception $e) {
+            // Registra el error o devuelve el mensaje de error
+            error_log($e->getMessage()); // Registra el error en el log del servidor
+            return false;
         }
-
-        return $result;
-    }
-
-    /**
-     * Función que nos devuelve el id del último registro creado.
-     */
-    public function getLastId()
-    {
-        $id = -1;
-        $sql = $this->db->query("SELECT MAX(id) as id FROM usuarios");
-        $id = $sql->fetch_object();
-        return $id->id;
     }
 
     public function isAdmin()

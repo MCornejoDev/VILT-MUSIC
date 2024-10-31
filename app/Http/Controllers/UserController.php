@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Services\UserService;
+
 require_once __DIR__ . '/BaseController.php';
-require_once __DIR__ . '../../../Models/User.php';
+require_once __DIR__ . '../../../Http/Services/UserService.php';
 
 class UserController extends BaseController
 {
@@ -23,13 +25,11 @@ class UserController extends BaseController
         }
 
         $data = $this->getData();
-        $user = new User();
-        $user->setEmail($data['email']);
-        $user->setPassword($data['password']);
 
-        if ($user->login()) {
-            $_SESSION['identity'] = $user->identityUser();
-            $_SESSION['admin'] = $user->isAdmin();
+        if (UserService::checkCredentials($data['email'], $data['password'])) {
+            $user = UserService::getUser($data['email']);
+            $_SESSION['identity'] = $user;
+            $_SESSION['admin'] = isAdmin();
             redirectTo('/');
         } else {
             addToBag('errors', ['user.form.login.error']);
@@ -45,26 +45,16 @@ class UserController extends BaseController
         }
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
             $data = $this->getData();
 
-            $user = new User();
+            // //VALIDAR EL USUARIO SEGÚN UNIQUE, NULO, FALSE O LO QUE SEA
+            // if (!$user->isValid($data)) {
+            //     $this->loadView('user/register');
+            //     return;
+            // }
 
-            //VALIDAR EL USUARIO SEGÚN UNIQUE, NULO, FALSE O LO QUE SEA
-            if (!$user->isValid($data)) {
-                $this->loadView('user/register');
-                return;
-            }
-
-            $user->setEmail($data['email']);
-            $user->setUserName($data['userName']);
-            $user->setPassword($data['password']);
-            $user->setName($data['name']);
-            $user->setLastName($data['lastName']);
-            $user->setAddress($data['address']);
-            $user->setImage($data['image']);
-            $user->setRol('user');
-
-            $user->save() ? addToBag('messages', ['user.form.register.success']) : addToBag('errors', ['user.form.register.error']);
+            UserService::save($data) ? addToBag('messages', ['user.form.register.success']) : addToBag('errors', ['user.form.register.error']);
         }
 
         $this->loadView('user/register');
