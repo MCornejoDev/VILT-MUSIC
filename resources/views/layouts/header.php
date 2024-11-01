@@ -51,7 +51,8 @@
                                     <div class="hidden font-bold text-white capitalize rounded-lg sm:block"><?= $_SESSION['identity']['username'] ?></div>
                                 </div>
                             </a>
-                            <div class="absolute z-10 w-48 mt-1 bg-white rounded-lg shadow-lg right-2 sm:rigth-0 dropdown-menu">
+                            <div class="absolute z-10 hidden w-48 mt-1 bg-white rounded-lg shadow-lg right-2 sm:rigth-0 dropdown-menu">
+                                <a href="<?= BASE_URL ?>/user/settings" class="block px-4 py-2 text-gray-700 capitalize rounded-lg hover:bg-gray-200 hover:text-black hover:font-bold"><? __('nav.settings') ?></a>
                                 <a href="<?= BASE_URL ?>/user/logout" class="block px-4 py-2 text-gray-700 capitalize rounded-lg hover:bg-gray-200 hover:text-black hover:font-bold"><? __('nav.logout') ?></a>
                             </div>
                         </div>

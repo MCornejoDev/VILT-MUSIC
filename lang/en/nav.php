@@ -4,6 +4,7 @@ return [
     'home' => 'Home',
     'login' => 'Login',
     'register' => 'Register',
+    'settings' => 'Settings',
     'logout' => 'Logout',
 
     'albums' => 'Albums',
