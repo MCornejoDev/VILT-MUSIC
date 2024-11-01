@@ -7,6 +7,7 @@ services:
     volumes:
       - ./:/var/www/html       # Monta el directorio actual en el contenedor
       - ./apache-config.conf:/etc/apache2/sites-available/000-default.conf # Asegura la configuración de Apache
+      - ./php.ini:/usr/local/etc/php/php.ini  # Monta el php.ini para editarlo sin reconstruir
     depends_on:
       - mysql
     env_file:

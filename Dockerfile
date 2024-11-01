@@ -22,6 +22,14 @@ WORKDIR /var/www/html
 # Cambiar los permisos para el usuario de Apache
 RUN chown -R www-data:www-data /var/www/html
 
+# Crear la carpeta de logs y otorgar permisos para escribir en ella
+RUN mkdir -p /var/www/html/logs && \
+    touch /var/www/html/logs/error.log && \
+    chown -R www-data:www-data /var/www/html/logs
+
+# Copiar configuración personalizada de PHP
+COPY ./php.ini /usr/local/etc/php/php.ini
+
 # Exponer el puerto 80 para Apache
 EXPOSE 80
 

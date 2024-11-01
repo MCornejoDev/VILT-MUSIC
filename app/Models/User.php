@@ -263,7 +263,7 @@ class User
                 move_uploaded_file($img['tmp_name'], $file);
             }
 
-            return $file;
+            return $name;
         } catch (Exception $e) {
             // Registra el error o devuelve el mensaje de error
             error_log($e->getMessage()); // Registra el error en el log del servidor
