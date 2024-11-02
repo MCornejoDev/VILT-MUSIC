@@ -15,7 +15,7 @@ function get_controller_name($uri_segment)
 function load_controller(?string $name_controller = null)
 {
     if (is_null($name_controller)) {
-        $name_controller = 'ErrorController';
+        $name_controller = 'BaseController';
     }
 
     $controller_file = __DIR__ . '/Http/Controllers/' . $name_controller . '.php';

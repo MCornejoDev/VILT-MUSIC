@@ -9,7 +9,12 @@ class BaseController
         if (file_exists($viewPath)) {
             include $viewPath;
         } else {
-            echo "La vista no existe.";
+            include BASE_PATH . '/resources/views/errors/404.php';
         }
+    }
+
+    public function error404()
+    {
+        $this->loadView('errors/404');
     }
 }
