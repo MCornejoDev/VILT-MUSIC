@@ -2,7 +2,12 @@
 
 class BaseController
 {
-    public function loadView($viewName)
+    /**
+     * This method loads a view.
+     * @param mixed $viewName 
+     * @return void 
+     */
+    public function loadView($viewName): void
     {
         $viewPath = BASE_PATH . '/resources/views/' . $viewName . '.php';
 
@@ -13,7 +18,11 @@ class BaseController
         }
     }
 
-    public function error404()
+    /**
+     * This method loads the 404 view.
+     * @return void 
+     */
+    public function error404(): void
     {
         $this->loadView('errors/404');
     }

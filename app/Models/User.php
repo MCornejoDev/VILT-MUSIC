@@ -218,24 +218,6 @@ class User
 
     #region Métodos
 
-    public function isValid(array $data)
-    {
-        // Usar array_walk para llenar el array de errores
-        array_walk($data, function ($value, $key) use (&$errors) {
-            if (empty($value)) { // Si el valor es vacío, nulo o falso
-                $errors[$key] = []; // Agregar la clave al array de errores
-            }
-        });
-
-        $hasErrors = empty($errors);
-
-        if (!$hasErrors) {
-            addToBag('errors', $errors);
-        }
-
-        return $hasErrors;
-    }
-
     /**
      * Función que nos comprueba que no exista el usuario en la base de datos.
      */

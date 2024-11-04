@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Requests\UserRequest;
 use App\Http\Services\UserService;
 
 require_once __DIR__ . '/BaseController.php';
 require_once __DIR__ . '../../../Http/Services/UserService.php';
+require_once __DIR__ . '../../../Http/Requests/UserRequest.php';
 
 class UserController extends BaseController
 {
@@ -24,7 +26,7 @@ class UserController extends BaseController
             return false;
         }
 
-        $data = $this->getData();
+        $data = UserRequest::getData();
 
         if (UserService::checkCredentials($data['email'], $data['password'])) {
             $user = UserService::getUser($data['email']);
@@ -46,13 +48,12 @@ class UserController extends BaseController
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-            $data = $this->getData();
+            $data = UserRequest::getData();
 
-            // //VALIDAR EL USUARIO SEGÚN UNIQUE, NULO, FALSE O LO QUE SEA
-            // if (!$user->isValid($data)) {
-            //     $this->loadView('user/register');
-            //     return;
-            // }
+            if (!UserRequest::isValid($data)) {
+                $this->loadView('user/register');
+                return;
+            }
 
             UserService::save($data) ? addToBag('messages', ['user.form.register.success']) : addToBag('errors', ['user.form.register.error']);
         }
@@ -68,20 +69,5 @@ class UserController extends BaseController
         unset($_SESSION['error']);
         unset($_SESSION['messages']);
         redirectTo('/user/login');
-    }
-
-    function getData()
-    {
-        $data = [];
-
-        foreach ($_POST as $key => $value) {
-            $data[$key] = $value;
-        }
-
-        foreach ($_FILES as $key => $value) {
-            $data[$key] = $value;
-        }
-
-        return $data;
     }
 }
