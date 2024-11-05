@@ -1,5 +1,6 @@
 <?php
 include __DIR__ . '/../../Models/Category.php';
+
 if (! function_exists('__')) {
     function __(string $key)
     {
@@ -10,10 +11,8 @@ if (! function_exists('__')) {
 if (! function_exists('setKey')) {
     function setKey(string $lang, string $key)
     {
-        $value = getKey($lang, $key);
-
         // Imprime el valor obtenido
-        print($value);
+        print(getKey($lang, $key));
     }
 }
 
@@ -41,13 +40,18 @@ if (! function_exists('getKey')) {
 if (! function_exists('getLanguage')) {
     function getLanguage()
     {
-        $lang = "es";
-        if (empty($_GET['lang'])) {
-            $lang = 'es';
-        } else {
-            $lang = htmlspecialchars($_GET['lang']);
+        return htmlspecialchars(empty($_GET['lang']) ? 'es' : $_GET['lang']);
+    }
+}
+
+if (! function_exists('initSession')) {
+    function initSession()
+    {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+            $_SESSION['errors'] = [];
+            $_SESSION['messages'] = [];
         }
-        return $lang;
     }
 }
 
@@ -65,31 +69,22 @@ if (! function_exists('existsKeyInBag')) {
     }
 }
 
-if (! function_exists('existsMessageInBag')) {
-    function existsMessageInBag()
+if (! function_exists('hasValuesInBag')) {
+    function hasValuesInBag(string $bag)
     {
-        return array_key_exists('messages', $_SESSION);
-    }
-}
-
-if (! function_exists('getValuesFromBag')) {
-    function getValuesFromBag(string $bag)
-    {
-        return $_SESSION[$bag];
+        return !empty($_SESSION[$bag]);
     }
 }
 
 if (! function_exists('getCategories')) {
     function getCategories()
     {
-        $category = new Category();
-        $categories = $category->getAll();
-        return $categories;
+        return (new Category())->getAll();
     }
 }
 
 if (!function_exists('redirectTo')) {
-    function redirectTo(string $url)
+    function redirectTo(string $url): void
     {
         print
             '<script>
@@ -101,14 +96,14 @@ if (!function_exists('redirectTo')) {
 }
 
 if (!function_exists('identityIsEmpty')) {
-    function identityIsEmpty()
+    function identityIsEmpty(): bool
     {
         return empty($_SESSION['identity']);
     }
 }
 
 if (!function_exists('isAdmin')) {
-    function isAdmin()
+    function isAdmin(): bool
     {
         return isset($_SESSION['identity']['role']) && $_SESSION['identity']['role'];
     }

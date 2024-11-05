@@ -1,10 +1,6 @@
 <?php
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-    $_SESSION['errors'] = [];
-    $_SESSION['messages'] = [];
-}
 require_once __DIR__ . '/../vendor/autoload.php';
+initSession();
 require_once __DIR__ . '/../config/app.php';
 require_once __DIR__ . '/../resources/views/components/input/input.php'; ?>
 
