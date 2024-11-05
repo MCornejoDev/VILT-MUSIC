@@ -2,27 +2,19 @@
 include __DIR__ . '/../../Models/Category.php';
 
 if (! function_exists('__')) {
-    function __(string $key)
+    function __(string $key): void
     {
-        setKey(getLanguage(), $key);
-    }
-}
-
-if (! function_exists('setKey')) {
-    function setKey(string $lang, string $key)
-    {
-        // Imprime el valor obtenido
-        print(getKey($lang, $key));
+        print(getKey($key));
     }
 }
 
 if (! function_exists('getKey')) {
-    function getKey(string $lang, string $key)
+    function getKey(string $key): string
     {
         $splits = explode('.', $key);
         $file = array_shift($splits);
 
-        $path = __DIR__ . '/../../../lang/' . $lang . '/' . $file . '.php';
+        $path = __DIR__ . '/../../../lang/' . getLanguage() . '/' . $file . '.php';
 
         if (file_exists($path)) {
             // Incluimos el archivo y obtenemos el array
@@ -38,14 +30,14 @@ if (! function_exists('getKey')) {
 }
 
 if (! function_exists('getLanguage')) {
-    function getLanguage()
+    function getLanguage(): string
     {
         return htmlspecialchars(empty($_GET['lang']) ? 'es' : $_GET['lang']);
     }
 }
 
 if (! function_exists('initSession')) {
-    function initSession()
+    function initSession(): void
     {
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
@@ -56,28 +48,28 @@ if (! function_exists('initSession')) {
 }
 
 if (! function_exists('addToBag')) {
-    function addToBag(string $key, array $data)
+    function addToBag(string $key, array $data): void
     {
         $_SESSION[$key] = $data;
     }
 }
 
 if (! function_exists('existsKeyInBag')) {
-    function existsKeyInBag(string $key, string $bag)
+    function existsKeyInBag(string $key, string $bag): bool
     {
         return array_key_exists($key, $_SESSION[$bag]);
     }
 }
 
 if (! function_exists('hasValuesInBag')) {
-    function hasValuesInBag(string $bag)
+    function hasValuesInBag(string $bag): bool
     {
         return !empty($_SESSION[$bag]);
     }
 }
 
 if (! function_exists('getCategories')) {
-    function getCategories()
+    function getCategories(): mysqli_result|bool
     {
         return (new Category())->getAll();
     }
