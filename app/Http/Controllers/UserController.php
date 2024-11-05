@@ -28,13 +28,13 @@ class UserController extends BaseController
 
         $data = UserRequest::getData();
 
-        if (UserService::checkCredentials($data['email'], $data['password'])) {
+        if (UserRequest::isValid($data) && UserService::checkCredentials($data['email'], $data['password'])) {
             $user = UserService::getUser($data['email']);
             $_SESSION['identity'] = $user;
             $_SESSION['admin'] = isAdmin();
             redirectTo('/');
         } else {
-            addToBag('errors', ['user.form.login.error']);
+            addToBag('messages', ['error' => 'user.form.register.error']);
             $this->loadView('user/index');
         }
     }
@@ -51,11 +51,12 @@ class UserController extends BaseController
             $data = UserRequest::getData();
 
             if (!UserRequest::isValid($data)) {
+                addToBag('messages', ['error' => 'user.form.register.error']);
                 $this->loadView('user/register');
                 return;
             }
 
-            UserService::save($data) ? addToBag('messages', ['user.form.register.success']) : addToBag('errors', ['user.form.register.error']);
+            UserService::save($data) ? addToBag('messages', ['success' => 'user.form.register.success']) : addToBag('messages', ['error' => 'user.form.register.error']);
         }
 
         $this->loadView('user/register');
