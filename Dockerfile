@@ -1,43 +1,56 @@
-# Usar la imagen oficial de PHP 8.3 con Apache
+# Use the official PHP 8.3 image with Apache
 FROM php:8.3-apache
 
-# Instalar dependencias necesarias
+# Install necessary dependencies
 RUN apt-get update && apt-get install -y \
     libpng-dev \
     libjpeg-dev \
     libfreetype6-dev \
     libzip-dev \
+    libonig-dev \
+    libxml2-dev \
     zip \
-    unzip \
-    && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install gd \
-    && docker-php-ext-install mysqli pdo pdo_mysql zip
+    unzip
 
-# Habilitar mod_rewrite de Apache (útil para frameworks como Laravel o Symfony)
+# Configure and install PHP extensions one by one to identify potential issues
+RUN docker-php-ext-configure gd --with-freetype --with-jpeg && \
+    docker-php-ext-install gd
+
+RUN docker-php-ext-install mysqli pdo pdo_mysql zip
+RUN docker-php-ext-install mbstring
+RUN docker-php-ext-install dom
+RUN docker-php-ext-install xml
+RUN docker-php-ext-install xmlwriter
+
+# Instalar Composer
+RUN curl -sS https://getcomposer.org/installer | php \
+    && mv composer.phar /usr/local/bin/composer
+
+# Enable mod_rewrite for Apache (useful for frameworks like Laravel or Symfony)
 RUN a2enmod rewrite
 
-# Configurar el directorio de trabajo en /var/www/html
+# Set the working directory to /var/www/html
 WORKDIR /var/www/html
 
-# Cambiar los permisos para el usuario de Apache
+# Change permissions for the Apache user
 RUN chown -R www-data:www-data /var/www/html
 
-# Crear la carpeta de logs y otorgar permisos para escribir en ella
+# Create logs directory and set permissions
 RUN mkdir -p /var/www/html/logs && \
     touch /var/www/html/logs/error.log && \
     chown -R www-data:www-data /var/www/html/logs
 
-# Copiar configuración personalizada de PHP
+# Copy custom PHP configuration
 COPY ./php.ini /usr/local/etc/php/php.ini
 
-# Exponer el puerto 80 para Apache
+# Expose port 80 for Apache
 EXPOSE 80
 
-# Copiar la configuración personalizada de Apache para apuntar a la carpeta public
+# Copy the custom Apache configuration to set the DocumentRoot to the public folder
 COPY ./apache-config.conf /etc/apache2/sites-available/000-default.conf
 
-# Copiar el código fuente al contenedor
+# Copy the application source code to the container
 COPY . /var/www/html
 
-# Comando de inicio
+# Start Apache in the foreground
 CMD ["apache2-foreground"]
