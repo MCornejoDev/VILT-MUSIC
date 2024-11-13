@@ -1,8 +1,14 @@
 <?php
+// Carga el autoload de Composer
 require_once __DIR__ . '/../vendor/autoload.php';
+
+// Inicia la sesión (asegúrate de que initSession() esté definido y disponible)
 initSession();
+
+// Cargar configuraciones de la aplicación y otros componentes
 require_once __DIR__ . '/../config/app.php';
-require_once __DIR__ . '/../resources/views/components/input/input.php'; ?>
+require_once __DIR__ . '/../resources/views/components/input/input.php';
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -18,11 +24,16 @@ require_once __DIR__ . '/../resources/views/components/input/input.php'; ?>
 
 <body>
     <div class="grid grid-flow-row auto-rows-max">
-        <? require_once __DIR__ . '/../resources/views/layouts/header.php'; ?>
+        <!-- Cargar el header antes del main -->
+        <?php require_once __DIR__ . '/../resources/views/layouts/header.php'; ?>
+
+        <!-- El controlador se carga dentro del main -->
         <main class="mt-10">
             <?php require_once __DIR__ . '/../app/autoloading.php'; ?>
         </main>
-        <? require_once __DIR__ . '/../resources/views/layouts/footer.php'; ?>
+
+        <!-- Footer -->
+        <?php require_once __DIR__ . '/../resources/views/layouts/footer.php'; ?>
     </div>
 </body>
 

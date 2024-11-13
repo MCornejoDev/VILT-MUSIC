@@ -1,5 +1,6 @@
 <?php
-include __DIR__ . '/../../Models/Category.php';
+
+use App\Models\Category;
 
 if (! function_exists('__')) {
     /**

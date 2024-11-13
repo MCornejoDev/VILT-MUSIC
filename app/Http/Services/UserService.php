@@ -2,9 +2,7 @@
 
 namespace App\Http\Services;
 
-use User;
-
-require_once __DIR__ . '../../../Models/User.php';
+use App\Models\User;
 
 class UserService
 {
@@ -20,6 +18,7 @@ class UserService
 
         try {
             $user = new User();
+
             $stmt = $user->db->prepare('SELECT id, username, role, image, address FROM users WHERE email = ?');
 
             if (!$stmt) {

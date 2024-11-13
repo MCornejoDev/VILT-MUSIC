@@ -1,6 +1,9 @@
 <?php
 
-require_once __DIR__ . '../../../config/db.php';
+namespace App\Models;
+
+use App\Database;
+
 class Category
 {
     #region Properties
@@ -11,7 +14,7 @@ class Category
 
     public function __construct()
     {
-        $this->db = Database::connect();
+        $this->db = new Database();
     }
 
     #region Getters and Setters

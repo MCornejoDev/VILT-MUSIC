@@ -2,9 +2,10 @@
 
 namespace App\Http\Requests;
 
-use Database;
+use App\Database;
 use Exception;
 use InvalidArgumentException;
+use PDO;
 
 class BaseRequest
 {
@@ -130,29 +131,18 @@ class BaseRequest
                 throw new InvalidArgumentException("Invalid table or column name.");
             }
 
-            $db = Database::connect();
+            $db = (new Database())->getConnection();
 
             // Preparar la consulta usando mysqli
-            $query = "SELECT COUNT(*) FROM $table WHERE $column = ?";
-            $stmt = $db->prepare($query);
+            $stmt = $db->prepare("SELECT 1 FROM $table WHERE $column = :value LIMIT 1");
 
             if (!$stmt) {
-                throw new Exception("Error al preparar la consulta: " . $db->error);
+                throw new Exception("Error al preparar la consulta: " . $db->errorInfo());
             }
 
-            // Enlazar el parámetro (asumiendo que $value es una cadena)
-            $stmt->bind_param("s", $value);
+            $stmt->bindParam(':value', $value, PDO::PARAM_STR);
             $stmt->execute();
-
-            // Obtener el resultado de la consulta
-            $stmt->bind_result($count);
-            $stmt->fetch();
-
-            // Cerrar la declaración
-            $stmt->close();
-
-            // Retorna true si el valor es único (count == 0)
-            return $count == 0;
+            return $stmt->fetchColumn();
         } catch (Exception $e) {
             // Registra el error
             error_log($e->getMessage());

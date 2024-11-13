@@ -1,6 +1,9 @@
 <?php
 
-require_once __DIR__ . '../../../config/db.php';
+namespace App\Models;
+
+use App\Database;
+use Exception;
 
 class User
 {
@@ -22,7 +25,7 @@ class User
 
     public function __construct($id = null, $email = null, $password = null, $name = null, $lastName = null, $rol = null, $image = null, $address = null)
     {
-        $this->db = Database::connect();
+        $this->db = (new Database())->getConnection();
         $this->id = $id;
         $this->email = $email;
         $this->password = $password;

@@ -18,11 +18,11 @@ function load_controller(?string $name_controller = null)
         $name_controller = 'BaseController';
     }
 
-    $controller_file = __DIR__ . '/Http/Controllers/' . $name_controller . '.php';
+    // Incluye el namespace completo
+    $namespace = 'App\Http\Controllers\\';
+    $controller_class = $namespace . $name_controller;
 
-    require_once $controller_file;
-
-    return new $name_controller();
+    return new $controller_class();
 }
 
 // Procesa URI y obtiene nombre del controlador
@@ -37,4 +37,5 @@ if (!$action || !method_exists($controller, $action)) {
     $action = 'error404';
 }
 
+// Ejecuta el método en el controlador
 $controller->$action();

@@ -1,11 +1,9 @@
 <?php
 
+namespace App\Http\Controllers;
+
 use App\Http\Requests\UserRequest;
 use App\Http\Services\UserService;
-
-require_once __DIR__ . '/BaseController.php';
-require_once __DIR__ . '../../../Http/Services/UserService.php';
-require_once __DIR__ . '../../../Http/Requests/UserRequest.php';
 
 class UserController extends BaseController
 {
@@ -35,7 +33,7 @@ class UserController extends BaseController
             return false;
         }
 
-        $data = UserRequest::getData();
+        $data = getData();
 
         if (UserRequest::isValid($data, $this->rules) && UserService::checkCredentials($data['email'], $data['password'])) {
             $user = UserService::getUser($data['email']);

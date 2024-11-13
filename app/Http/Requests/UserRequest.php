@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-require_once __DIR__ . '/BaseRequest.php';
+use App\Http\Requests\BaseRequest;
 
 class UserRequest extends BaseRequest
 {
