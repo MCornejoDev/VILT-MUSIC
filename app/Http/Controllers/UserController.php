@@ -9,6 +9,15 @@ require_once __DIR__ . '../../../Http/Requests/UserRequest.php';
 
 class UserController extends BaseController
 {
+    private $rules = [
+        'userName' => 'required|min:1|max:255',
+        'email' => 'required|unique:users|email',
+        'password' => 'required|min:8|max:255',
+        'name' => 'required|max:255',
+        'lastName' => 'required|max:255',
+        'address' => 'required|max:255',
+    ];
+
     function index()
     {
         $this->login();
@@ -28,7 +37,7 @@ class UserController extends BaseController
 
         $data = UserRequest::getData();
 
-        if (UserRequest::isValid($data) && UserService::checkCredentials($data['email'], $data['password'])) {
+        if (UserRequest::isValid($data, $this->rules) && UserService::checkCredentials($data['email'], $data['password'])) {
             $user = UserService::getUser($data['email']);
             $_SESSION['identity'] = $user;
             $_SESSION['admin'] = isAdmin();
@@ -48,9 +57,9 @@ class UserController extends BaseController
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-            $data = UserRequest::getData();
+            $data = getData();
 
-            if (!UserRequest::isValid($data)) {
+            if (!UserRequest::isValid($data, $this->rules)) {
                 addToBag('messages', ['error' => 'user.form.register.error']);
                 $this->loadView('user/register');
                 return;
