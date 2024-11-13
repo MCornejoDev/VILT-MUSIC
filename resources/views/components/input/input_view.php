@@ -16,6 +16,9 @@
             name="<?= htmlspecialchars($name); ?>"
             id="<?= htmlspecialchars($id); ?>"
             class="border-red-500 w-full p-2 border-2 rounded-md shadow-sm<?= htmlspecialchars($class); ?>">
+        <?php foreach ($_SESSION['errors'][$name] as $error): ?>
+            <p class="text-red-600"><?= htmlspecialchars($error); ?></p>
+        <?php endforeach; ?>
     <?php else: ?>
         <input type="<?= htmlspecialchars($type); ?>"
             name="<?= htmlspecialchars($name); ?>"
