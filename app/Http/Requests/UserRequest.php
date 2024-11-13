@@ -6,14 +6,26 @@ require_once __DIR__ . '/BaseRequest.php';
 
 class UserRequest extends BaseRequest
 {
-    public static function isValid($data): bool
+    public static function isValid($data, $rules): bool
     {
-        // Usar array_walk para llenar el array de errores
-        array_walk($data, function ($value, $key) use (&$errors) {
-            if (empty($value)) { // Si el valor es vacío, nulo o falso
-                $errors[$key] = []; // Agregar la clave al array de errores
+        foreach ($rules as $key => $value) {
+
+            if (array_key_exists($key, $data)) {
+                $errors[$key] = [];
+                $allRules = self::splitRules($value);
+                foreach ($allRules as $rule) {
+
+                    $error = match ($rule[0]) {
+                        'required' => self::isRequired($data[$key], $key),
+                        'email' => self::isEmail($data[$key], $key),
+                        'unique' => self::isUnique($rule[1], $key, $data[$key]),
+                        'min' => self::minLength($data[$key], $rule[1], $key),
+                        'max' => self::maxLength($data[$key], $rule[1], $key),
+                    };
+                    array_push($errors[$key], $error);
+                }
             }
-        });
+        }
 
         $hasErrors = empty($errors);
 
@@ -23,4 +35,6 @@ class UserRequest extends BaseRequest
 
         return $hasErrors;
     }
+
+    public static function getError() {}
 }
