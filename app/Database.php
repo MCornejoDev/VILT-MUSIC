@@ -5,7 +5,10 @@ namespace App;
 use PDO;
 use PDOException;
 
-/**Creamos una clase estática que contendra la conexión a la base de datos */
+/**
+ * Class Database
+ * @package App
+ */
 class Database
 {
     private $pdo;

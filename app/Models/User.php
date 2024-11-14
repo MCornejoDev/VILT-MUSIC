@@ -5,6 +5,10 @@ namespace App\Models;
 use App\Database;
 use Exception;
 
+/**
+ * Class User
+ * @package App\Models
+ */
 class User
 {
     #region Propiedades 
@@ -102,7 +106,7 @@ class User
      */
     public function getPassword()
     {
-        return password_hash($this->db->real_escape_string($this->password), PASSWORD_BCRYPT, ['cost' => 4]);
+        return password_hash($this->db->quote($this->password), PASSWORD_BCRYPT, ['cost' => 4]);
     }
 
     /**

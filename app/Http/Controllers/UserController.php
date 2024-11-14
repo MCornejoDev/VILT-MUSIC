@@ -8,9 +8,10 @@ use App\Http\Services\UserService;
 class UserController extends BaseController
 {
     private $rules = [
-        'userName' => 'required|min:1|max:255',
+        'userName' => 'required|unique:users|min:1|max:255',
         'email' => 'required|unique:users|email',
         'password' => 'required|min:8|max:255',
+        'samePassword' => 'required||min:8|max:255',
         'name' => 'required|max:255',
         'lastName' => 'required|max:255',
         'address' => 'required|max:255',
@@ -57,7 +58,7 @@ class UserController extends BaseController
 
             $data = getData();
 
-            if (!UserRequest::isValid($data, $this->rules)) {
+            if (UserRequest::isValid($data, $this->rules)) {
                 addToBag('messages', ['error' => 'user.form.register.error']);
                 $this->loadView('user/register');
                 return;

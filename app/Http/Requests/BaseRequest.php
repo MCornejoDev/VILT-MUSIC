@@ -29,13 +29,12 @@ class BaseRequest
 
     /**
      * Check if a field is unique.
-     * 
-     * @param string $table
-     * @param string $column
-     * @param mixed $value
-     * @return bool
+     * @param string $table 
+     * @param string $column 
+     * @param string $value 
+     * @return string 
      */
-    public static function isUnique(string $table, string $column, string $value): bool
+    public static function isUnique(string $table, string $column, string $value): string
     {
         $trans = getKey('global.rules.unique');
         $transField = getKey('user.' . $column);
@@ -100,11 +99,36 @@ class BaseRequest
         $trans = getKey('global.rules.email');
         $transField = getKey('user.' . $field);
 
-        if (filter_var($value, FILTER_VALIDATE_EMAIL)) {
-            return $transField . ' ' . $trans;
-        }
+        // $value = trim($value);
+
+        // if (is_string($value) && filter_var($value, FILTER_VALIDATE_EMAIL, FILTER_FLAG_EMAIL_UNICODE)) {
+        //     return $transField . ' ' . $trans;
+        // }
 
         return "";
+    }
+
+    public static function applyRule($rule, $value, $key)
+    {
+        return match ($rule[0]) {
+            'required' => self::isRequired($value, $key),
+            'email' => self::isEmail($value, $key),
+            'unique' => self::isUnique($rule[1], $key, $value),
+            'min' => self::minLength($value, $rule[1], $key),
+            'max' => self::maxLength($value, $rule[1], $key),
+            default => null,
+        };
+    }
+
+    public static function handleErrors(array $errors): bool
+    {
+        $hasErrors = !empty($errors);
+
+        if ($hasErrors) {
+            addToBag('errors', $errors);
+        }
+
+        return $hasErrors;
     }
 
     /**
@@ -123,6 +147,13 @@ class BaseRequest
         return $rules;
     }
 
+    /**
+     * Check if a value in a field is unique in the database.
+     * @param string $table 
+     * @param string $column 
+     * @param string $value 
+     * @return bool 
+     */
     public static function checkUnique(string $table, string $column, string $value): bool
     {
         try {
