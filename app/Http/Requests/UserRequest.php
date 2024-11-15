@@ -17,7 +17,7 @@ class UserRequest extends BaseRequest
                 foreach ($allRules as $rule) {
                     $error = self::applyRule($rule, $data[$key], $key);
 
-                    if ($error !== "") {
+                    if (!is_null($error)) {
                         $errors[$key][] = $error;
                     }
                 }
@@ -26,6 +26,4 @@ class UserRequest extends BaseRequest
 
         return self::handleErrors($errors);
     }
-
-    public static function getError() {}
 }

@@ -9,13 +9,15 @@ use PDO;
 
 class BaseRequest
 {
+    /**TODO: IMPLEMENT GET AND SET REQUEST PARAMETERS*/
+
     /**
      * Check if a field is required.
      * @param mixed $value 
      * @param mixed $field 
      * @return string 
      */
-    public static function isRequired($value, $field)
+    public static function isRequired($value, $field): ?string
     {
         $trans = getKey('global.rules.required');
         $transField = getKey('user.' . $field);
@@ -24,7 +26,7 @@ class BaseRequest
             return $transField . ' ' . $trans;
         }
 
-        return "";
+        return null;
     }
 
     /**
@@ -34,7 +36,7 @@ class BaseRequest
      * @param string $value 
      * @return string 
      */
-    public static function isUnique(string $table, string $column, string $value): string
+    public static function isUnique(string $table, string $column, string $value): ?string
     {
         $trans = getKey('global.rules.unique');
         $transField = getKey('user.' . $column);
@@ -43,7 +45,7 @@ class BaseRequest
             return $transField . ' ' . $trans;
         }
 
-        return "";
+        return null;
     }
 
     /**
@@ -53,7 +55,7 @@ class BaseRequest
      * @param mixed $field 
      * @return string 
      */
-    public static function minLength($value, $minLength, $field)
+    public static function minLength($value, $minLength, $field): ?string
     {
         $min = $minLength == 1 ? getKey('global.rules.min.one') : getKey('global.rules.min.other');
 
@@ -64,7 +66,7 @@ class BaseRequest
             return $transField . ' ' . $trans;
         }
 
-        return "";
+        return null;
     }
 
     /**
@@ -74,7 +76,7 @@ class BaseRequest
      * @param mixed $field 
      * @return string 
      */
-    public static function maxLength($value, $maxLength, $field)
+    public static function maxLength($value, $maxLength, $field): ?string
     {
         $max = $maxLength == 1 ? getKey('global.rules.max.one') : getKey('global.rules.max.other');
 
@@ -85,28 +87,34 @@ class BaseRequest
             return $transField . ' ' . $trans;
         }
 
-        return "";
+        return null;
     }
 
     /**
      * Check if a field is a valid email.
      * @param mixed $value 
-     * @param mixed $field 
-     * @return string 
+     * @param string $field 
+     * @return string|null
      */
-    public static function isEmail($value, $field)
+    public static function isEmail($value, string $field): ?string
     {
-        $trans = getKey('global.rules.email');
-        $transField = getKey('user.' . $field);
+        // Traducciones para los mensajes
+        $trans = getKey('global.rules.email'); // Ejemplo: "is not a valid email"
+        $transField = getKey('user.' . $field); // Ejemplo: "Email"
 
-        // $value = trim($value);
+        // Asegúrate de que el valor sea una cadena válida
+        $value = is_string($value) ? trim($value) : '';
 
-        // if (is_string($value) && filter_var($value, FILTER_VALIDATE_EMAIL, FILTER_FLAG_EMAIL_UNICODE)) {
-        //     return $transField . ' ' . $trans;
-        // }
+        // Validación del email
+        if (!filter_var($value, FILTER_VALIDATE_EMAIL)) {
+            // Si no es válido, devuelve el mensaje de error
+            return $transField . ' ' . $trans;
+        }
 
-        return "";
+        // Devuelve null si la validación es exitosa
+        return null;
     }
+
 
     public static function applyRule($rule, $value, $key)
     {
