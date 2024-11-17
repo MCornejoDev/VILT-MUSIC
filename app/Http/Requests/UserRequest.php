@@ -3,19 +3,28 @@
 namespace App\Http\Requests;
 
 use App\Http\Requests\BaseRequest;
+use ReflectionClass;
 
 class UserRequest extends BaseRequest
 {
-    public static function isValid($data, $rules): bool
+    private array $rules;
+
+    public function __construct(array $rules)
+    {
+        parent::__construct(__CLASS__);
+        $this->rules = $rules;
+    }
+
+    public function isValid($data): bool
     {
         $errors = [];
 
-        foreach ($rules as $key => $value) {
+        foreach ($this->rules as $key => $value) {
             if (array_key_exists($key, $data)) {
-                $allRules = self::splitRules($value);
+                $allRules = $this->splitRules($value);
 
                 foreach ($allRules as $rule) {
-                    $error = self::applyRule($rule, $data[$key], $key);
+                    $error = $this->applyRule($rule, $data[$key], $key);
 
                     if (!is_null($error)) {
                         $errors[$key][] = $error;
@@ -24,6 +33,6 @@ class UserRequest extends BaseRequest
             }
         }
 
-        return self::handleErrors($errors);
+        return $this->handleErrors($errors);
     }
 }

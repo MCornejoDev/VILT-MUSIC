@@ -6,10 +6,17 @@ use App\Database;
 use Exception;
 use InvalidArgumentException;
 use PDO;
+use ReflectionClass;
 
 class BaseRequest
 {
+    public string $class;
+
     /**TODO: IMPLEMENT GET AND SET REQUEST PARAMETERS*/
+    public function __construct(string $class)
+    {
+        $this->class = $this->getShortName($class);
+    }
 
     /**
      * Check if a field is required.
@@ -17,10 +24,10 @@ class BaseRequest
      * @param mixed $field 
      * @return string 
      */
-    public static function isRequired($value, $field): ?string
+    public function isRequired($value, $field): ?string
     {
         $trans = getKey('global.rules.required');
-        $transField = getKey('user.' . $field);
+        $transField = getKey($this->class . '.' . $field);
 
         if (isset($value) && is_string($value) && trim($value) === '') {
             return $transField . ' ' . $trans;
@@ -36,12 +43,12 @@ class BaseRequest
      * @param string $value 
      * @return string 
      */
-    public static function isUnique(string $table, string $column, string $value): ?string
+    public function isUnique(string $table, string $column, string $value): ?string
     {
         $trans = getKey('global.rules.unique');
-        $transField = getKey('user.' . $column);
+        $transField = getKey($this->class . '.' . $column);
 
-        if (self::checkUnique($table, $column, $value)) {
+        if ($this->checkUnique($table, $column, $value)) {
             return $transField . ' ' . $trans;
         }
 
@@ -55,12 +62,12 @@ class BaseRequest
      * @param mixed $field 
      * @return string 
      */
-    public static function minLength($value, $minLength, $field): ?string
+    public function minLength($value, $minLength, $field): ?string
     {
         $min = $minLength == 1 ? getKey('global.rules.min.one') : getKey('global.rules.min.other');
 
         $trans = str_replace(':min', $minLength, $min);
-        $transField = getKey('user.' . $field);
+        $transField = getKey($this->class . '.' . $field);
 
         if (strlen($value) < $minLength) {
             return $transField . ' ' . $trans;
@@ -76,12 +83,12 @@ class BaseRequest
      * @param mixed $field 
      * @return string 
      */
-    public static function maxLength($value, $maxLength, $field): ?string
+    public function maxLength($value, $maxLength, $field): ?string
     {
         $max = $maxLength == 1 ? getKey('global.rules.max.one') : getKey('global.rules.max.other');
 
         $trans = str_replace(':max', $maxLength, $max);
-        $transField = getKey('user.' . $field);
+        $transField = getKey($this->class . '.' . $field);
 
         if (strlen($value) >= $maxLength) {
             return $transField . ' ' . $trans;
@@ -96,11 +103,11 @@ class BaseRequest
      * @param string $field 
      * @return string|null
      */
-    public static function isEmail($value, string $field): ?string
+    public function isEmail($value, string $field): ?string
     {
         // Traducciones para los mensajes
         $trans = getKey('global.rules.email'); // Ejemplo: "is not a valid email"
-        $transField = getKey('user.' . $field); // Ejemplo: "Email"
+        $transField = getKey($this->class . '.' . $field); // Ejemplo: "Email"
 
         // Asegúrate de que el valor sea una cadena válida
         $value = is_string($value) ? trim($value) : '';
@@ -116,19 +123,19 @@ class BaseRequest
     }
 
 
-    public static function applyRule($rule, $value, $key)
+    public function applyRule($rule, $value, $key)
     {
         return match ($rule[0]) {
-            'required' => self::isRequired($value, $key),
-            'email' => self::isEmail($value, $key),
-            'unique' => self::isUnique($rule[1], $key, $value),
-            'min' => self::minLength($value, $rule[1], $key),
-            'max' => self::maxLength($value, $rule[1], $key),
+            'required' => $this->isRequired($value, $key),
+            'email' => $this->isEmail($value, $key),
+            'unique' => $this->isUnique($rule[1], $key, $value),
+            'min' => $this->minLength($value, $rule[1], $key),
+            'max' => $this->maxLength($value, $rule[1], $key),
             default => null,
         };
     }
 
-    public static function handleErrors(array $errors): bool
+    public function handleErrors(array $errors): bool
     {
         $hasErrors = !empty($errors);
 
@@ -144,7 +151,7 @@ class BaseRequest
      * @param mixed $rules 
      * @return array 
      */
-    public static function splitRules($rules): array
+    public function splitRules($rules): array
     {
         $rules = explode('|', $rules);
 
@@ -162,7 +169,7 @@ class BaseRequest
      * @param string $value 
      * @return bool 
      */
-    public static function checkUnique(string $table, string $column, string $value): bool
+    public function checkUnique(string $table, string $column, string $value): bool
     {
         try {
             // Validar que los nombres de tabla y columna solo contengan caracteres válidos
@@ -187,5 +194,10 @@ class BaseRequest
             error_log($e->getMessage());
             return false; // También devolver null en caso de error
         }
+    }
+
+    public function getShortName(string $class): string
+    {
+        return strtolower(substr((new ReflectionClass($class))->getShortName(), 0, -strlen('Request')));
     }
 }

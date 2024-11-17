@@ -7,7 +7,7 @@ use App\Http\Services\UserService;
 
 class UserController extends BaseController
 {
-    private $rules = [
+    private $rulesRegister = [
         'userName' => 'required|unique:users|min:1|max:255',
         'email' => 'required|unique:users|email',
         'password' => 'required|min:8|max:255',
@@ -17,6 +17,19 @@ class UserController extends BaseController
         'address' => 'required|max:255',
     ];
 
+    private $rulesLogin = [
+        'email' => 'required',
+        'password' => 'required',
+    ];
+
+    public function __construct()
+    {
+        if (!identityIsEmpty()) {
+            redirectTo('/');
+            return false;
+        }
+    }
+
     function index()
     {
         $this->login();
@@ -24,41 +37,30 @@ class UserController extends BaseController
 
     function login()
     {
-        if (!identityIsEmpty()) {
-            redirectTo('/');
-            return false;
-        }
-
-        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            $this->loadView('user/index');
-            return false;
-        }
-
-        $data = getData();
-
-        if (UserRequest::isValid($data, $this->rules) && UserService::checkCredentials($data['email'], $data['password'])) {
-            $user = UserService::getUser($data['email']);
-            $_SESSION['identity'] = $user;
-            $_SESSION['admin'] = isAdmin();
-            redirectTo('/');
-        } else {
-            addToBag('messages', ['error' => 'user.form.register.error']);
-            $this->loadView('user/index');
-        }
-    }
-
-    function register()
-    {
-        if (!identityIsEmpty()) {
-            redirectTo('/');
-            return false;
-        }
-
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $data = getData();
 
-            if (UserRequest::isValid($data, $this->rules)) {
+            if ((new UserRequest($this->rulesLogin))->isValid($data) && UserService::checkCredentials($data['email'], $data['password'])) {
+                $user = UserService::getUser($data['email']);
+                $_SESSION['identity'] = $user;
+                $_SESSION['admin'] = isAdmin();
+                redirectTo('/');
+            } else {
+                addToBag('messages', ['error' => 'user.form.register.error']);
+            }
+        }
+
+        $this->loadView('user/index');
+    }
+
+    function register()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+            $data = getData();
+
+            if ((new UserRequest($this->rulesRegister))->isValid($data)) {
                 addToBag('messages', ['error' => 'user.form.register.error']);
                 $this->loadView('user/register');
                 return;
