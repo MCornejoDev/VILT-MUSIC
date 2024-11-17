@@ -14,40 +14,46 @@ if (! function_exists('__')) {
     }
 }
 
-if (! function_exists('getKey')) {
+if (!function_exists('getKey')) {
     /**
-     * This method gets the key from the language file
-     * @param string $key 
-     * @return string 
+     * Retrieve the value of a translation key from the language file.
+     * @param string $key
+     * @return string
      */
     function getKey(string $key): string
     {
+        static $cache = [];
         $splits = explode('.', $key);
         $file = array_shift($splits);
 
-        $path = __DIR__ . '/../../../lang/' . getLanguage() . '/' . $file . '.php';
+        $path = LANG_PATH . getLanguage() . '/' . $file . '.php';
 
-        if (file_exists($path)) {
-            // Incluimos el archivo y obtenemos el array
-            $keys = include $path;
+        if (!isset($cache[$file])) {
+            $cache[$file] = file_exists($path) ? include $path : [];
         }
 
-        // Utiliza array_reduce para obtener el valor final del array multidimensional
-        // Utilizamos array_reduce para navegar por el array anidado
+        $keys = $cache[$file];
+
+        if (!is_array($keys)) {
+            return "[invalid file format: $file]";
+        }
+
         return array_reduce($splits, function ($carry, $item) {
-            return isset($carry[$item]) ? $carry[$item] : null;
+            return $carry[$item] ?? "[missing key: $item]";
         }, $keys);
     }
 }
 
-if (! function_exists('getLanguage')) {
+if (!function_exists('getLanguage')) {
     /**
-     * This method returns a language
-     * @return string 
+     * Determine the active language.
+     * @return string
      */
     function getLanguage(): string
     {
-        return htmlspecialchars(empty($_GET['lang']) ? 'es' : $_GET['lang']);
+        $allowedLanguages = ['es', 'en', 'fr']; // Idiomas soportados
+        $lang = htmlspecialchars($_GET['lang'] ?? 'es');
+        return in_array($lang, $allowedLanguages) ? $lang : 'es';
     }
 }
 

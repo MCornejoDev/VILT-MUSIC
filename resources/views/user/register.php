@@ -1,7 +1,7 @@
 <? require_once __DIR__ . '/../components/messages.php'; ?>
 <div class="container mx-auto mb-5">
-    <div class="flex flex-col items-center">
-        <div class="w-full p-6 mx-auto bg-white border shadow-md lg:w-1/2">
+    <div class="flex flex-col items-center p-4">
+        <div class="w-full p-6 mx-auto bg-white border shadow-md">
             <div class="py-4 text-center border-b">
                 <h3 class="text-3xl font-semibold"><? __('user.form.title') ?></h3>
             </div>
