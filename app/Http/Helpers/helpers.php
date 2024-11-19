@@ -72,6 +72,20 @@ if (! function_exists('initSession')) {
     }
 }
 
+if (! function_exists('setSession')) {
+    /**
+     * This method sets the session data
+     * @return void 
+     */
+    function setSession(array $user): void
+    {
+        if (session_status() === PHP_SESSION_ACTIVE) {
+            $_SESSION['identity'] = $user;
+            $_SESSION['admin'] = isAdmin();
+        }
+    }
+}
+
 if (! function_exists('addToBag')) {
     /**
      * This method adds a data in a bag of session

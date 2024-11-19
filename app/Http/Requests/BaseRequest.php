@@ -29,6 +29,8 @@ class BaseRequest
         $trans = getKey('global.rules.required');
         $transField = getKey($this->class . '.' . $field);
 
+        $value = is_array($value) ? $value['name'] : $value;
+
         if (isset($value) && is_string($value) && trim($value) === '') {
             return $transField . ' ' . $trans;
         }
@@ -123,6 +125,13 @@ class BaseRequest
     }
 
 
+    /**
+     * Apply a rule to a value
+     * @param mixed $rule 
+     * @param mixed $value 
+     * @param mixed $key 
+     * @return string|null 
+     */
     public function applyRule($rule, $value, $key)
     {
         return match ($rule[0]) {
@@ -135,6 +144,11 @@ class BaseRequest
         };
     }
 
+    /**
+     * Handle errors and add them to the bag
+     * @param array $errors 
+     * @return bool 
+     */
     public function handleErrors(array $errors): bool
     {
         $hasErrors = !empty($errors);
@@ -196,6 +210,11 @@ class BaseRequest
         }
     }
 
+    /**
+     * Get the short name of a class
+     * @param string $class 
+     * @return string 
+     */
     public function getShortName(string $class): string
     {
         return strtolower(substr((new ReflectionClass($class))->getShortName(), 0, -strlen('Request')));

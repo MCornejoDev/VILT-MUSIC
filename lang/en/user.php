@@ -8,7 +8,7 @@ return [
     'password' => 'Password',
     'samePassword' => 'Repeat Password',
     'address' => 'Address',
-    'image' => 'Select a file',
+    'image' => 'Image',
 
     'form' => [
         'title' => 'Register Form',

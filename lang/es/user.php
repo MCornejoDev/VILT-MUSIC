@@ -8,7 +8,7 @@ return [
     'password' => 'Contraseña',
     'samePassword' => 'Repetir contraseña',
     'address' => 'Dirección',
-    'image' => 'Seleccione un fichero',
+    'image' => 'Imagén',
 
     'form' => [
         'title' => 'Formulario de registro',

@@ -11,10 +11,11 @@ class UserController extends BaseController
         'userName' => 'required|unique:users|min:1|max:255',
         'email' => 'required|unique:users|email',
         'password' => 'required|min:8|max:255',
-        'samePassword' => 'required||min:8|max:255',
+        'samePassword' => 'required|min:8|max:255',
         'name' => 'required|max:255',
         'lastName' => 'required|max:255',
         'address' => 'required|max:255',
+        'image' => 'required',
     ];
 
     private $rulesLogin = [
@@ -41,13 +42,11 @@ class UserController extends BaseController
 
             $data = getData();
 
-            if ((new UserRequest($this->rulesLogin))->isValid($data) && UserService::checkCredentials($data['email'], $data['password'])) {
-                $user = UserService::getUser($data['email']);
-                $_SESSION['identity'] = $user;
-                $_SESSION['admin'] = isAdmin();
+            if (!(new UserRequest($this->rulesLogin))->isValid($data) && UserService::checkCredentials($data['email'], $data['password'])) {
+                setSession(UserService::getUser($data['email']));
                 redirectTo('/');
             } else {
-                addToBag('messages', ['error' => 'user.form.register.error']);
+                addToBag('messages', ['error' => 'user.form.login.error']);
             }
         }
 
