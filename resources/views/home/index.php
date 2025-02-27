@@ -1,5 +1,5 @@
 <div class="container-fluid">
     <h2 class="mx-auto text-capitalize h2-responsive">
-        hi!
+        DashBoard de la aplicación
     </h2>
 </div>

@@ -23,17 +23,20 @@ class UserController extends BaseController
         'password' => 'required',
     ];
 
-    public function __construct()
-    {
-        if (!identityIsEmpty()) {
-            redirectTo('/');
-            return false;
-        }
-    }
+    // public function __construct()
+    // {
+    //     if (!identityIsEmpty()) {
+    //         redirectTo('/');
+    //         return false;
+    //     }
+    // }
 
     function index()
     {
-        $this->login();
+        if (identityIsEmpty()) {
+            redirectTo('/user/login');
+        }
+        redirectTo('/');
     }
 
     function login()
@@ -50,7 +53,7 @@ class UserController extends BaseController
             }
         }
 
-        $this->loadView('user/index');
+        $this->view('user/login');
     }
 
     function register()
@@ -61,14 +64,14 @@ class UserController extends BaseController
 
             if ((new UserRequest($this->rulesRegister))->isValid($data)) {
                 addToBag('messages', ['error' => 'user.form.register.error']);
-                $this->loadView('user/register');
+                $this->view('user/register');
                 return;
             }
 
             UserService::save($data) ? addToBag('messages', ['success' => 'user.form.register.success']) : addToBag('messages', ['error' => 'user.form.register.error']);
         }
 
-        $this->loadView('user/register');
+        $this->view('user/register');
     }
 
     public function logout()

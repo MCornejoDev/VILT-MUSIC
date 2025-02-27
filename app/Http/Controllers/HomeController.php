@@ -6,6 +6,10 @@ class HomeController extends BaseController
 {
     public function index()
     {
-        $this->loadView('home/index');
+        if (!identityIsEmpty()) {
+            $this->view('home/index');
+        }
+
+        redirectTo('/user/login');
     }
 }

@@ -22,18 +22,22 @@
                         </button>
                     </div>
                     <div class="flex items-center flex-shrink-0">
-                        <a href="<?= BASE_URL ?>">
+                        <?php if (identityIsEmpty()) : ?>
                             <img class="w-auto h-8" src="<?= BASE_URL ?>/img/logo.webp" alt="Logo">
-                        </a>
+                        <?php else : ?>
+                            <a href="<?= BASE_URL ?>">
+                                <img class="w-auto h-8" src="<?= BASE_URL ?>/img/logo.webp" alt="Logo">
+                            </a>
+                        <? endif; ?>
                     </div>
                     <div class="hidden sm:ml-6 sm:block">
                         <div class="flex space-x-4">
                             <!-- Menu de navegación -->
                             <?php if (identityIsEmpty()) : ?>
-                                <a href="<?= BASE_URL ?>" class="block px-3 py-2 text-base font-medium text-gray-300 rounded-md hover:bg-indigo-500 hover:text-white"><? __('nav.home') ?></a>
                                 <a href="<?= BASE_URL ?>/user/login" class="block px-3 py-2 text-base font-medium text-gray-300 rounded-md hover:bg-indigo-500 hover:text-white"><? __('nav.login') ?></a>
                                 <a href="<?= BASE_URL ?>/user/register" class="block px-3 py-2 text-base font-medium text-gray-300 rounded-md hover:bg-indigo-500 hover:text-white"><? __('nav.register') ?></a>
                             <?php else : ?>
+                                <a href="<?= BASE_URL ?>" class="block px-3 py-2 text-base font-medium text-gray-300 rounded-md hover:bg-indigo-500 hover:text-white"><? __('nav.home') ?></a>
                                 <?php if (isAdmin()) : ?>
                                     <? include __DIR__ . '/../components/nav/admin.php'; ?>
                                 <?php else : ?>
@@ -65,10 +69,10 @@
         <div class="overflow-hidden transition-all duration-200 ease-in-out opacity-0 sm:hidden max-h-0" id="mobile-menu">
             <div class="px-2 pt-2 pb-3 space-y-1">
                 <?php if (identityIsEmpty()) : ?>
-                    <a href="<?= BASE_URL ?>" class="block px-3 py-2 text-base font-medium text-gray-300 rounded-md hover:bg-indigo-500 hover:text-white"><? __('nav.home') ?></a>
                     <a href="<?= BASE_URL ?>/user/login" class="block px-3 py-2 text-base font-medium text-gray-300 rounded-md hover:bg-indigo-500 hover:text-white"><? __('nav.login') ?></a>
                     <a href="<?= BASE_URL ?>/user/register" class="block px-3 py-2 text-base font-medium text-gray-300 rounded-md hover:bg-indigo-500 hover:text-white"><? __('nav.register') ?></a>
                 <?php else : ?>
+                    <a href="<?= BASE_URL ?>" class="block px-3 py-2 text-base font-medium text-gray-300 rounded-md hover:bg-indigo-500 hover:text-white"><? __('nav.home') ?></a>
                     <?php if (isAdmin()) : ?>
                         <? include __DIR__ . '/../components/nav/admin.php'; ?>
                     <?php else : ?>
