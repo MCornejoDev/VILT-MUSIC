@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\App\AlbumController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -16,9 +17,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
         return Inertia::render('Dashboard');
     })->name('dashboard');
 
-    Route::get('albums', function () {
-        return Inertia::render('Album');
-    })->name('albums');
+    // Route::get('albums', function () {
+    //     return Inertia::render('Album');
+    // })->name('albums');
+    Route::resource('albums', AlbumController::class);
 });
 
 require __DIR__ . '/settings.php';

@@ -12,11 +12,10 @@
     },
     "framework": "laravel",
     "aliases": {
-        "components": "@/components",
-        "composables": "@/composables",
+        "components": "resources/js/Components",
         "utils": "@/lib/utils",
-        "ui": "@/components/ui",
-        "lib": "@/lib"
-    },
-    "iconLibrary": "lucide"
+        "ui": "resources/js/Components/ui",
+        "lib": "@/lib",
+        "hooks": "@/hooks"
+    }
 }

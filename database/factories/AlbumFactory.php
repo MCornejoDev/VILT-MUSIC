@@ -24,7 +24,7 @@ class AlbumFactory extends Factory
             'stocks' => fake()->numberBetween(0, 100),
             'price' => fake()->randomFloat(2, 0, 100),
             'release_date' => fake()->dateTimeThisYear(),
-            'cover' => fake()->imageUrl(200, 200),
+            'cover' => "https://picsum.photos/300/200?random={$this->faker->unique()->randomNumber}",
             'category_id' => fake()->randomElement(Category::all()->pluck('id')->toArray()),
         ];
     }
