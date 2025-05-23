@@ -17,10 +17,15 @@ class SingleFactory extends Factory
      */
     public function definition(): array
     {
+        $realMp3Urls = [
+            'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',
+            'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3',
+        ];
+
         return [
             'title' => $this->faker->sentence(),
             'duration' => $this->faker->numberBetween(10, 100),
-            'file' => $this->faker->url(),
+            'file' => $this->faker->randomElement($realMp3Urls),
             'album_id' => Album::inRandomOrder()->first()->id,
         ];
     }

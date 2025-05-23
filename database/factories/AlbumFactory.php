@@ -18,14 +18,14 @@ class AlbumFactory extends Factory
     public function definition(): array
     {
         return [
-            'title' => fake()->sentence(),
-            'artist' => fake()->name(),
-            'description' => fake()->paragraph(),
-            'stocks' => fake()->numberBetween(0, 100),
-            'price' => fake()->randomFloat(2, 0, 100),
-            'release_date' => fake()->dateTimeThisYear(),
+            'title' => $this->faker->sentence(),
+            'artist' => $this->faker->name(),
+            'description' => $this->faker->paragraph(1),
+            'stocks' => $this->faker->numberBetween(0, 100),
+            'price' => $this->faker->randomFloat(2, 0, 100),
+            'release_date' => $this->faker->dateTimeThisYear(),
             'cover' => "https://picsum.photos/300/200?random={$this->faker->unique()->randomNumber}",
-            'category_id' => fake()->randomElement(Category::all()->pluck('id')->toArray()),
+            'category_id' => $this->faker->randomElement(Category::all()->pluck('id')->toArray()),
         ];
     }
 }

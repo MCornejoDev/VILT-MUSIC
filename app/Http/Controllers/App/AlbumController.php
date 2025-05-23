@@ -4,8 +4,10 @@ namespace App\Http\Controllers\App;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\AlbumResource;
+use App\Http\Resources\SingleResource;
 use App\Http\Services\AlbumService;
 use App\Models\Album;
+use App\Models\Single;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -40,7 +42,10 @@ class AlbumController extends Controller
      */
     public function show(Album $album)
     {
-        return Inertia::render('albums/Show', ['album' => new AlbumResource($album)]);
+        return Inertia::render('albums/Show', [
+            'album' => $album,
+            'singles' => SingleResource::collection($album->singles),
+        ]);
     }
 
     /**
