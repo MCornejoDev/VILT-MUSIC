@@ -1,0 +1,10 @@
+{
+    "title": "Title",
+    "category": "Category",
+    "artist": "Artist",
+    "release_date": "Release Date",
+    "description": "Description",
+    "stocks": "Stocks",
+    "price": "Price",
+    "tracklist": "Tracklist"
+}

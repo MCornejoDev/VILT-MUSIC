@@ -1,4 +1,8 @@
 <script setup lang="ts">
+import { useI18n } from 'vue-i18n';
+// Inicializa i18n en el componente
+const { t } = useI18n();
+
 import { Head } from '@inertiajs/vue3';
 import AppLayout from '@/layouts/AppLayout.vue';
 import AudioPlayer from '@/components/AudioPlayer.vue';
@@ -38,18 +42,18 @@ const playerRef = ref<InstanceType<typeof AudioPlayer> | null>(null);
                 <div>
                     <h1 class="text-3xl font-bold">{{ album.title }}</h1>
                     <p class="text-lg text-gray-500">{{ album.artist }}</p>
-                    <p class="text-sm text-gray-400">Released on {{ album.release_date }}</p>
+                    <p class="text-sm text-gray-400">{{ t('album.release_date') }} {{ album.release_date }}</p>
                 </div>
 
                 <p class="text-gray-700">{{ album.description }}</p>
 
                 <div class="flex gap-4 mt-4 text-sm text-gray-600">
-                    <div><strong>Stocks:</strong> {{ album.stocks }}</div>
-                    <div><strong>Price:</strong> ${{ album.price }}</div>
+                    <div><strong>{{ t('album.stocks') }}:</strong> {{ album.stocks }}</div>
+                    <div><strong>{{ t('album.price') }}:</strong> ${{ album.price }}</div>
                 </div>
 
                 <div class="mt-6">
-                    <h2 class="mb-2 text-xl font-semibold">Tracklist</h2>
+                    <h2 class="mb-2 text-xl font-semibold">{{ t('album.tracklist') }}</h2>
                     <div class="divide-y divide-gray-200 rounded-lg">
                         <div v-for="(single, index) in singles.data" :key="single.id"
                             class="flex items-center justify-between px-4 py-3 transition"

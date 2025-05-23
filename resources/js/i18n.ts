@@ -4,9 +4,12 @@ const enModules = import.meta.glob('./locales/en/*.json', { eager: true }) as Re
 const esModules = import.meta.glob('./locales/es/*.json', { eager: true }) as Record<string, { default: any }>;
 
 function mergeModules(modules: Record<string, { default: any }>) {
-    return Object.values(modules).reduce((acc, mod) => {
-        return { ...acc, ...mod.default };
-    }, {});
+    return Object.entries(modules).reduce((acc, [path, mod]) => {
+        // Extraer el nombre del archivo para usarlo como namespace
+        const fileName = path.split('/').pop()?.replace('.json', '') ?? '';
+        acc[fileName] = mod.default;
+        return acc;
+    }, {} as Record<string, any>);
 }
 
 const messages = {

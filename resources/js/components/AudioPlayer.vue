@@ -135,7 +135,7 @@ onUnmounted(() => {
     <div class="p-4 text-white bg-gray-900 shadow rounded-xl">
         <div class="flex items-center justify-between mb-2">
             <div class="text-lg font-bold">
-                {{ currentSingle?.title || 'Sin reproducción' }}
+                {{ currentSingle?.title || t('audio_player.no_track') }}
             </div>
             <div class="text-sm text-gray-400">
                 {{ formatTime(progress) }} / {{ formatTime(duration) }}
@@ -155,15 +155,15 @@ onUnmounted(() => {
 
         <div class="flex justify-center gap-4 mt-4 text-sm">
             <button @click="setMode('normal')" :class="{ 'text-indigo-400': mode === 'normal' }">
-                {{ t('mode.normal') }}
+                {{ t('audio_player.mode.normal') }}
             </button>
 
             <button @click="setMode('random')" :class="{ 'text-indigo-400': mode === 'random' }">
-                {{ t('mode.random') }}
+                {{ t('audio_player.mode.random') }}
             </button>
 
             <button @click="setMode('repeat')" :class="{ 'text-indigo-400': mode === 'repeat' }">
-                {{ t('mode.repeat') }}
+                {{ t('audio_player.mode.repeat') }}
             </button>
         </div>
     </div>

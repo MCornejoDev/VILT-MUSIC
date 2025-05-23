@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { useI18n } from 'vue-i18n';
+// Inicializa i18n en el componente
+const { t } = useI18n();
 import { Head, router } from '@inertiajs/vue3';
 import AppLayout from '@/layouts/AppLayout.vue';
 
@@ -41,13 +44,13 @@ const goToAlbum = (id: number) => {
                 <TableHeader>
                     <TableRow>
                         <TableHead>#</TableHead>
-                        <TableHead>Title</TableHead>
-                        <TableHead>Category</TableHead>
-                        <TableHead>Artist</TableHead>
-                        <TableHead>Stocks</TableHead>
-                        <TableHead>Price</TableHead>
-                        <TableHead>Release Date</TableHead>
-                        <TableHead>Actions</TableHead>
+                        <TableHead>{{ t('album.title') }}</TableHead>
+                        <TableHead>{{ t('album.category') }}</TableHead>
+                        <TableHead>{{ t('album.artist') }}</TableHead>
+                        <TableHead>{{ t('album.stocks') }}</TableHead>
+                        <TableHead>{{ t('album.price') }}</TableHead>
+                        <TableHead>{{ t('album.release_date') }}</TableHead>
+                        <TableHead>{{ t('actions.title') }}</TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>
