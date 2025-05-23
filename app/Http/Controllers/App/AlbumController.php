@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\App;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\AlbumResource;
 use App\Http\Services\AlbumService;
 use App\Models\Album;
 use Illuminate\Http\Request;
@@ -15,9 +16,7 @@ class AlbumController extends Controller
      */
     public function index()
     {
-        //
-
-        return Inertia::render('Album', ['albums' => AlbumService::getAlbums()->get()]);
+        return Inertia::render('Album', ['albums' => AlbumResource::collection(AlbumService::getAlbums(perPage: 10))]);
     }
 
     /**

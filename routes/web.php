@@ -17,9 +17,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
         return Inertia::render('Dashboard');
     })->name('dashboard');
 
-    // Route::get('albums', function () {
-    //     return Inertia::render('Album');
-    // })->name('albums');
     Route::resource('albums', AlbumController::class);
 });
 
