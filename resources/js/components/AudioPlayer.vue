@@ -1,4 +1,9 @@
 <script setup lang="ts">
+import { useI18n } from 'vue-i18n';
+
+// Inicializa i18n en el componente
+const { t } = useI18n();
+
 import { Single } from '@/types/models/single';
 import { ref, onMounted, onUnmounted, computed } from 'vue';
 
@@ -149,9 +154,17 @@ onUnmounted(() => {
         </div>
 
         <div class="flex justify-center gap-4 mt-4 text-sm">
-            <button @click="setMode('normal')" :class="{ 'text-indigo-400': mode === 'normal' }">Normal</button>
-            <button @click="setMode('random')" :class="{ 'text-indigo-400': mode === 'random' }">Random</button>
-            <button @click="setMode('repeat')" :class="{ 'text-indigo-400': mode === 'repeat' }">Repeat</button>
+            <button @click="setMode('normal')" :class="{ 'text-indigo-400': mode === 'normal' }">
+                {{ t('mode.normal') }}
+            </button>
+
+            <button @click="setMode('random')" :class="{ 'text-indigo-400': mode === 'random' }">
+                {{ t('mode.random') }}
+            </button>
+
+            <button @click="setMode('repeat')" :class="{ 'text-indigo-400': mode === 'repeat' }">
+                {{ t('mode.repeat') }}
+            </button>
         </div>
     </div>
 </template>
