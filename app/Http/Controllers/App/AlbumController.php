@@ -16,7 +16,7 @@ class AlbumController extends Controller
      */
     public function index()
     {
-        return Inertia::render('Album', ['albums' => AlbumResource::collection(AlbumService::getAlbums(perPage: 10))]);
+        return Inertia::render('albums/Index', ['albums' => AlbumResource::collection(AlbumService::getAlbums(perPage: 10))]);
     }
 
     /**
@@ -40,7 +40,7 @@ class AlbumController extends Controller
      */
     public function show(Album $album)
     {
-        //
+        return Inertia::render('albums/Show', ['album' => new AlbumResource($album)]);
     }
 
     /**

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Head } from '@inertiajs/vue3';
+import { Head, router } from '@inertiajs/vue3';
 import AppLayout from '@/layouts/AppLayout.vue';
 
 import { type BreadcrumbItem } from '@/types';
@@ -15,7 +15,7 @@ import {
     TableHeader,
     TableRow,
 } from '@/components/ui/table'
-import Pagination from './Pagination.vue';
+import Pagination from '@/pages/Pagination.vue';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -25,6 +25,10 @@ const breadcrumbs: BreadcrumbItem[] = [
 ];
 
 const { albums } = defineProps<{ albums: Paginated<Album> }>();
+
+const goToAlbum = (id: number) => {
+    router.visit(`/albums/${id}`);
+}
 
 </script>
 
@@ -58,6 +62,9 @@ const { albums } = defineProps<{ albums: Paginated<Album> }>();
                         <TableCell>{{ album.price }}</TableCell>
                         <TableCell>{{ album.release_date }}</TableCell>
                         <TableCell>
+                            <a v-on:click="goToAlbum(album.id)"
+                                class="text-blue-500 cursor-pointer hover:text-blue-700">See</a>
+                            <span class="mx-2">|</span>
                             <a href="#" class="text-blue-500 hover:text-blue-700">Edit</a>
                             <span class="mx-2">|</span>
                             <a href="#" class="text-blue-500 hover:text-blue-700">Delete</a>
