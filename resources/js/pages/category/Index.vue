@@ -1,5 +1,4 @@
 <script setup lang="ts">
-// ─────────────────────────────────────────────────────────────────────────────
 // 🧩 Imports externos
 import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
@@ -7,52 +6,30 @@ import { Head } from '@inertiajs/vue3';
 import { useForm, useField } from 'vee-validate';
 import * as yup from 'yup';
 
-// ─────────────────────────────────────────────────────────────────────────────
 // 🧩 Layouts y componentes UI
 import AppLayout from '@/layouts/AppLayout.vue';
 import Pagination from '@/pages/Pagination.vue';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import {
-    Card,
-    CardHeader,
-    CardTitle,
-    CardContent,
-} from '@/components/ui/card';
-import {
-    Dialog,
-    DialogContent,
-    DialogHeader,
-    DialogDescription,
-    DialogTitle,
-} from '@/components/ui/dialog';
-import {
-    FormField,
-    FormItem,
-    FormLabel,
-    FormControl,
-    FormMessage,
-} from '@/components/ui/form';
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
+import { Dialog, DialogContent, DialogHeader, DialogDescription, DialogTitle } from '@/components/ui/dialog';
+import { FormField, FormItem, FormLabel, FormControl, FormMessage, } from '@/components/ui/form';
 
-// ─────────────────────────────────────────────────────────────────────────────
 // 🧩 Tipos
 import { type BreadcrumbItem } from '@/types';
 import { Category } from '@/types/models/category';
 import { Paginated } from '@/types/models/paginated';
 
-// ─────────────────────────────────────────────────────────────────────────────
 // 🌍 Internacionalización
 const { t } = useI18n();
 
-// ─────────────────────────────────────────────────────────────────────────────
+
 // 📌 Props
 const { categories } = defineProps<{ categories: Paginated<Category> }>();
 
-// ─────────────────────────────────────────────────────────────────────────────
 // 🧠 Estado local
 const showModal = ref(false);
 
-// ─────────────────────────────────────────────────────────────────────────────
 // ✅ Validación con VeeValidate y Yup
 const schema = yup.object({
     title: yup.string().required(t('validation.required')),
@@ -66,7 +43,6 @@ const onSubmit = handleSubmit((values) => {
     showModal.value = false;
 });
 
-// ─────────────────────────────────────────────────────────────────────────────
 // 🧭 Breadcrumbs
 const breadcrumbs: BreadcrumbItem[] = [
     {
