@@ -3,22 +3,19 @@
 namespace App\Http\Controllers\App;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\AlbumResource;
-use App\Http\Resources\SingleResource;
-use App\Http\Services\AlbumService;
-use App\Models\Album;
-use App\Models\Single;
+use App\Http\Resources\CategoryResource;
+use App\Http\Services\CategoryService;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
-class AlbumController extends Controller
+class CategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return Inertia::render('album/Index', ['albums' => AlbumResource::collection(AlbumService::getAlbums(perPage: 10))]);
+        return Inertia::render('category/Index', ['categories' => CategoryResource::collection(CategoryService::getCategories(perPage: 10))]);
     }
 
     /**
@@ -40,18 +37,15 @@ class AlbumController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Album $album)
+    public function show(string $id)
     {
-        return Inertia::render('album/Show', [
-            'album' => $album,
-            'singles' => SingleResource::collection($album->singles),
-        ]);
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Album $album)
+    public function edit(string $id)
     {
         //
     }
@@ -59,7 +53,7 @@ class AlbumController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Album $album)
+    public function update(Request $request, string $id)
     {
         //
     }
@@ -67,7 +61,7 @@ class AlbumController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Album $album)
+    public function destroy(string $id)
     {
         //
     }

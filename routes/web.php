@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\App\AlbumController;
+use App\Http\Controllers\App\CategoryController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -18,6 +19,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('dashboard');
 
     Route::resource('albums', AlbumController::class);
+    Route::resource('categories', CategoryController::class);
 });
 
 require __DIR__ . '/settings.php';

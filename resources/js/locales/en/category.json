@@ -1,0 +1,7 @@
+{
+    "title": "Categories",
+    "table": {
+        "name": "Name",
+        "slug": "Slug"
+    }
+}

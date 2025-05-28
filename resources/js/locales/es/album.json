@@ -1,10 +1,13 @@
 {
-    "title": "Título",
-    "category": "Categoría",
-    "artist": "Artista",
-    "release_date": "Fecha de lanzamiento",
-    "description": "Descripción",
-    "stocks": "Unidades",
-    "price": "Precio",
+    "title": "Álbums",
+    "table": {
+        "title": "Título",
+        "category": "Categoría",
+        "artist": "Artista",
+        "release_date": "Fecha de lanzamiento",
+        "description": "Descripción",
+        "stocks": "Unidades",
+        "price": "Precio"
+    },
     "tracklist": "Lista de canciones"
 }

@@ -22,7 +22,7 @@ import Pagination from '@/pages/Pagination.vue';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
-        title: 'Albums',
+        title: t('album.title'),
         href: '/albums',
     },
 ];
@@ -44,12 +44,12 @@ const goToAlbum = (id: number) => {
                 <TableHeader>
                     <TableRow>
                         <TableHead>#</TableHead>
-                        <TableHead>{{ t('album.title') }}</TableHead>
-                        <TableHead>{{ t('album.category') }}</TableHead>
-                        <TableHead>{{ t('album.artist') }}</TableHead>
-                        <TableHead>{{ t('album.stocks') }}</TableHead>
-                        <TableHead>{{ t('album.price') }}</TableHead>
-                        <TableHead>{{ t('album.release_date') }}</TableHead>
+                        <TableHead>{{ t('album.table.title') }}</TableHead>
+                        <TableHead>{{ t('album.table.category') }}</TableHead>
+                        <TableHead>{{ t('album.table.artist') }}</TableHead>
+                        <TableHead>{{ t('album.table.stocks') }}</TableHead>
+                        <TableHead>{{ t('album.table.price') }}</TableHead>
+                        <TableHead>{{ t('album.table.release_date') }}</TableHead>
                         <TableHead>{{ t('actions.title') }}</TableHead>
                     </TableRow>
                 </TableHeader>

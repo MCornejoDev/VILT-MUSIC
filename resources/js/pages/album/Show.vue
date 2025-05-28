@@ -42,14 +42,14 @@ const playerRef = ref<InstanceType<typeof AudioPlayer> | null>(null);
                 <div>
                     <h1 class="text-3xl font-bold">{{ album.title }}</h1>
                     <p class="text-lg text-gray-500">{{ album.artist }}</p>
-                    <p class="text-sm text-gray-400">{{ t('album.release_date') }} {{ album.release_date }}</p>
+                    <p class="text-sm text-gray-400">{{ t('album.table.release_date') }} {{ album.release_date }}</p>
                 </div>
 
                 <p class="text-gray-700">{{ album.description }}</p>
 
                 <div class="flex gap-4 mt-4 text-sm text-gray-600">
-                    <div><strong>{{ t('album.stocks') }}:</strong> {{ album.stocks }}</div>
-                    <div><strong>{{ t('album.price') }}:</strong> ${{ album.price }}</div>
+                    <div><strong>{{ t('album.table.stocks') }}:</strong> {{ album.stocks }}</div>
+                    <div><strong>{{ t('album.table.price') }}:</strong> ${{ album.price }}</div>
                 </div>
 
                 <div class="mt-6">
