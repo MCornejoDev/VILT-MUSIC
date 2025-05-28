@@ -3,5 +3,18 @@
     "table": {
         "name": "Nombre",
         "slug": "Slug"
+    },
+    "form": {
+        "title": "Título",
+        "description": "Crear una nueva categoría",
+        "placeholder": {
+            "title": "Introduce el título"
+        }
+    },
+    "actions": {
+        "create": {
+            "title": "Crear categoría",
+            "button": "Crear"
+        }
     }
 }

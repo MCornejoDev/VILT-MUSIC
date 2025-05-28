@@ -3,5 +3,18 @@
     "table": {
         "name": "Name",
         "slug": "Slug"
+    },
+    "form": {
+        "title": "Title",
+        "description": "Create a new category",
+        "placeholder": {
+            "title": "Enter the title"
+        }
+    },
+    "actions": {
+        "create": {
+            "title": "Create category",
+            "button": "Create"
+        }
     }
 }

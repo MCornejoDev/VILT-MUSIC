@@ -1,50 +1,139 @@
 <script setup lang="ts">
+// ─────────────────────────────────────────────────────────────────────────────
+// 🧩 Imports externos
+import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { Head } from '@inertiajs/vue3';
+import { useForm, useField } from 'vee-validate';
+import * as yup from 'yup';
+
+// ─────────────────────────────────────────────────────────────────────────────
+// 🧩 Layouts y componentes UI
 import AppLayout from '@/layouts/AppLayout.vue';
-
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardContent,
-} from '@/components/ui/card';
-
 import Pagination from '@/pages/Pagination.vue';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import {
+    Card,
+    CardHeader,
+    CardTitle,
+    CardContent,
+} from '@/components/ui/card';
+import {
+    Dialog,
+    DialogContent,
+    DialogHeader,
+    DialogDescription,
+    DialogTitle,
+} from '@/components/ui/dialog';
+import {
+    FormField,
+    FormItem,
+    FormLabel,
+    FormControl,
+    FormMessage,
+} from '@/components/ui/form';
 
+// ─────────────────────────────────────────────────────────────────────────────
+// 🧩 Tipos
 import { type BreadcrumbItem } from '@/types';
 import { Category } from '@/types/models/category';
 import { Paginated } from '@/types/models/paginated';
 
+// ─────────────────────────────────────────────────────────────────────────────
+// 🌍 Internacionalización
 const { t } = useI18n();
 
-const breadcrumbs: BreadcrumbItem[] = [
-  {
-    title: t('category.title'),
-    href: '/categories',
-  },
-];
-
+// ─────────────────────────────────────────────────────────────────────────────
+// 📌 Props
 const { categories } = defineProps<{ categories: Paginated<Category> }>();
+
+// ─────────────────────────────────────────────────────────────────────────────
+// 🧠 Estado local
+const showModal = ref(false);
+
+// ─────────────────────────────────────────────────────────────────────────────
+// ✅ Validación con VeeValidate y Yup
+const schema = yup.object({
+    title: yup.string().required(t('validation.required')),
+});
+
+const { handleSubmit } = useForm({ validationSchema: schema });
+const { value: title, errorMessage, handleBlur } = useField<string>('title');
+
+const onSubmit = handleSubmit((values) => {
+    console.log('Formulario enviado:', values);
+    showModal.value = false;
+});
+
+// ─────────────────────────────────────────────────────────────────────────────
+// 🧭 Breadcrumbs
+const breadcrumbs: BreadcrumbItem[] = [
+    {
+        title: t('category.title'),
+        href: '/categories',
+    },
+];
 </script>
 
 <template>
-  <Head :title="t('category.title')" ></Head>
 
-  <AppLayout :breadcrumbs="breadcrumbs">
-    <div class="flex flex-col flex-1 h-full gap-4 p-4">
-      <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        <Card v-for="category in categories.data" :key="category.id" class="shadow-md">
-          <CardHeader>
-            <CardTitle>{{ category.name }}</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p class="text-sm text-muted-foreground">{{ category.slug }}</p>
-          </CardContent>
-        </Card>
-      </div>
+    <Head :title="t('category.title')" />
 
-      <Pagination :paginator="categories.meta" />
-    </div>
-  </AppLayout>
+    <AppLayout :breadcrumbs="breadcrumbs">
+        <div class="flex flex-col flex-1 h-full gap-4 p-4">
+            <!-- Botón para abrir el modal -->
+            <div class="flex justify-end">
+                <Button @click="showModal = true">
+                    {{ t('category.actions.create.title') }}
+                </Button>
+            </div>
+
+            <!-- Tarjetas de categorías -->
+            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                <Card v-for="category in categories.data" :key="category.id" class="shadow-md">
+                    <CardHeader>
+                        <CardTitle>{{ category.name }}</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <p class="text-sm text-muted-foreground">{{ category.slug }}</p>
+                    </CardContent>
+                </Card>
+            </div>
+
+            <!-- Paginación -->
+            <Pagination :paginator="categories.meta" />
+        </div>
+
+        <!-- Modal con formulario VeeValidate -->
+        <Dialog v-model:open="showModal">
+            <DialogContent>
+                <DialogHeader>
+                    <DialogTitle>{{ t('category.actions.create.title') }}</DialogTitle>
+                    <DialogDescription>
+                        {{ t('category.form.description') }}
+                    </DialogDescription>
+                </DialogHeader>
+
+                <form @submit.prevent="onSubmit" class="space-y-4">
+                    <FormField v-slot="{ componentField }" name="title">
+                        <FormItem>
+                            <FormLabel>{{ t('category.form.title') }}</FormLabel>
+                            <FormControl>
+                                <Input v-bind="componentField" v-model="title" @blur="handleBlur"
+                                    :placeholder="t('category.form.placeholder.title')" />
+                            </FormControl>
+                            <FormMessage>{{ errorMessage }}</FormMessage>
+                        </FormItem>
+                    </FormField>
+
+                    <div class="flex justify-end">
+                        <Button type="submit">
+                            {{ t('category.actions.create.button') }}
+                        </Button>
+                    </div>
+                </form>
+            </DialogContent>
+        </Dialog>
+    </AppLayout>
 </template>
