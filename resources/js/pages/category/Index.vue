@@ -5,6 +5,7 @@ import { useI18n } from 'vue-i18n';
 import { Head } from '@inertiajs/vue3';
 import { useForm, useField } from 'vee-validate';
 import * as yup from 'yup';
+import { router } from '@inertiajs/vue3'
 
 // 🧩 Layouts y componentes UI
 import AppLayout from '@/layouts/AppLayout.vue';
@@ -32,15 +33,23 @@ const showModal = ref(false);
 
 // ✅ Validación con VeeValidate y Yup
 const schema = yup.object({
-    title: yup.string().required(t('validation.required')),
+    name: yup.string().required(t('validation.required')),
 });
 
 const { handleSubmit } = useForm({ validationSchema: schema });
-const { value: title, errorMessage, handleBlur } = useField<string>('title');
+const { value: name, errorMessage, handleBlur } = useField<string>('name');
 
 const onSubmit = handleSubmit((values) => {
     console.log('Formulario enviado:', values);
-    showModal.value = false;
+    // showModal.value = false;
+    router.post('/categories', values, {
+        onSuccess: () => {
+            showModal.value = false;
+        },
+        onError: (errors) => {
+            console.error('Errores de validación:', errors);
+        },
+    });
 });
 
 // 🧭 Breadcrumbs
@@ -94,10 +103,10 @@ const breadcrumbs: BreadcrumbItem[] = [
                 <form @submit.prevent="onSubmit" class="space-y-4">
                     <FormField v-slot="{ componentField }" name="title">
                         <FormItem>
-                            <FormLabel>{{ t('category.form.title') }}</FormLabel>
+                            <FormLabel>{{ t('category.form.name') }}</FormLabel>
                             <FormControl>
-                                <Input v-bind="componentField" v-model="title" @blur="handleBlur"
-                                    :placeholder="t('category.form.placeholder.title')" />
+                                <Input v-bind="componentField" v-model="name" @blur="handleBlur"
+                                    :placeholder="t('category.form.placeholder.name')" />
                             </FormControl>
                             <FormMessage>{{ errorMessage }}</FormMessage>
                         </FormItem>

@@ -5,10 +5,10 @@
         "slug": "Slug"
     },
     "form": {
-        "title": "Título",
+        "name": "Nombre",
         "description": "Crear una nueva categoría",
         "placeholder": {
-            "title": "Introduce el título"
+            "name": "Introduce el Nombre"
         }
     },
     "actions": {

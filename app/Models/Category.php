@@ -11,6 +11,8 @@ class Category extends Model
     /** @use HasFactory<\Database\Factories\CategoryFactory> */
     use HasFactory, CategoryPresentation;
 
+    protected $fillable = ['name', 'slug'];
+
     public function albums()
     {
         return $this->hasMany(Album::class);
