@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Category>
@@ -16,9 +17,12 @@ class CategoryFactory extends Factory
      */
     public function definition(): array
     {
+        $name = fake()->words(3, true);
+        $slug = Str::slug($name);
+
         return [
-            'name' => fake()->word(),
-            'slug' => fake()->slug(),
+            'name' => $name,
+            'slug' => $slug,
         ];
     }
 }

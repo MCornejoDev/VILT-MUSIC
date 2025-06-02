@@ -75,7 +75,7 @@ const breadcrumbs: BreadcrumbItem[] = [
             </div>
 
             <!-- Tarjetas de categorías -->
-            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                 <Card v-for="category in categories.data" :key="category.id" class="shadow-md">
                     <CardHeader>
                         <CardTitle>{{ category.name }}</CardTitle>
@@ -101,7 +101,7 @@ const breadcrumbs: BreadcrumbItem[] = [
                 </DialogHeader>
 
                 <form @submit.prevent="onSubmit" class="space-y-4">
-                    <FormField v-slot="{ componentField }" name="title">
+                    <FormField v-slot="{ componentField }" name="name">
                         <FormItem>
                             <FormLabel>{{ t('category.form.name') }}</FormLabel>
                             <FormControl>
