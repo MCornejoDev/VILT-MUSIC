@@ -77,6 +77,10 @@ const confirmDelete = () => {
             },
             onError: (errors) => {
                 console.error('Error al eliminar:', errors);
+                toast({
+                    title: t('album.actions.delete.error.title'),
+                    description: t('album.actions.delete.error.description'),
+                });
             },
         });
     }
