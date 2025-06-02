@@ -69,6 +69,7 @@ class AlbumController extends Controller
      */
     public function destroy(Album $album)
     {
-        //
+        $deleted = AlbumService::delete($album);
+        return back()->with('status', $deleted ? 'success' : 'error');
     }
 }

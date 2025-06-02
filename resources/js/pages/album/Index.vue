@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
+import { ref } from 'vue';
+import { useToast } from '@/components/ui/toast';
+
 // Inicializa i18n en el componente
 const { t } = useI18n();
 import { Head, router } from '@inertiajs/vue3';
@@ -18,6 +21,16 @@ import {
     TableHeader,
     TableRow,
 } from '@/components/ui/table'
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
+} from '@/components/ui/dialog'
+import { Button } from '@/components/ui/button'
+import Toaster from '@/components/ui/toast/Toaster.vue'
+
 import Pagination from '@/pages/Pagination.vue';
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -29,9 +42,45 @@ const breadcrumbs: BreadcrumbItem[] = [
 
 const { albums } = defineProps<{ albums: Paginated<Album> }>();
 
+const showDeleteModal = ref(false);
+const albumToDelete = ref<number | null>(null);
+const { toast } = useToast()
+
 const goToAlbum = (id: number) => {
     router.visit(`/albums/${id}`);
 }
+
+const openDeleteModal = (id: number) => {
+    albumToDelete.value = id;
+    showDeleteModal.value = true;
+};
+
+const confirmDelete = () => {
+    if (albumToDelete.value !== null) {
+        router.delete(`/albums/${albumToDelete.value}`, {
+            onSuccess: (success) => {
+                const status = success.props.status;
+                if (status === 'success') {
+                    toast({
+                        title: t('album.actions.delete.success.title'),
+                        description: t('album.actions.delete.success.description'),
+                    });
+                    showDeleteModal.value = false;
+                    albumToDelete.value = null;
+                    router.reload();
+                } else {
+                    toast({
+                        title: t('album.actions.delete.error.title'),
+                        description: t('album.actions.delete.error.description'),
+                    });
+                }
+            },
+            onError: (errors) => {
+                console.error('Error al eliminar:', errors);
+            },
+        });
+    }
+};
 
 </script>
 
@@ -68,14 +117,31 @@ const goToAlbum = (id: number) => {
                             <a v-on:click="goToAlbum(album.id)"
                                 class="text-blue-500 cursor-pointer hover:text-blue-700">See</a>
                             <span class="mx-2">|</span>
-                            <a href="#" class="text-blue-500 hover:text-blue-700">Edit</a>
+                            <a href="#" class="text-blue-500 cursor-pointer hover:text-blue-700">Edit</a>
                             <span class="mx-2">|</span>
-                            <a href="#" class="text-blue-500 hover:text-blue-700">Delete</a>
+                            <a v-on:click="openDeleteModal(album.id)"
+                                class="text-blue-500 cursor-pointer hover:text-blue-700">Delete</a>
                         </TableCell>
                     </TableRow>
                 </TableBody>
             </Table>
             <Pagination :paginator="albums.meta"></Pagination>
         </div>
+
+        <Dialog v-model:open="showDeleteModal">
+            <DialogContent>
+                <DialogHeader>
+                    <DialogTitle>{{ t('album.actions.delete.title') }}</DialogTitle>
+                    <DialogDescription>{{ t('album.actions.delete.description') }}</DialogDescription>
+                </DialogHeader>
+                <div class="flex justify-end gap-2 mt-4">
+                    <Button variant="outline"
+                        @click="showDeleteModal = false">{{ t('album.actions.delete.reject') }}</Button>
+                    <Button variant="destructive" @click="confirmDelete">{{ t('album.actions.delete.accept') }}</Button>
+                </div>
+            </DialogContent>
+        </Dialog>
+        <Toaster />
+
     </AppLayout>
 </template>

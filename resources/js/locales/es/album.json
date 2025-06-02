@@ -9,5 +9,21 @@
         "stocks": "Unidades",
         "price": "Precio"
     },
-    "tracklist": "Lista de canciones"
+    "tracklist": "Lista de canciones",
+    "actions": {
+        "delete": {
+            "title": "Eliminar álbum",
+            "description": "¿Estás seguro de que quieres eliminar este álbum?",
+            "accept": "Sí, eliminarlo",
+            "reject": "No, cancelar",
+            "success": {
+                "title": "Álbum eliminado correctamente",
+                "description": "El álbum se ha eliminado correctamente"
+            },
+            "error": {
+                "title": "Algo salió mal",
+                "description": "Inténtalo de nuevo"
+            }
+        }
+    }
 }
