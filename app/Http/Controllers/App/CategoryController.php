@@ -34,12 +34,7 @@ class CategoryController extends Controller
     {
         $fields = $request->validated();
         $category = CategoryService::create($fields);
-
-        if (!$category) {
-            return back()->withErrors(['error' => 'No se pudo crear la categoría. Intenta de nuevo.']);
-        }
-
-        return back()->with('success', 'Categoría creada correctamente.');
+        return back()->with('status', $category ? 'success' : 'error');
     }
 
     /**

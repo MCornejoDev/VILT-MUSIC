@@ -14,7 +14,18 @@
     "actions": {
         "create": {
             "title": "Create category",
-            "button": "Create"
+            "button": "Create",
+            "description": "Are you sure you want to create this category?",
+            "accept": "Yes, create the category",
+            "reject": "No, cancel",
+            "success": {
+                "title": "Category created successfully",
+                "description": "The category has been created successfully"
+            },
+            "error": {
+                "title": "Something went wrong",
+                "description": "Try again"
+            }
         }
     }
 }

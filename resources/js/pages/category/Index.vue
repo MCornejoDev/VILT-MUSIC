@@ -6,6 +6,7 @@ import { Head } from '@inertiajs/vue3';
 import { useForm, useField } from 'vee-validate';
 import * as yup from 'yup';
 import { router } from '@inertiajs/vue3'
+import { useToast } from '@/components/ui/toast';
 
 // 🧩 Layouts y componentes UI
 import AppLayout from '@/layouts/AppLayout.vue';
@@ -15,6 +16,7 @@ import { Input } from '@/components/ui/input';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogHeader, DialogDescription, DialogTitle } from '@/components/ui/dialog';
 import { FormField, FormItem, FormLabel, FormControl, FormMessage, } from '@/components/ui/form';
+import Toaster from '@/components/ui/toast/Toaster.vue'
 
 // 🧩 Tipos
 import { type BreadcrumbItem } from '@/types';
@@ -24,12 +26,12 @@ import { Paginated } from '@/types/models/paginated';
 // 🌍 Internacionalización
 const { t } = useI18n();
 
-
 // 📌 Props
 const { categories } = defineProps<{ categories: Paginated<Category> }>();
 
 // 🧠 Estado local
 const showModal = ref(false);
+const { toast } = useToast()
 
 // ✅ Validación con VeeValidate y Yup
 const schema = yup.object({
@@ -40,14 +42,30 @@ const { handleSubmit } = useForm({ validationSchema: schema });
 const { value: name, errorMessage, handleBlur } = useField<string>('name');
 
 const onSubmit = handleSubmit((values) => {
-    console.log('Formulario enviado:', values);
-    // showModal.value = false;
     router.post('/categories', values, {
-        onSuccess: () => {
-            showModal.value = false;
+        onSuccess: (success) => {
+            const status = success.props.status;
+            console.log('status', status);
+
+            if (status === 'success') {
+                toast({
+                    title: t('category.actions.create.success.title'),
+                    description: t('category.actions.create.success.description'),
+                });
+                showModal.value = false;
+            } else {
+                toast({
+                    title: t('category.actions.create.error.title'),
+                    description: t('category.actions.create.error.description'),
+                });
+            }
         },
         onError: (errors) => {
             console.error('Errores de validación:', errors);
+            toast({
+                title: t('category.actions.create.error.title'),
+                description: t('category.actions.create.error.description'),
+            });
         },
     });
 });
@@ -120,5 +138,6 @@ const breadcrumbs: BreadcrumbItem[] = [
                 </form>
             </DialogContent>
         </Dialog>
+        <Toaster />
     </AppLayout>
 </template>
