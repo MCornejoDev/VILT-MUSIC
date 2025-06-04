@@ -5,7 +5,7 @@ const { t } = useI18n();
 
 import { Head } from '@inertiajs/vue3';
 import AppLayout from '@/layouts/AppLayout.vue';
-import AudioPlayer from '@/components/AudioPlayer.vue';
+import AudioPlayer from '@/components/custom/AudioPlayer.vue';
 import { type BreadcrumbItem } from '@/types';
 import { Album } from '@/types/models/album';
 import { Paginated } from '@/types/models/paginated';

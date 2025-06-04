@@ -45,8 +45,6 @@ const onSubmit = handleSubmit((values) => {
     router.post('/categories', values, {
         onSuccess: (success) => {
             const status = success.props.status;
-            console.log('status', status);
-
             if (status === 'success') {
                 toast({
                     title: t('category.actions.create.success.title'),

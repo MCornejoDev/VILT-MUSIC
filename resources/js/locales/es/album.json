@@ -7,10 +7,15 @@
         "release_date": "Fecha de lanzamiento",
         "description": "Descripción",
         "stocks": "Unidades",
-        "price": "Precio"
+        "price": "Precio",
+        "no_results": "No se encontraron resultados"
     },
     "tracklist": "Lista de canciones",
     "actions": {
+        "create": {
+            "title": "Crear álbum",
+            "btn": "Crear álbum"
+        },
         "delete": {
             "title": "Eliminar álbum",
             "description": "¿Estás seguro de que quieres eliminar este álbum?",

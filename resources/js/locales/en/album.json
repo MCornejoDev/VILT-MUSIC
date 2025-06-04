@@ -7,10 +7,15 @@
         "release_date": "Release Date",
         "description": "Description",
         "stocks": "Stocks",
-        "price": "Price"
+        "price": "Price",
+        "no_results": "No results found"
     },
     "tracklist": "Tracklist",
     "actions": {
+        "create": {
+            "title": "Create album",
+            "btn": "Create"
+        },
         "delete": {
             "title": "Delete album",
             "description": "Are you sure you want to delete this album?",
