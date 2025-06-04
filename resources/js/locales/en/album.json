@@ -11,6 +11,22 @@
         "no_results": "No results found"
     },
     "tracklist": "Tracklist",
+    "form": {
+        "name": "Name",
+        "category": "Category",
+        "artist": "Artist",
+        "stocks": "Stocks",
+        "price": "Price",
+        "release_date": "Release Date",
+        "placeholder": {
+            "name": "Enter the name",
+            "category": "Select the category",
+            "artist": "Enter the artist",
+            "stocks": "Enter the stocks",
+            "price": "Enter the price",
+            "release_date": "Enter the release date"
+        }
+    },
     "actions": {
         "create": {
             "title": "Create album",

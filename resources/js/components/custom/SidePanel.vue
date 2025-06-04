@@ -59,7 +59,8 @@ function onPanelClick(event: MouseEvent) {
                 <transition enter-active-class="transition-all duration-300 ease-out"
                     leave-active-class="transition-all duration-200 ease-in"
                     enter-from-class="translate-x-full opacity-0" leave-to-class="translate-x-full opacity-0">
-                    <div class="relative z-50 w-full h-full max-w-xl ml-auto overflow-hidden border-l shadow-2xl bg-gradient-to-br from-gray-900 via-gray-800 to-black border-gray-700/50"
+                    <div v-if="isOpen"
+                        class="relative z-50 w-full h-full max-w-xl ml-auto overflow-hidden border-l shadow-2xl bg-gradient-to-br from-gray-900 via-gray-800 to-black border-gray-700/50"
                         @click="onPanelClick">
                         <!-- Header -->
                         <div

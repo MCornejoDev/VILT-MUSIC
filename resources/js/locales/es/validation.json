@@ -1,3 +1,8 @@
 {
-    "required": "Este campo es requerido"
+    "required": "Este campo es requerido",
+    "number": "Este campo debe ser un número",
+    "min": "Este campo debe ser mayor o igual a {min}",
+    "max": "Este campo debe ser menor o igual a {max}",
+    "date": "Este campo debe ser una fecha válida",
+    "email": "Este campo debe ser un correo electrónico válido"
 }
