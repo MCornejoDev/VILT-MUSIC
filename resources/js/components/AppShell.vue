@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { SidebarProvider } from '@/components/ui/sidebar';
 import { onMounted, ref } from 'vue';
+import SidePanel from './custom/SidePanel.vue';
 
 interface Props {
     variant?: 'header' | 'sidebar';
@@ -21,10 +22,12 @@ const handleSidebarChange = (open: boolean) => {
 </script>
 
 <template>
-    <div v-if="variant === 'header'" class="flex min-h-screen w-full flex-col">
+    <div v-if="variant === 'header'" class="flex flex-col w-full min-h-screen">
         <slot />
+        <SidePanel />
     </div>
     <SidebarProvider v-else :default-open="isOpen" :open="isOpen" @update:open="handleSidebarChange">
         <slot />
+        <SidePanel />
     </SidebarProvider>
 </template>
