@@ -16,7 +16,6 @@ import { Input } from '@/components/ui/input';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogHeader, DialogDescription, DialogTitle } from '@/components/ui/dialog';
 import { FormField, FormItem, FormLabel, FormControl, FormMessage, } from '@/components/ui/form';
-import Toaster from '@/components/ui/toast/Toaster.vue'
 
 // 🧩 Tipos
 import { type BreadcrumbItem } from '@/types';
@@ -136,6 +135,5 @@ const breadcrumbs: BreadcrumbItem[] = [
                 </form>
             </DialogContent>
         </Dialog>
-        <Toaster />
     </AppLayout>
 </template>

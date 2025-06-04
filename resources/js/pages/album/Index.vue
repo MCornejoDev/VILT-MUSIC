@@ -21,7 +21,6 @@ import {
     DialogTitle,
 } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
-import Toaster from '@/components/ui/toast/Toaster.vue'
 import AlbumList from '@/pages/album/components/AlbumList.vue';
 import AlbumCreateForm from './components/AlbumCreateForm.vue';
 
@@ -90,10 +89,14 @@ const openPanel = () => {
 
     <Head title="Dashboard"></Head>
     <AppLayout :breadcrumbs="breadcrumbs">
-        <Button @click="openPanel">
-            {{ t('album.actions.create.btn') }}
-        </Button>
-        <AlbumList :albums="albums" @request-delete="openDeleteModal" />
+        <div class="flex flex-col flex-1 h-full gap-4 p-4">
+            <div class="flex justify-end">
+                <Button @click="openPanel">
+                    {{ t('album.actions.create.btn') }}
+                </Button>
+            </div>
+            <AlbumList :albums="albums" @request-delete="openDeleteModal" />
+        </div>
 
         <Dialog v-model:open="showDeleteModal">
             <DialogContent>
@@ -108,7 +111,6 @@ const openPanel = () => {
                 </div>
             </DialogContent>
         </Dialog>
-        <Toaster />
 
     </AppLayout>
 </template>

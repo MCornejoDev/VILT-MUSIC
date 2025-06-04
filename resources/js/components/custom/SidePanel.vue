@@ -2,13 +2,20 @@
 import { ref } from 'vue'
 import { onMounted, onUnmounted } from 'vue'
 
+interface PanelPayload {
+    title: string
+    component: any
+    icon: any
+    params?: Record<string, any>
+}
+
 const isOpen = ref(false)
 const title = ref('')
 const icon = ref(null)
 const component = ref(null)
 const params = ref({})
 
-function openPanel({ title: t, component: c, icon: i, params: p }) {
+function openPanel({ title: t, component: c, icon: i, params: p }: PanelPayload) {
     title.value = t
     component.value = c
     icon.value = i
@@ -20,25 +27,23 @@ function closePanel() {
     isOpen.value = false
 }
 
-function handleOpen(e: any) {
+function handleOpen(e: CustomEvent<PanelPayload>) {
     openPanel(e.detail)
 }
 
 onMounted(() => {
-    window.addEventListener('open-panel', handleOpen)
+    window.addEventListener('open-panel', handleOpen as EventListener)
     window.addEventListener('close-panel', closePanel)
 })
 
 onUnmounted(() => {
-    window.removeEventListener('open-panel', handleOpen)
+    window.removeEventListener('open-panel', handleOpen as EventListener)
     window.removeEventListener('close-panel', closePanel)
 })
 
 function onPanelClick(event: MouseEvent) {
-    event.stopPropagation();
-    console.log('Panel clic, no cerrar');
+    event.stopPropagation()
 }
-
 </script>
 
 <template>
