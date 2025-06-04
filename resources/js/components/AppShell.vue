@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import { SidebarProvider } from '@/components/ui/sidebar';
 import { onMounted, ref } from 'vue';
-import SidePanel from './custom/SidePanel.vue';
-import Toaster from './ui/toast/Toaster.vue';
 
 interface Props {
     variant?: 'header' | 'sidebar';
@@ -25,12 +23,8 @@ const handleSidebarChange = (open: boolean) => {
 <template>
     <div v-if="variant === 'header'" class="flex flex-col w-full min-h-screen">
         <slot />
-        <SidePanel />
-        <Toaster />
     </div>
     <SidebarProvider v-else :default-open="isOpen" :open="isOpen" @update:open="handleSidebarChange">
         <slot />
-        <SidePanel />
-        <Toaster />
     </SidebarProvider>
 </template>
