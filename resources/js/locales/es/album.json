@@ -18,13 +18,15 @@
         "stocks": "Unidades",
         "price": "Precio",
         "release_date": "Fecha de lanzamiento",
+        "description": "Descripción",
         "placeholder": {
             "name": "Introduzca el nombre",
             "category": "Seleccione la categoría",
             "artist": "Introduzca el artista",
             "stocks": "Introduzca las unidades",
             "price": "Introduzca el precio",
-            "release_date": "Introduzca la fecha de lanzamiento"
+            "release_date": "Introduzca la fecha de lanzamiento",
+            "description": "Introduzca la descripción"
         }
     },
     "actions": {

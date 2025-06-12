@@ -18,13 +18,15 @@
         "stocks": "Stocks",
         "price": "Price",
         "release_date": "Release Date",
+        "description": "Description",
         "placeholder": {
             "name": "Enter the name",
             "category": "Select the category",
             "artist": "Enter the artist",
             "stocks": "Enter the stocks",
             "price": "Enter the price",
-            "release_date": "Enter the release date"
+            "release_date": "Enter the release date",
+            "description": "Enter the description"
         }
     },
     "actions": {

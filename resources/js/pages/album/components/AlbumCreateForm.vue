@@ -10,6 +10,7 @@ import axios from 'axios'; // Asegúrate de tener axios instalado con `npm i axi
 // 🧩 Layouts y componentes UI
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
 import { FormField, FormItem, FormLabel, FormControl, FormMessage, } from '@/components/ui/form';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select';
 
@@ -25,7 +26,7 @@ const categories = ref<Category[]>([]);
 // ✅ Validación con VeeValidate y Yup
 const schema = yup.object({
     name: yup.string().required(t('validation.required')),
-    category: yup
+    category_id: yup
         .number()
         .typeError(t('validation.required')) // Para evitar errores si el valor es string o null
         .required(t('validation.required')),
@@ -44,16 +45,18 @@ const schema = yup.object({
         .date()
         .required(t('validation.required'))
         .typeError(t('validation.date')),
+    description: yup.string().required(t('validation.required')),
 });
 
 const { handleSubmit, resetForm } = useForm({ validationSchema: schema });
 
 const { value: name, errorMessage: nameError, handleBlur: nameBlur } = useField<string>('name');
-const { value: category, errorMessage: categoryError, handleChange: categoryChange, handleBlur: categoryBlur } = useField<number | ''>('category')
+const { value: category_id, errorMessage: categoryError, handleChange: categoryChange, handleBlur: categoryBlur } = useField<number | ''>('category_id')
 const { value: artist, errorMessage: artistError, handleBlur: artistBlur } = useField<string>('artist');
 const { value: stocks, errorMessage: stocksError, handleBlur: stocksBlur } = useField<number>('stocks');
 const { value: price, errorMessage: priceError, handleBlur: priceBlur } = useField<number>('price');
 const { value: release_date, errorMessage: releaseDateError, handleBlur: releaseDateBlur } = useField<Date>('release_date');
+const { value: description, errorMessage: descriptionError, handleBlur: descriptionBlur } = useField<string>('description');
 
 const onSubmit = handleSubmit((values) => {
     router.post('/albums', values, {
@@ -97,7 +100,7 @@ onMounted(async () => {
             <FormItem>
                 <FormLabel>{{ t('album.form.category') }}</FormLabel>
                 <FormControl>
-                    <Select :modelValue="category" @update:modelValue="categoryChange" @blur="categoryBlur">
+                    <Select :modelValue="category_id" @update:modelValue="categoryChange" @blur="categoryBlur">
                         <SelectTrigger
                             class="w-full h-10 text-sm border rounded-md shadow-sm bg-background border-input">
                             <SelectValue :placeholder="t('album.form.placeholder.category')" />
@@ -162,6 +165,19 @@ onMounted(async () => {
                 <FormMessage>{{ releaseDateError }}</FormMessage>
             </FormItem>
         </FormField>
+
+        <!-- Descripción -->
+        <FormField v-slot="{ componentField }" name="description">
+            <FormItem>
+                <FormLabel>{{ t('album.form.description') }}</FormLabel>
+                <FormControl>
+                    <Textarea v-bind="componentField" v-model="description" @blur="descriptionBlur"
+                        class="w-full h-10 text-sm border rounded-md shadow-sm bg-background border-input" />
+                </FormControl>
+                <FormMessage>{{ descriptionError }}</FormMessage>
+            </FormItem>
+        </FormField>
+
 
         <!-- Submit -->
         <div class="flex justify-end">

@@ -27,9 +27,9 @@ const askDelete = () => {
         <TableCell>{{ album.price }}</TableCell>
         <TableCell>{{ album.release_date }}</TableCell>
         <TableCell class="flex items-center justify-center gap-2 h-14">
-            <Eye class="w-5 h-5 cursor-pointer" @click="goToAlbum" />
-            <Pencil class="w-5 h-5 cursor-pointer" />
-            <Trash class="w-5 h-5 cursor-pointer" @click="askDelete" />
+            <Eye class="w-5 h-5 text-blue-500 cursor-pointer hover:text-blue-700" @click="goToAlbum" />
+            <Pencil class="w-5 h-5 cursor-pointer text-violet-500 hover:text-violet-700" />
+            <Trash class="w-5 h-5 text-red-500 cursor-pointer hover:text-red-700" @click="askDelete" />
         </TableCell>
     </TableRow>
 </template>
