@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { router } from '@inertiajs/vue3';
+import { Eye, Pencil, Trash } from 'lucide-vue-next';
 import { TableRow, TableCell } from '@/components/ui/table';
 import { Album } from '@/types/models/album';
 
@@ -25,12 +26,10 @@ const askDelete = () => {
         <TableCell>{{ album.stocks }}</TableCell>
         <TableCell>{{ album.price }}</TableCell>
         <TableCell>{{ album.release_date }}</TableCell>
-        <TableCell>
-            <a @click="goToAlbum" class="text-blue-500 cursor-pointer hover:text-blue-700">See</a>
-            <span class="mx-2">|</span>
-            <a href="#" class="text-blue-500 cursor-pointer hover:text-blue-700">Edit</a>
-            <span class="mx-2">|</span>
-            <a @click="askDelete" class="text-blue-500 cursor-pointer hover:text-blue-700">Delete</a>
+        <TableCell class="flex items-center justify-center gap-2 h-14">
+            <Eye class="w-5 h-5 cursor-pointer" @click="goToAlbum" />
+            <Pencil class="w-5 h-5 cursor-pointer" />
+            <Trash class="w-5 h-5 cursor-pointer" @click="askDelete" />
         </TableCell>
     </TableRow>
 </template>

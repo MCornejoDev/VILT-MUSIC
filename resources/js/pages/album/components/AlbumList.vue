@@ -28,7 +28,7 @@ const handleRequestDelete = (albumId: number) => {
                     <TableHead>{{ t('album.table.stocks') }}</TableHead>
                     <TableHead>{{ t('album.table.price') }}</TableHead>
                     <TableHead>{{ t('album.table.release_date') }}</TableHead>
-                    <TableHead>{{ t('actions.title') }}</TableHead>
+                    <TableHead class="text-center">{{ t('actions.title') }}</TableHead>
                 </TableRow>
             </TableHeader>
             <TableBody v-if="albums.data.length">
