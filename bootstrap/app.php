@@ -18,6 +18,14 @@ return Application::configure(basePath: dirname(__DIR__))
             HandleInertiaRequests::class,
             AddLinkHeadersForPreloadedAssets::class,
         ]);
+        // Aquí añadimos el middleware Sanctum para las rutas API
+        $middleware->api(append: [
+            // Este es el middleware que activa la autenticación stateful para SPA
+            \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
+        ]);
+
+        // Y para que Sanctum distinga requests stateful en las API
+        $middleware->statefulApi();
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

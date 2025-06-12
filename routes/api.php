@@ -14,6 +14,6 @@ use App\Http\Controllers\Api\CategoryController;
 |
 */
 
-Route::group(['middleware' => 'auth'], function () {
+Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('/categories', CategoryController::class . '@index')->name('categories');
 });

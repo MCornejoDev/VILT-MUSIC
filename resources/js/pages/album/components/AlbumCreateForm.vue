@@ -76,7 +76,6 @@ onMounted(async () => {
     }
 });
 
-console.log(categories);
 </script>
 
 <template>
@@ -106,7 +105,7 @@ console.log(categories);
                         <SelectContent>
                             <SelectGroup>
                                 <SelectLabel>{{ t('album.form.placeholder.category') }}</SelectLabel>
-                                <SelectItem v-for="c in categories" :key="c.id" :value="c.id">
+                                <SelectItem v-for="c in categories" :key="c.id" :value="c.id" class="cursor-pointer">
                                     {{ c.name }}
                                 </SelectItem>
                             </SelectGroup>
