@@ -10,6 +10,21 @@ class Album extends Model
     /** @use HasFactory<\Database\Factories\AlbumFactory> */
     use HasFactory;
 
+    protected $fillable = [
+        'title',
+        'artist',
+        'description',
+        'stocks',
+        'price',
+        'release_date',
+        'category_id',
+        'cover',
+    ];
+
+    protected $casts = [
+        'release_date' => 'date',
+    ];
+
     public function category()
     {
         return $this->belongsTo(Category::class);

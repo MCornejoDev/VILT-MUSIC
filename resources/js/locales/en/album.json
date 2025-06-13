@@ -12,27 +12,37 @@
     },
     "tracklist": "Tracklist",
     "form": {
-        "name": "Name",
+        "title": "Title",
         "category": "Category",
         "artist": "Artist",
         "stocks": "Stocks",
         "price": "Price",
         "release_date": "Release Date",
         "description": "Description",
+        "file": "File",
         "placeholder": {
-            "name": "Enter the name",
+            "title": "Enter the title",
             "category": "Select the category",
             "artist": "Enter the artist",
             "stocks": "Enter the stocks",
             "price": "Enter the price",
             "release_date": "Enter the release date",
-            "description": "Enter the description"
+            "description": "Enter the description",
+            "file": "Select the file"
         }
     },
     "actions": {
         "create": {
             "title": "Create album",
-            "btn": "Create"
+            "btn": "Create",
+            "success": {
+                "title": "Album created successfully",
+                "description": "The album has been created successfully"
+            },
+            "error": {
+                "title": "Something went wrong",
+                "description": "Try again"
+            }
         },
         "delete": {
             "title": "Delete album",

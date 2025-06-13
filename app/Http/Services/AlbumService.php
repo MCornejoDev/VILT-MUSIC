@@ -14,13 +14,23 @@ class AlbumService
         return $query->orderBy($sortField, $sortDirection)->paginate($perPage);
     }
 
+    public static function create(array $data): ?Album
+    {
+        try {
+            $album = Album::create($data);
+            return $album;
+        } catch (Exception $e) {
+            log_error($e);
+            return null;
+        }
+    }
+
     public static function delete(Album $album): bool
     {
         try {
             return $album->delete();
         } catch (Exception $e) {
             log_error($e);
-
             return false;
         }
     }

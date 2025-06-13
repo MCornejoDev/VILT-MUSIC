@@ -12,27 +12,37 @@
     },
     "tracklist": "Lista de canciones",
     "form": {
-        "name": "Nombre",
+        "title": "Título",
         "category": "Categoría",
         "artist": "Artista",
         "stocks": "Unidades",
         "price": "Precio",
         "release_date": "Fecha de lanzamiento",
         "description": "Descripción",
+        "file": "Archivo",
         "placeholder": {
-            "name": "Introduzca el nombre",
+            "title": "Introduzca el título",
             "category": "Seleccione la categoría",
             "artist": "Introduzca el artista",
             "stocks": "Introduzca las unidades",
             "price": "Introduzca el precio",
             "release_date": "Introduzca la fecha de lanzamiento",
-            "description": "Introduzca la descripción"
+            "description": "Introduzca la descripción",
+            "file": "Seleccione el archivo"
         }
     },
     "actions": {
         "create": {
             "title": "Crear álbum",
-            "btn": "Crear álbum"
+            "btn": "Crear álbum",
+            "success": {
+                "title": "Álbum creado correctamente",
+                "description": "El álbum se ha creado correctamente"
+            },
+            "error": {
+                "title": "Algo salió mal",
+                "description": "Inténtalo de nuevo"
+            }
         },
         "delete": {
             "title": "Eliminar álbum",
