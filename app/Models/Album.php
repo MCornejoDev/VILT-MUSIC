@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Log;
 
 class Album extends Model
 {
@@ -38,5 +40,14 @@ class Album extends Model
     public function orderLines()
     {
         return $this->hasMany(OrderLine::class);
+    }
+
+    public function coverImage(): Attribute
+    {
+        return Attribute::make(
+            get: function () {
+                return filter_var($this->cover, FILTER_VALIDATE_URL) ? $this->cover : asset('storage/' . $this->cover);
+            },
+        );
     }
 }

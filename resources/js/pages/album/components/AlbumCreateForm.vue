@@ -67,8 +67,19 @@ const { value: cover, errorMessage: coverError, handleBlur: coverBlur } = useFie
 
 
 const onSubmit = handleSubmit((values) => {
-    console.log(values)
-    router.post('/albums', values, {
+    const formData = new FormData();
+
+    if (values.cover && values.cover.length > 0) {
+        formData.append('cover', values.cover[0].file);
+    }
+
+    for (const key in values) {
+        if (key !== 'cover') {
+            formData.append(key, values[key]);
+        }
+    }
+
+    router.post('/albums', formData, {
         onSuccess: (success) => {
             resetForm();
             window.dispatchEvent(new Event('close-panel'));
